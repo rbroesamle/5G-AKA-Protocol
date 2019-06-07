@@ -1,0 +1,14 @@
+# Set default behaviour, in case you don't have core.autocrlf set.
+* text=auto
+
+# Declare text files that should always be normalized and converted.
+*.java text
+*.groovy text
+*.scala text
+*.clj text
+*.txt text
+*.md text
+
+# Denote all files that should not be modified.
+*.png binary
+*.jpg binary
