@@ -19,8 +19,7 @@ public class AUSF extends Entity {
         if (message instanceof Message_5G_AIR && sender instanceof SEAF) {
             //Received 5G-AIR, sending Auth Info Req to the ARPF
             Message_5G_AIR fiveGAir = (Message_5G_AIR) message;
-            SEAF seaf = (SEAF) sender;            System.err.println(getName() + ": Received an unusual message. Ignoring it.");
-
+            SEAF seaf = (SEAF) sender;
 
             Message_Auth_Info_Req authInfoReq = getAuthInfoReqFrom5gAir(fiveGAir, seaf);
 

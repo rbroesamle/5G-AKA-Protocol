@@ -20,6 +20,11 @@ public class App {
             int i = -1;
 
             @Override
+            public String getName() {
+                return null;
+            }
+
+            @Override
             public void onReceiveMessage(Message message, Entity sender) {
                 print(message);
             }
