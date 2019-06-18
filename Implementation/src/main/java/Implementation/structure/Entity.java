@@ -11,6 +11,9 @@ public abstract class Entity {
     }
 
     public void prepareMessage(Message message, Entity receiver) {
+        if (message == null || receiver == null) {
+            return;
+        }
         Entity sender = this;
         class _Send extends Send {
             @Override
@@ -32,6 +35,9 @@ public abstract class Entity {
     }
 
     public void sendMessage(Message message, Entity receiver) {
+        if (message == null || receiver == null) {
+            return;
+        }
         if (preparedMessage == null) {
             prepareMessage(message, receiver);
         }
@@ -43,6 +49,7 @@ public abstract class Entity {
         }
     }
 
-    public abstract void onReceiveMessage(Message message, Entity sender);
+    public abstract String getName();
 
+    public abstract void onReceiveMessage(Message message, Entity sender);
 }
