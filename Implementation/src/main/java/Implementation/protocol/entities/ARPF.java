@@ -35,7 +35,7 @@ public class ARPF extends Entity {
 
     private Message_Auth_Info_Resp getAuthInfoRespFromAuthInfoReq(Message_Auth_Info_Req authInfoReq, AUSF ausf) {
         //TODO
-        return null;
+        return new Message_Auth_Info_Resp();
     }
 
 

@@ -1,5 +1,8 @@
 package Implementation;
 
+import Implementation.protocol.entities.ARPF;
+import Implementation.protocol.entities.AUSF;
+import Implementation.protocol.entities.SEAF;
 import Implementation.protocol.entities.UE;
 import Implementation.structure.Entity;
 import Implementation.structure.Message;
@@ -9,7 +12,23 @@ import io.reactivex.schedulers.Schedulers;
 public class App {
 
     public static void main(String[] args) {
-        ownImplementation();
+        UE ue = new UE();
+        SEAF seaf = new SEAF();
+        AUSF ausf = new AUSF();
+        ARPF arpf = new ARPF();
+
+        seaf.ausf = ausf;
+        seaf.ue = ue;
+        ausf.arpf = arpf;
+        ausf.seaf = seaf;
+
+        ue.initiateAuthentication(seaf);
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException ex) {
+            ex.printStackTrace();
+        }
     }
 
     private static void ownImplementation() {

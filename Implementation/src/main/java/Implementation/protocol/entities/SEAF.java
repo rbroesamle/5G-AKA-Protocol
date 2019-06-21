@@ -6,8 +6,8 @@ import Implementation.structure.Message;
 
 public class SEAF  extends Entity {
 
-    private AUSF ausf = null;
-    private UE ue = null;
+    public AUSF ausf = null;
+    public UE ue = null;
 
     @Override
     public String getName() {
@@ -54,7 +54,7 @@ public class SEAF  extends Entity {
 
     private Message_5G_AIR get5gAirFromN1(Message_N1 n1, UE ue) {
         //TODO
-        return null;
+        return new Message_5G_AIR();
     }
 
     /**
@@ -69,7 +69,7 @@ public class SEAF  extends Entity {
 
     private Message_Auth_Req getAuthReqFrom5gAia(Message_5G_AIA fiveGAia, AUSF ausf) {
         //TODO
-        return null;
+        return new Message_Auth_Req();
     }
 
     /**
@@ -85,6 +85,6 @@ public class SEAF  extends Entity {
 
     private Message_5G_AC get5gAcFromAuthResp(Message_Auth_Resp authResp, UE ue) {
         //TODO
-        return null;
+        return new Message_5G_AC();
     }
 }

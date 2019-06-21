@@ -35,6 +35,6 @@ public class UE extends Entity {
 
     private Message_Auth_Resp calculateAuthResp(Message_Auth_Req authReq, SEAF seaf) {
         //TODO
-        return null;
+        return new Message_Auth_Resp();
     }
 }

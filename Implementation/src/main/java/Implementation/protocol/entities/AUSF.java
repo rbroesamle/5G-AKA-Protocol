@@ -6,8 +6,8 @@ import Implementation.structure.Message;
 
 public class AUSF extends Entity {
 
-    private ARPF arpf = null;
-    private SEAF seaf = null;
+    public ARPF arpf = null;
+    public SEAF seaf = null;
 
     @Override
     public String getName() {
@@ -21,9 +21,11 @@ public class AUSF extends Entity {
             Message_5G_AIR fiveGAir = (Message_5G_AIR) message;
             SEAF seaf = (SEAF) sender;
 
-            Message_Auth_Info_Req authInfoReq = getAuthInfoReqFrom5gAir(fiveGAir, seaf);
+            if (checkIfSeafIsEntitledToUseSnName(fiveGAir, seaf)) {
+                Message_Auth_Info_Req authInfoReq = getAuthInfoReqFrom5gAir(fiveGAir, seaf);
 
-            sendMessage(authInfoReq, this.arpf);
+                sendMessage(authInfoReq, this.arpf);
+            }
         } else if (message instanceof Message_Auth_Info_Resp && sender instanceof ARPF) {
             //Storing the XRES*, calculating the HXRES* and dend 5G_AIA to the SEAF.
             Message_Auth_Info_Resp authInfoResp = (Message_Auth_Info_Resp) message;
@@ -50,19 +52,31 @@ public class AUSF extends Entity {
         }
     }
 
+    /**
+     *
+     * @param fiveGAir
+     * @param seaf
+     * @return true if SEAF is entitled to use the ServingNetworkName
+     */
+    private boolean checkIfSeafIsEntitledToUseSnName(Message_5G_AIR fiveGAir, SEAF seaf) {
+        //3GPP TS 33.501 V0.7.0 Page 31
+        //TODO
+        return true;
+    }
+
     private Message_Auth_Info_Req getAuthInfoReqFrom5gAir(Message_5G_AIR fiveGAir, SEAF seaf) {
         //TODO
-        return null;
+        return new Message_Auth_Info_Req();
     }
 
     private HXRES storeXresAndCalculateHxresFromAuthInfoResp(Message_Auth_Info_Resp authInfoResp, ARPF arpf) {
         //TODO
-        return null;
+        return new HXRES();
     }
 
     private Message_5G_AIA get5gAiaFromAuthInfoRespAndHxres(Message_Auth_Info_Resp authInfoResp, ARPF arpf, HXRES hxres) {
         //TODO
-        return null;
+        return new Message_5G_AIA();
     }
 
     /**
@@ -78,7 +92,7 @@ public class AUSF extends Entity {
 
     private Message_5G_ACA get5GAcaFrom5gAc(Message_5G_AC fiveGAc, SEAF seaf) {
         //TODO
-        return null;
+        return new Message_5G_ACA();
     }
 
 
