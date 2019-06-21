@@ -1,6 +1,6 @@
 package Implementation.protocol.messages;
 
-import Implementation.protocol.data.DataFor5GAir;
+import Implementation.protocol.data.interfaces.DataForNausf_UEAuth_Auth_Req;
 import Implementation.protocol.data.Data_Serving_Network_Name;
 import Implementation.structure.Message;
 
@@ -8,7 +8,7 @@ public class Nausf_UEAuthentication_Authenticate_Request implements Message {
     //3GPP TS 33.501 V0.7.0 Page 31
 
     //SUCI or SUPI
-    public DataFor5GAir authenticationInformation;
+    public DataForNausf_UEAuth_Auth_Req authenticationInformation;
 
     //Serving Netowkr Name
     public Data_Serving_Network_Name servingNetworkName;

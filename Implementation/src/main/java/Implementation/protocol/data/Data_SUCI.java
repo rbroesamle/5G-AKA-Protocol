@@ -1,4 +1,7 @@
 package Implementation.protocol.data;
 
-public class Data_SUCI implements DataForN1, DataFor5GAir {
+import Implementation.protocol.data.interfaces.DataForNausf_UEAuth_Auth_Req;
+import Implementation.protocol.data.interfaces.DataForRegistration_Request;
+
+public class Data_SUCI implements DataForRegistration_Request, DataForNausf_UEAuth_Auth_Req {
 }

@@ -1,4 +1,6 @@
 package Implementation.protocol.data;
 
-public class Data_SUPI implements DataFor5GAir {
+import Implementation.protocol.data.interfaces.DataForNausf_UEAuth_Auth_Req;
+
+public class Data_SUPI implements DataForNausf_UEAuth_Auth_Req {
 }
