@@ -16,13 +16,13 @@ public class UE extends Entity {
     @Override
     public void onReceiveMessage(Message message, Entity sender) {
         if (message instanceof Authentication_Request && sender instanceof SEAF) {
-            //Calculate Auth Resp and send it back to the SEAF
-            Authentication_Request authReq = (Authentication_Request) message;
+            //Received Authentication Request
+            Authentication_Request authRequest = (Authentication_Request) message;
             SEAF seaf = (SEAF) sender;
 
-            Authentication_Response authResp = calculateAuthResp(authReq, seaf);
+            Authentication_Response authResponse = calculateAuthResponse(authRequest, seaf);
 
-            sendMessage(authResp, sender);
+            sendMessage(authResponse, sender);
         } else {
             System.err.println(getName() + ": Received an unusual message. Ignoring it.");
         }
@@ -33,7 +33,7 @@ public class UE extends Entity {
         sendMessage(n1, seaf);
     }
 
-    private Authentication_Response calculateAuthResp(Authentication_Request authReq, SEAF seaf) {
+    private Authentication_Response calculateAuthResponse(Authentication_Request authRequest, SEAF seaf) {
         //TODO
         return new Authentication_Response();
     }

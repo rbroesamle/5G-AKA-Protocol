@@ -17,73 +17,74 @@ public class SEAF  extends Entity {
     @Override
     public void onReceiveMessage(Message message, Entity sender) {
         if (message instanceof N1_Registration_Request && sender instanceof UE) {
-            //Send 5G-AIR message to the AUSF
+            //Received N1 Registration Request
             N1_Registration_Request n1 = (N1_Registration_Request) message;
             UE ue = (UE) sender;
 
-            Nausf_UEAuthentication_Authenticate_Request fiveGAir = get5gAirFromN1(n1, ue);
+            Nausf_UEAuthentication_Authenticate_Request authRequest = getAuthRequest(n1, ue);
 
-            sendMessage(fiveGAir, this.ausf);
+            sendMessage(authRequest, this.ausf);
         } else if (message instanceof Nausf_UEAuthentication_Authenticate_Response && sender instanceof AUSF) {
-            //Check expiry timer and then send Auth req to the UE
-            Nausf_UEAuthentication_Authenticate_Response fiveGAia = (Nausf_UEAuthentication_Authenticate_Response) message;
+            //Received Nausf_UEAuthentication_ Authenticate Response
+            Nausf_UEAuthentication_Authenticate_Response authResponse = (Nausf_UEAuthentication_Authenticate_Response) message;
             AUSF ausf = (AUSF) sender;
 
-            if (checkExpiryTimer(fiveGAia, ausf)) {
-                Authentication_Request authReq = getAuthReqFrom5gAia(fiveGAia, ausf);
+            if (checkExpiryTimer(authResponse, ausf)) {
+                Authentication_Request authRequest = getAuthRequest(authResponse, ausf);
 
-                sendMessage(authReq, this.ue);
+                sendMessage(authRequest, this.ue);
             }
         } else if (message instanceof Authentication_Response && sender instanceof UE) {
-            //Calculate HXRES*, compare it and if comparison successful send 5G-AC to the AUSF
-            Authentication_Response authResp = (Authentication_Response) message;
+            //Received Authentication Response
+            Authentication_Response authResponse = (Authentication_Response) message;
             UE ue = (UE) sender;
 
-            if (calculateHxresAndCompare(authResp, ue)) {
-                Nausf_UEAuthentication_Confirmation_Request fiveGAc = get5gAcFromAuthResp(authResp, ue);
+            if (calculateHxresAndCompare(authResponse, ue)) {
+                Nausf_UEAuthentication_Confirmation_Request confirmRequest = getConfirmRequest(authResponse, ue);
 
-                sendMessage(fiveGAc, this.ausf);
+                sendMessage(confirmRequest, this.ausf);
             }
         } else if (message instanceof Nausf_UEAuthentication_Confirmation_Response && sender instanceof AUSF) {
-            //Authentication was successful.
+            //Received Nausf_UEAuthentication_ Authenticate Response (/Confirmation Response)
             System.out.println("Authentication was successful.");
         } else {
             System.err.println(getName() + ": Received an unusual message. Ignoring it.");
         }
     }
 
-    private Nausf_UEAuthentication_Authenticate_Request get5gAirFromN1(N1_Registration_Request n1, UE ue) {
+    private Nausf_UEAuthentication_Authenticate_Request getAuthRequest(N1_Registration_Request n1, UE ue) {
         //TODO
         return new Nausf_UEAuthentication_Authenticate_Request();
     }
 
     /**
      *
-     * @param fiveGAia
+     * @param authResponse
+     * @param ausf
      * @return true if timer is not expired
      */
-    private boolean checkExpiryTimer(Nausf_UEAuthentication_Authenticate_Response fiveGAia, AUSF ausf) {
+    private boolean checkExpiryTimer(Nausf_UEAuthentication_Authenticate_Response authResponse, AUSF ausf) {
         //TODO
         return true;
     }
 
-    private Authentication_Request getAuthReqFrom5gAia(Nausf_UEAuthentication_Authenticate_Response fiveGAia, AUSF ausf) {
+    private Authentication_Request getAuthRequest(Nausf_UEAuthentication_Authenticate_Response authResponse, AUSF ausf) {
         //TODO
         return new Authentication_Request();
     }
 
     /**
      *
-     * @param authResp
+     * @param authResponse
      * @param ue
      * @return true if calculated HXRES equals the previously stored one.
      */
-    private boolean calculateHxresAndCompare(Authentication_Response authResp, UE ue) {
+    private boolean calculateHxresAndCompare(Authentication_Response authResponse, UE ue) {
         //TODO
         return true;
     }
 
-    private Nausf_UEAuthentication_Confirmation_Request get5gAcFromAuthResp(Authentication_Response authResp, UE ue) {
+    private Nausf_UEAuthentication_Confirmation_Request getConfirmRequest(Authentication_Response authResponse, UE ue) {
         //TODO
         return new Nausf_UEAuthentication_Confirmation_Request();
     }

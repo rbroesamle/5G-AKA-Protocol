@@ -1,6 +1,6 @@
 package Implementation;
 
-import Implementation.protocol.entities.ARPF;
+import Implementation.protocol.entities.UDM;
 import Implementation.protocol.entities.AUSF;
 import Implementation.protocol.entities.SEAF;
 import Implementation.protocol.entities.UE;
@@ -15,11 +15,11 @@ public class App {
         UE ue = new UE();
         SEAF seaf = new SEAF();
         AUSF ausf = new AUSF();
-        ARPF arpf = new ARPF();
+        UDM udm = new UDM();
 
         seaf.ausf = ausf;
         seaf.ue = ue;
-        ausf.arpf = arpf;
+        ausf.udm = udm;
         ausf.seaf = seaf;
 
         ue.initiateAuthentication(seaf);
