@@ -4,7 +4,7 @@ import Implementation.protocol.data.DataFor5GAir;
 import Implementation.protocol.data.Data_Serving_Network_Name;
 import Implementation.structure.Message;
 
-public class Message_5G_AIR implements Message {
+public class Nausf_UEAuthentication_Authenticate_Request implements Message {
     //3GPP TS 33.501 V0.7.0 Page 31
 
     //SUCI or SUPI

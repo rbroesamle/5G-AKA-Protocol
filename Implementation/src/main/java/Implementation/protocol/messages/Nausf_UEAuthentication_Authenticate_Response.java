@@ -2,9 +2,9 @@ package Implementation.protocol.messages;
 
 import Implementation.structure.Message;
 
-public class Message_Auth_Info_Resp implements Message {
+public class Nausf_UEAuthentication_Authenticate_Response implements Message {
     @Override
     public String getName() {
-        return "Auth Info Resp";
+        return "5G AIA";
     }
 }

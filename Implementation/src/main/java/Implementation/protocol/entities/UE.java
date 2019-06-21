@@ -1,8 +1,8 @@
 package Implementation.protocol.entities;
 
-import Implementation.protocol.messages.Message_Auth_Req;
-import Implementation.protocol.messages.Message_Auth_Resp;
-import Implementation.protocol.messages.Message_N1;
+import Implementation.protocol.messages.Authentication_Request;
+import Implementation.protocol.messages.Authentication_Response;
+import Implementation.protocol.messages.N1_Registration_Request;
 import Implementation.structure.Entity;
 import Implementation.structure.Message;
 
@@ -15,12 +15,12 @@ public class UE extends Entity {
 
     @Override
     public void onReceiveMessage(Message message, Entity sender) {
-        if (message instanceof Message_Auth_Req && sender instanceof SEAF) {
+        if (message instanceof Authentication_Request && sender instanceof SEAF) {
             //Calculate Auth Resp and send it back to the SEAF
-            Message_Auth_Req authReq = (Message_Auth_Req) message;
+            Authentication_Request authReq = (Authentication_Request) message;
             SEAF seaf = (SEAF) sender;
 
-            Message_Auth_Resp authResp = calculateAuthResp(authReq, seaf);
+            Authentication_Response authResp = calculateAuthResp(authReq, seaf);
 
             sendMessage(authResp, sender);
         } else {
@@ -29,12 +29,12 @@ public class UE extends Entity {
     }
 
     public void initiateAuthentication(SEAF seaf) {
-        Message_N1 n1 = new Message_N1();
+        N1_Registration_Request n1 = new N1_Registration_Request();
         sendMessage(n1, seaf);
     }
 
-    private Message_Auth_Resp calculateAuthResp(Message_Auth_Req authReq, SEAF seaf) {
+    private Authentication_Response calculateAuthResp(Authentication_Request authReq, SEAF seaf) {
         //TODO
-        return new Message_Auth_Resp();
+        return new Authentication_Response();
     }
 }

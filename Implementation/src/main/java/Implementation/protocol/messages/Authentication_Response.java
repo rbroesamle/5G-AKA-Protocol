@@ -2,9 +2,9 @@ package Implementation.protocol.messages;
 
 import Implementation.structure.Message;
 
-public class Message_Auth_Req implements Message {
+public class Authentication_Response implements Message {
     @Override
     public String getName() {
-        return "Auth Req";
+        return "Auth Resp";
     }
 }

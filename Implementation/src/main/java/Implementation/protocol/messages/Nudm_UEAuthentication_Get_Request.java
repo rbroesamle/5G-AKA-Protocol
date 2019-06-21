@@ -2,9 +2,9 @@ package Implementation.protocol.messages;
 
 import Implementation.structure.Message;
 
-public class Message_Auth_Resp implements Message {
+public class Nudm_UEAuthentication_Get_Request implements Message {
     @Override
     public String getName() {
-        return "Auth Resp";
+        return "Auth Info Req";
     }
 }

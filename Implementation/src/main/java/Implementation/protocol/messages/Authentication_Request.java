@@ -2,9 +2,9 @@ package Implementation.protocol.messages;
 
 import Implementation.structure.Message;
 
-public class Message_5G_ACA implements Message {
+public class Authentication_Request implements Message {
     @Override
     public String getName() {
-        return "5G ACA";
+        return "Auth Req";
     }
 }
