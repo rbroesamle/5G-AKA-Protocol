@@ -35,6 +35,7 @@ public class UE extends Entity {
 
     private Authentication_Response calculateAuthResponse(Authentication_Request authRequest, SEAF seaf) {
         //TODO
+        //TODO: Verify freshness, as described on page 45.
         return new Authentication_Response();
     }
 }

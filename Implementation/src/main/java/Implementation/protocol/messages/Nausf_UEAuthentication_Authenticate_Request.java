@@ -15,6 +15,6 @@ public class Nausf_UEAuthentication_Authenticate_Request implements Message {
 
     @Override
     public String getName() {
-        return "5G AIR";
+        return "Nausf_UEAuthentication_Authenticate Request";
     }
 }

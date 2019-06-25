@@ -15,6 +15,6 @@ public class Nudm_Authentication_Get_Response implements Message {
 
     @Override
     public String getName() {
-        return "Auth Info Resp";
+        return "Nudm_Authentication_Get Response";
     }
 }

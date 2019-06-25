@@ -1,6 +1,6 @@
 package Implementation.protocol.entities;
 
-import Implementation.protocol.data.interfaces.Data_5G_SE_AV;
+import Implementation.protocol.data.Data_5G_SE_AV;
 import Implementation.protocol.messages.*;
 import Implementation.structure.Entity;
 import Implementation.structure.Message;

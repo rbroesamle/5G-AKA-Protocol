@@ -11,6 +11,6 @@ public class N1_Registration_Request implements Message {
 
     @Override
     public String getName() {
-        return "N1";
+        return "N1 Registration Request";
     }
 }

@@ -15,6 +15,6 @@ public class Nudm_UEAuthentication_Get_Request implements Message {
 
     @Override
     public String getName() {
-        return "Auth Info Req";
+        return "Nudm_UEAuthentication_Get Request";
     }
 }
