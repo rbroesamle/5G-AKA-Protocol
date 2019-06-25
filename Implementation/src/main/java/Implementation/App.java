@@ -12,6 +12,10 @@ import io.reactivex.schedulers.Schedulers;
 public class App {
 
     public static void main(String[] args) {
+        runProtocol();
+    }
+
+    private  static void runProtocol() {
         UE ue = new UE();
         SEAF seaf = new SEAF();
         AUSF ausf = new AUSF();
