@@ -9,7 +9,7 @@ public class KDF {
 
     public static byte[] deriveKey(byte[] key, byte[] Fc, byte[][] Pis, byte[][] Lis) {
         //3GPP TS 33.220 V15.4.0 Page 46
-        byte[] S = calculateS(Fc, Pis, Lis);
+        byte[] S = calculateS(Converter.expandBytesToLength(Fc, 2), Pis, Lis);
         return HmacSHA256.encode(key, S);
     }
 
