@@ -55,13 +55,27 @@ public class Converter {
     }
 
     public static byte[] expandBytesToLength(byte[] data, int length) {
+        if (data == null) {
+            return new byte[length];
+        }
         if (length < data.length) {
-            System.out.println("Error in Converter.expandBytes: array is longer than specified length!");
+            System.out.println("Warning in Converter.expandBytes: array is longer than specified length!");
+            return data;
         }
         byte[] arr = new byte[length];
         for (int i = 0; i < data.length && i < length; i++) {
             arr[length - 1 - i] = data[data.length - 1 - i];
         }
         return arr;
+    }
+
+    public static byte[] randomBytes(int length) {
+        byte[] array = new byte[length];
+        for (int i = 0; i < length; i++) {
+            int randomNumber = (int) (Math.random() * 256);
+            byte[] randomBytesArray = expandBytesToLength(intToBytes(randomNumber), 1);
+            array[i] = randomBytesArray[0];
+        }
+        return array;
     }
 }
