@@ -69,13 +69,41 @@ public class Converter {
         return arr;
     }
 
-    public static byte[] randomBytes(int length) {
-        byte[] array = new byte[length];
-        for (int i = 0; i < length; i++) {
-            int randomNumber = (int) (Math.random() * 256);
-            byte[] randomBytesArray = expandBytesToLength(intToBytes(randomNumber), 1);
-            array[i] = randomBytesArray[0];
+    public static byte[] concatenateBytes(byte[]... data) {
+        int length = 0;
+        for (byte[] array : data) {
+            length += array.length;
         }
-        return array;
+        //Concatenate bytes.
+        byte[] result = new byte[length];
+        int index = 0;
+        for (byte[] array : data) {
+            for (byte b : array) {
+                result[index] = b;
+                index++;
+            }
+        }
+        return result;
+    }
+
+    public static byte[][] splitBytes(byte[] data, int... lengths) {
+        int index = 0;
+        byte[][] result = new byte[lengths.length][];
+        for (int i = 0; i < lengths.length; i++) {
+            int length = lengths[i];
+            if (data.length < index) {
+                result[i] = new byte[0];
+            } else if (data.length < index + length) {
+                byte[] arr = new byte[data.length - index];
+                System.arraycopy(data, index, arr, 0, data.length - index);
+                result[i] = arr;
+            } else {
+                byte[] arr = new byte[length];
+                System.arraycopy(data, index, arr, 0, length);
+                result[i] = arr;
+            }
+            index += length;
+        }
+        return result;
     }
 }

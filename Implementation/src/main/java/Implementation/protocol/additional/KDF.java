@@ -73,7 +73,7 @@ public class KDF {
         //3GPP TS 33.102 V15.1.0 Page 26
         //TODO: Find the correct algorithm
         byte[] longVersion = Converter.expandBytesToLength(HmacSHA256.encode(key, data), 8);
-        byte[] result = new byte[8];
+        byte[] result = new byte[ParameterLength.MAC];
         for (int i = 0; i < result.length; i++) {
             result[i] = longVersion[i];
         }
