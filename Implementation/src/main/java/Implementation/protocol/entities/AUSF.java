@@ -69,8 +69,12 @@ public class AUSF extends Entity {
     }
 
     private Nudm_UEAuthentication_Get_Request getGetRequest(Nausf_UEAuthentication_Authenticate_Request authRequest, SEAF seaf) {
-        //TODO
-        return new Nudm_UEAuthentication_Get_Request();
+        if (authRequest.SUCI != null) {
+            return new Nudm_UEAuthentication_Get_Request(authRequest.SUCI, true, authRequest.servingNetworkName);
+        } else if (authRequest.SUPI != null) {
+            return new Nudm_UEAuthentication_Get_Request(authRequest.SUPI, false, authRequest.servingNetworkName);
+        }
+        return null;
     }
 
     private Data_5G_SE_AV storeAuthDataAndCompute5GSeAv(Nudm_Authentication_Get_Response getResponse, UDM udm) {

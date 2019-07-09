@@ -16,7 +16,7 @@ public class App {
     }
 
     private static void runProtocol() {
-        UE ue = new UE();
+        UE ue = new UE(null, null, null);
         SEAF seaf = new SEAF();
         AUSF ausf = new AUSF();
         UDM udm = new UDM();
@@ -65,7 +65,7 @@ public class App {
 
         for (int i = 0; i < numberOfMessages; i++) {
             final int j = i;
-            entities[i] = new UE();
+            entities[i] = new UE(null, null, null);
             messages[i] = () -> "" + j;
             entities[i].prepareMessage(messages[i], seaf);
         }

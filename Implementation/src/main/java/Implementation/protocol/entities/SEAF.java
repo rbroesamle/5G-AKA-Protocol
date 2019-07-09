@@ -53,8 +53,13 @@ public class SEAF  extends Entity {
     }
 
     private Nausf_UEAuthentication_Authenticate_Request getAuthRequest(N1_Registration_Request n1, UE ue) {
-        //TODO
-        return new Nausf_UEAuthentication_Authenticate_Request();
+        if (n1.SUCI != null) {
+            return new Nausf_UEAuthentication_Authenticate_Request(n1.SUCI, true, ue.servingNetworkName);
+        } else if (n1.fiveGGUTI != null) {
+            byte[] SUPI = n1.fiveGGUTI.getSUPI();
+            return new Nausf_UEAuthentication_Authenticate_Request(SUPI, false, ue.servingNetworkName);
+        }
+        return null;
     }
 
     /**
