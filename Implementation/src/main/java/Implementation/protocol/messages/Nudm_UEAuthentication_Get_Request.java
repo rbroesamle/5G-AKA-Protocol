@@ -1,20 +1,30 @@
 package Implementation.protocol.messages;
 
-import Implementation.protocol.data.Data_Serving_Network_Name;
-import Implementation.protocol.data.interfaces.DataForNudm_UEAuth_Get_Req;
 import Implementation.structure.Message;
 
 public class Nudm_UEAuthentication_Get_Request implements Message {
     //3GPP TS 33.501 V15.34.1 Page 40
 
     //SUCI or SUPI
-    public DataForNudm_UEAuth_Get_Req authentication;
+    public final byte[] SUCI;
+    public final byte[] SUPI;
 
     //Serving Network Name
-    public Data_Serving_Network_Name servingNetworkName;
+    public final byte[] servingNetworkName;
 
     @Override
     public String getName() {
         return "Nudm_UEAuthentication_Get Request";
+    }
+
+    public Nudm_UEAuthentication_Get_Request(byte[] suciOrSupi, boolean isSuci, byte[] servingNetworkName) {
+        if (isSuci) {
+            this.SUCI = suciOrSupi;
+            this.SUPI = null;
+        } else {
+            this.SUCI = null;
+            this.SUPI = suciOrSupi;
+        }
+        this.servingNetworkName = servingNetworkName;
     }
 }
