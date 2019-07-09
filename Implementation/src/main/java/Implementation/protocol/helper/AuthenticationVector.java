@@ -12,7 +12,7 @@ import java.util.Arrays;
 public class AuthenticationVector {
 
     public static byte[] generate(byte[] K, byte[] AMF) {
-        //3GPP TS 33.102 V15.1.0 Page 26
+        //3GPP TS 33.102 V15.1.0 Page 25
 
         byte[] SQN = generateSQN();
         byte[] RAND = generateRAND();
@@ -42,6 +42,8 @@ public class AuthenticationVector {
     }
 
     public static Values reconstructValues(byte[] K, byte[] AV) {
+        //3GPP TS 33.102 V15.1.0 Page 27
+
         byte[][] splitRAND = Converter.splitBytes(AV, ParameterLength.RAND, AV.length + ParameterLength.RAND);
         if (splitRAND.length < 2) {
             System.out.println("AuthenticationVector: Couldn't separate RAND from the AV.");

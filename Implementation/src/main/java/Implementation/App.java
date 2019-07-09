@@ -1,12 +1,12 @@
 package Implementation;
 
-import Implementation.protocol.entities.UDM;
 import Implementation.protocol.entities.AUSF;
 import Implementation.protocol.entities.SEAF;
+import Implementation.protocol.entities.UDM;
 import Implementation.protocol.entities.UE;
 import Implementation.structure.Entity;
 import Implementation.structure.Message;
-import io.reactivex.*;
+import io.reactivex.Flowable;
 import io.reactivex.schedulers.Schedulers;
 
 public class App {
@@ -15,7 +15,7 @@ public class App {
         runProtocol();
     }
 
-    private  static void runProtocol() {
+    private static void runProtocol() {
         UE ue = new UE();
         SEAF seaf = new SEAF();
         AUSF ausf = new AUSF();
