@@ -4,6 +4,7 @@ import Implementation.helper.Converter;
 import Implementation.protocol.additional.KDF;
 import Implementation.protocol.additional.SIDF;
 import Implementation.protocol.data.Data_5G_HE_AV;
+import Implementation.protocol.data.Data_AUTN;
 import Implementation.protocol.helper.AuthenticationVector;
 import Implementation.protocol.messages.Nudm_Authentication_Get_Response;
 import Implementation.protocol.messages.Nudm_UEAuthentication_Get_Request;
@@ -86,7 +87,7 @@ public class UDM extends Entity {
         byte[] XRESstar = KDF.deriveKey(KEY, Fc_XRESstar, Pis_XRESstar, Lis_XRESstar);
 
 
-        Data_5G_HE_AV.AUTN AUTN = new Data_5G_HE_AV.AUTN(av.SQNxorAK, av.AMF, av.MAC);
+        Data_AUTN AUTN = new Data_AUTN(av.SQNxorAK, av.AMF, av.MAC);
         return new Data_5G_HE_AV(av.RAND, AUTN, XRESstar, Kausf);
     }
 

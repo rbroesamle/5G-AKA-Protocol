@@ -4,6 +4,7 @@ import Implementation.helper.Converter;
 import Implementation.helper.SHA256;
 import Implementation.protocol.additional.KDF;
 import Implementation.protocol.data.Data_5G_SE_AV;
+import Implementation.protocol.data.Data_AUTN;
 import Implementation.protocol.messages.*;
 import Implementation.structure.Entity;
 import Implementation.structure.Message;
@@ -123,18 +124,16 @@ public class AUSF extends Entity {
                 null
         };
         byte[] Kseaf = KDF.deriveKey(getResponse.heAV.Kausf, Fc, Pis, Lis);
+        //TODO: Store this key somewhere... See Page 44. Message-Nr.: 4 & 5
 
 
-        Data_5G_SE_AV.AUTN AUTN = new Data_5G_SE_AV.AUTN(getResponse.heAV.AUTN.SQNxorAK,
+        Data_AUTN AUTN = new Data_AUTN(getResponse.heAV.AUTN.SQNxorAK,
                 getResponse.heAV.AUTN.AMF, getResponse.heAV.AUTN.MAC);
-        return new Data_5G_SE_AV(getResponse.heAV.RAND, AUTN, HXRESstar, Kseaf);
+        return new Data_5G_SE_AV(getResponse.heAV.RAND, AUTN, HXRESstar);
     }
 
     private Nausf_UEAuthentication_Authenticate_Response getAuthResponse(Nudm_Authentication_Get_Response getResponse, UDM udm, Data_5G_SE_AV fiveGSeAv) {
-        byte[] Kseaf = fiveGSeAv.Kseaf;
-        //TODO: Store this key somewhere... See Page 44. Message-Nr.: 4 & 5
-
-        Data_5G_SE_AV av = new Data_5G_SE_AV(fiveGSeAv.RAND, fiveGSeAv.AUTN, fiveGSeAv.HXRESstar, null);
+        Data_5G_SE_AV av = new Data_5G_SE_AV(fiveGSeAv.RAND, fiveGSeAv.AUTN, fiveGSeAv.HXRESstar);
         return new Nausf_UEAuthentication_Authenticate_Response(av);
     }
 
