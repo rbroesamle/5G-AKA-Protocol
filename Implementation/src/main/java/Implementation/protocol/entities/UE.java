@@ -14,18 +14,14 @@ public class UE extends Entity {
     private final byte[] SUPI;
     private final PublicKey publicKey;
 
-    //TODO: Maybe include the SN-Name in the N1 message.
-    public final byte[] servingNetworkName;
+    public UE(byte[] SUPI, PublicKey publicKey) {
+        this.SUPI = SUPI;
+        this.publicKey = publicKey;
+    }
 
     @Override
     public String getName() {
         return "UE";
-    }
-
-    public UE(byte[] SUPI, PublicKey publicKey, byte[] servingNetworkName) {
-        this.SUPI = SUPI;
-        this.publicKey = publicKey;
-        this.servingNetworkName = servingNetworkName;
     }
 
     @Override

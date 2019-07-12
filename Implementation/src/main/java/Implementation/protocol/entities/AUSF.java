@@ -1,9 +1,15 @@
 package Implementation.protocol.entities;
 
+import Implementation.helper.Converter;
+import Implementation.helper.SHA256;
+import Implementation.protocol.additional.KDF;
 import Implementation.protocol.data.Data_5G_SE_AV;
 import Implementation.protocol.messages.*;
 import Implementation.structure.Entity;
 import Implementation.structure.Message;
+
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class AUSF extends Entity {
 
@@ -56,6 +62,9 @@ public class AUSF extends Entity {
         }
     }
 
+    private Queue<Byte[]> SNNameQueue = new LinkedList<>();
+
+
     /**
      *
      * @param authRequest
@@ -64,8 +73,12 @@ public class AUSF extends Entity {
      */
     private boolean checkIfSeafIsEntitledToUseSnName(Nausf_UEAuthentication_Authenticate_Request authRequest, SEAF seaf) {
         //3GPP TS 33.501 V15.34.1 0 Page 40
-        //TODO: Store the SN-Name temporarily, as described on page 40.
-        //TODO
+        Byte[] SNName = new Byte[authRequest.servingNetworkName.length];
+        for (int i = 0; i < authRequest.servingNetworkName.length; i++) {
+            SNName[i] = authRequest.servingNetworkName[i];
+        }
+        SNNameQueue.add(SNName);
+        //TODO: Check if Seaf is entitled to use this SN-Name.
         return true;
     }
 
@@ -81,14 +94,48 @@ public class AUSF extends Entity {
     private Data_5G_SE_AV storeAuthDataAndCompute5GSeAv(Nudm_Authentication_Get_Response getResponse, UDM udm) {
         //3GPP TS 33.501 V15.34.1 Page 44
         //TODO: Store the XRES* temporarily together with the received SUCI or SUPI. And maybe store the KAUSF. See page 44
-        //TODO: Generate 5G SE AV from 5G HE AV, as described on page 44.
-        //TODO
-        return new Data_5G_SE_AV();
+
+        Byte[] SNName = this.SNNameQueue.poll();
+        if (SNName == null) {
+            return null;
+        }
+        byte[] servingNetworkName = new byte[SNName.length];
+        for (int i = 0; i< SNName.length; i++) {
+            servingNetworkName[i] = SNName[i];
+        }
+
+        //Derive HXRESstar
+        //3GPP TS 33.501 V15.34.1 Page 155
+        byte[] P0 = getResponse.heAV.RAND;
+        byte[] P1 = getResponse.heAV.XRESstar;
+        byte[] S = Converter.concatenateBytes(P0, P1);
+
+        byte[] HXRESstar = SHA256.encode(S);
+
+
+        //Derive Kseaf
+        //3GPP TS 33.501 V15.34.1 Page 155
+        byte[] Fc = Converter.intToBytes(0x6C);
+        byte[][] Pis = {
+                servingNetworkName
+        };
+        byte[][] Lis = {
+                null
+        };
+        byte[] Kseaf = KDF.deriveKey(getResponse.heAV.Kausf, Fc, Pis, Lis);
+
+
+        Data_5G_SE_AV.AUTN AUTN = new Data_5G_SE_AV.AUTN(getResponse.heAV.AUTN.SQNxorAK,
+                getResponse.heAV.AUTN.AMF, getResponse.heAV.AUTN.MAC);
+        return new Data_5G_SE_AV(getResponse.heAV.RAND, AUTN, HXRESstar, Kseaf);
     }
 
     private Nausf_UEAuthentication_Authenticate_Response getAuthResponse(Nudm_Authentication_Get_Response getResponse, UDM udm, Data_5G_SE_AV fiveGSeAv) {
-        //TODO
-        return new Nausf_UEAuthentication_Authenticate_Response();
+        byte[] Kseaf = fiveGSeAv.Kseaf;
+        //TODO: Store this key somewhere... See Page 44. Message-Nr.: 4 & 5
+
+        Data_5G_SE_AV av = new Data_5G_SE_AV(fiveGSeAv.RAND, fiveGSeAv.AUTN, fiveGSeAv.HXRESstar, null);
+        return new Nausf_UEAuthentication_Authenticate_Response(av);
     }
 
     /**

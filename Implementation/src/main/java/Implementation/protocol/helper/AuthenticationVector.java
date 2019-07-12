@@ -39,7 +39,7 @@ public class AuthenticationVector {
 
     public static class Values {
         public final byte[] RAND;
-        public final byte[] RES;
+        public final byte[] XRES;
         public final byte[] CK;
         public final byte[] IK;
         public final byte[] AK;
@@ -47,9 +47,9 @@ public class AuthenticationVector {
         public final byte[] AMF;
         public final byte[] MAC;
 
-        Values(byte[] RAND, byte[] RES, byte[] CK, byte[] IK, byte[] AK, byte[] SQNxorAK, byte[] AMF, byte[] MAC) {
+        Values(byte[] RAND, byte[] XRES, byte[] CK, byte[] IK, byte[] AK, byte[] SQNxorAK, byte[] AMF, byte[] MAC) {
             this.RAND = RAND;
-            this.RES = RES;
+            this.XRES = XRES;
             this.CK = CK;
             this.IK = IK;
             this.AK = AK;

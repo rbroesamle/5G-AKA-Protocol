@@ -9,6 +9,12 @@ public class SEAF  extends Entity {
     public AUSF ausf = null;
     public UE ue = null;
 
+    public final byte[] servingNetworkName;
+
+    public SEAF(byte[] servingNetworkName) {
+        this.servingNetworkName = servingNetworkName;
+    }
+
     @Override
     public String getName() {
         return "SEAF";
@@ -55,10 +61,10 @@ public class SEAF  extends Entity {
 
     private Nausf_UEAuthentication_Authenticate_Request getAuthRequest(N1_Registration_Request n1, UE ue) {
         if (n1.SUCI != null) {
-            return new Nausf_UEAuthentication_Authenticate_Request(n1.SUCI, true, ue.servingNetworkName);
+            return new Nausf_UEAuthentication_Authenticate_Request(n1.SUCI, true, this.servingNetworkName);
         } else if (n1.fiveGGUTI != null) {
             byte[] SUPI = n1.fiveGGUTI.getSUPI();
-            return new Nausf_UEAuthentication_Authenticate_Request(SUPI, false, ue.servingNetworkName);
+            return new Nausf_UEAuthentication_Authenticate_Request(SUPI, false, this.servingNetworkName);
         }
         return null;
     }
