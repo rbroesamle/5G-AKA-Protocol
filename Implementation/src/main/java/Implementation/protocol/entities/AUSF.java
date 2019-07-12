@@ -51,7 +51,8 @@ public class AUSF extends Entity {
                 sendMessage(confirmResponse, seaf);
             }
         } else {
-            System.err.println(getName() + ": Received an unusual message. Ignoring it.");
+            String name = message == null ? null : message.getName();
+            System.err.println(getName() + ": Received an unusual message: " + (name == null ? "" : name) + ". Ignoring it.");
         }
     }
 

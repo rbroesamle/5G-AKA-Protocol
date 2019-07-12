@@ -48,7 +48,8 @@ public class SEAF  extends Entity {
             //Received Nausf_UEAuthentication_ Authenticate Response (/Confirmation Response)
             System.out.println("Authentication was successful.");
         } else {
-            System.err.println(getName() + ": Received an unusual message. Ignoring it.");
+            String name = message == null ? null : message.getName();
+            System.err.println(getName() + ": Received an unusual message: " + (name == null ? "" : name) + ". Ignoring it.");
         }
     }
 

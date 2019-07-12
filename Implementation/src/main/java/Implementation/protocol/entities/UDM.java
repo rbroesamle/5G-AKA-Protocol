@@ -26,6 +26,9 @@ public class UDM extends Entity {
             Nudm_Authentication_Get_Response authInfoResp = getGetResponse(getRequest, ausf);
 
             sendMessage(authInfoResp, ausf);
+        } else {
+            String name = message == null ? null : message.getName();
+            System.err.println(getName() + ": Received an unusual message: " + (name == null ? "" : name) + ". Ignoring it.");
         }
     }
 

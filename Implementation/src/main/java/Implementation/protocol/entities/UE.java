@@ -39,7 +39,8 @@ public class UE extends Entity {
 
             sendMessage(authResponse, sender);
         } else {
-            System.err.println(getName() + ": Received an unusual message. Ignoring it.");
+            String name = message == null ? null : message.getName();
+            System.err.println(getName() + ": Received an unusual message: " + (name == null ? "" : name) + ". Ignoring it.");
         }
     }
 
