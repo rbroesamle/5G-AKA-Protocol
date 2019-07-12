@@ -45,7 +45,7 @@ public class SEAF  extends Entity {
             Authentication_Response authResponse = (Authentication_Response) message;
             UE ue = (UE) sender;
 
-            if (calculateHxresAndCompare(authResponse, ue)) {
+            if (calculateHresAndCompare(authResponse, ue)) {
                 Nausf_UEAuthentication_Confirmation_Request confirmRequest = getConfirmRequest(authResponse, ue);
 
                 sendMessage(confirmRequest, this.ausf);
@@ -81,8 +81,8 @@ public class SEAF  extends Entity {
     }
 
     private Authentication_Request getAuthRequest(Nausf_UEAuthentication_Authenticate_Response authResponse, AUSF ausf) {
-        //TODO
-        return new Authentication_Request();
+        //TODO: Store the HXRES* temporary.
+        return new Authentication_Request(authResponse.seAV.RAND, authResponse.seAV.AUTN);
     }
 
     /**
@@ -91,7 +91,7 @@ public class SEAF  extends Entity {
      * @param ue
      * @return true if calculated HXRES equals the previously stored one.
      */
-    private boolean calculateHxresAndCompare(Authentication_Response authResponse, UE ue) {
+    private boolean calculateHresAndCompare(Authentication_Response authResponse, UE ue) {
         //TODO
         return true;
     }

@@ -1,13 +1,14 @@
 package Implementation.protocol.messages;
 
-import Implementation.protocol.data.Data_5G_UE_AV;
+import Implementation.protocol.data.Data_AUTN;
 import Implementation.structure.Message;
 
 public class Authentication_Request implements Message {
     //3GPP TS 33.501 V15.34.1 Page 44 & 45
 
     //RAND, AUTN
-    public Data_5G_UE_AV ueAV;
+    public final byte[] RAND;
+    public final Data_AUTN AUTN;
 
     //TODO: Include ngKSI
 
@@ -17,5 +18,10 @@ public class Authentication_Request implements Message {
     @Override
     public String getName() {
         return "Authentication Request";
+    }
+
+    public Authentication_Request(byte[] RAND, Data_AUTN AUTN) {
+        this.RAND = RAND;
+        this.AUTN = AUTN;
     }
 }

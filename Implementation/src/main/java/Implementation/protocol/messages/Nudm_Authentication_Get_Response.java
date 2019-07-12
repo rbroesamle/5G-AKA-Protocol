@@ -7,10 +7,10 @@ public class Nudm_Authentication_Get_Response implements Message {
     //3GPP TS 33.501 V15.34.1 Page 44
 
     //HE AV.
-    public Data_5G_HE_AV heAV; //TODO: Return an indication that the 5G HE AV is to be used for 5G-AKA
+    public final Data_5G_HE_AV heAV; //TODO: Return an indication that the 5G HE AV is to be used for 5G-AKA
 
     //If SUCI was sent in Request, return SUPI
-    public byte[] SUPI;
+    public final byte[] SUPI;
 
     @Override
     public String getName() {
