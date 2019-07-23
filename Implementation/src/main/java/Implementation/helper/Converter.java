@@ -70,7 +70,6 @@ public class Converter {
             return new byte[length];
         }
         if (length < data.length) {
-            System.out.println("Warning in Converter.expandBytes: array is longer than specified length!");
             return data;
         }
         byte[] arr = new byte[length];

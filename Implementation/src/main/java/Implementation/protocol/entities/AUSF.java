@@ -1,5 +1,6 @@
 package Implementation.protocol.entities;
 
+import Implementation.helper.Calculator;
 import Implementation.helper.Converter;
 import Implementation.helper.SHA256;
 import Implementation.protocol.additional.KDF;
@@ -9,6 +10,7 @@ import Implementation.protocol.messages.*;
 import Implementation.structure.Entity;
 import Implementation.structure.Message;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -52,33 +54,51 @@ public class AUSF extends Entity {
             Nausf_UEAuthentication_Confirmation_Request confirmRequest = (Nausf_UEAuthentication_Confirmation_Request) message;
             SEAF seaf = (SEAF) sender;
 
+            Nausf_UEAuthentication_Confirmation_Response confirmResponse = null;
             if (verifyConfirmRequest(confirmRequest, seaf)) {
-                Nausf_UEAuthentication_Confirmation_Response confirmResponse = getConfirmResponse(confirmRequest, seaf);
-
-                sendMessage(confirmResponse, seaf);
+                confirmResponse = getConfirmResponse(confirmRequest, seaf);
             }
+
+            if (confirmResponse == null) {//Always send back a message to the SEAF.
+                confirmResponse = new Nausf_UEAuthentication_Confirmation_Response(false, null, null);
+            } else {
+                //Consider authentication as successful.
+                System.out.println(getName() + " is considering the authentication as successful.");
+            }
+            sendMessage(confirmResponse, seaf);
+
         } else {
             String name = message == null ? null : message.getName();
             System.err.println(getName() + ": Received an unusual message: " + (name == null ? "" : name) + ". Ignoring it.");
         }
     }
 
-    private Queue<Byte[]> SNNameQueue = new LinkedList<>();
+    //This queue is for temporarily storing the SNN.
+    private Queue<byte[]> SNNameQueue = new LinkedList<>();
 
+    //This HashMap is for temporarily storing the Kseaf and the XRES* for a specific SNN.
+    private HashMap<byte[], TemporaryData> temporaryXRESstarStorage = new HashMap<>();
+
+    private class TemporaryData {
+        final byte[] Kseaf;
+        final byte[] XRESstar;
+        final byte[] SUPI;
+
+        TemporaryData(byte[] Kseaf, byte[] XRESstar, byte[] SUPI) {
+            this.Kseaf = Kseaf;
+            this.XRESstar = XRESstar;
+            this.SUPI = SUPI;
+        }
+    }
 
     /**
-     *
      * @param authRequest
      * @param seaf
      * @return true if SEAF is entitled to use the ServingNetworkName
      */
     private boolean checkIfSeafIsEntitledToUseSnName(Nausf_UEAuthentication_Authenticate_Request authRequest, SEAF seaf) {
         //3GPP TS 33.501 V15.34.1 0 Page 40
-        Byte[] SNName = new Byte[authRequest.servingNetworkName.length];
-        for (int i = 0; i < authRequest.servingNetworkName.length; i++) {
-            SNName[i] = authRequest.servingNetworkName[i];
-        }
-        SNNameQueue.add(SNName);
+        SNNameQueue.add(authRequest.servingNetworkName);
         //TODO: Check if Seaf is entitled to use this SN-Name.
         return true;
     }
@@ -94,15 +114,10 @@ public class AUSF extends Entity {
 
     private Data_5G_SE_AV storeAuthDataAndCompute5GSeAv(Nudm_Authentication_Get_Response getResponse, UDM udm) {
         //3GPP TS 33.501 V15.34.1 Page 44
-        //TODO: Store the XRES* temporarily together with the received SUCI or SUPI. And maybe store the KAUSF. See page 44
 
-        Byte[] SNName = this.SNNameQueue.poll();
-        if (SNName == null) {
+        byte[] servingNetworkName = this.SNNameQueue.poll();
+        if (servingNetworkName == null) {
             return null;
-        }
-        byte[] servingNetworkName = new byte[SNName.length];
-        for (int i = 0; i< SNName.length; i++) {
-            servingNetworkName[i] = SNName[i];
         }
 
         //Derive HXRESstar
@@ -124,8 +139,10 @@ public class AUSF extends Entity {
                 null
         };
         byte[] Kseaf = KDF.deriveKey(getResponse.heAV.Kausf, Fc, Pis, Lis);
-        //TODO: Store this key somewhere... See Page 44. Message-Nr.: 4 & 5
 
+        //Temporary storing the Kseaf and the XRES*.
+        TemporaryData temporaryData = new TemporaryData(Kseaf, getResponse.heAV.XRESstar, getResponse.SUPI);
+        this.temporaryXRESstarStorage.put(servingNetworkName, temporaryData);
 
         Data_AUTN AUTN = new Data_AUTN(getResponse.heAV.AUTN.SQNxorAK,
                 getResponse.heAV.AUTN.AMF, getResponse.heAV.AUTN.MAC);
@@ -138,18 +155,25 @@ public class AUSF extends Entity {
     }
 
     /**
-     *
      * @param confirmRequest
      * @param seaf
      * @return true if the verification was successful.
      */
     private boolean verifyConfirmRequest(Nausf_UEAuthentication_Confirmation_Request confirmRequest, SEAF seaf) {
-        //TODO
-        return true;
+        TemporaryData temporaryData = this.temporaryXRESstarStorage.get(seaf.servingNetworkName);
+        if (temporaryData == null) {
+            return false;
+        }
+        //TODO: Inform UDM about successful authentication, as described on page 45 message 11.
+        return Calculator.equals(confirmRequest.RESstar, temporaryData.XRESstar);
     }
 
     private Nausf_UEAuthentication_Confirmation_Response getConfirmResponse(Nausf_UEAuthentication_Confirmation_Request confirmRequest, SEAF seaf) {
-        //TODO
-        return new Nausf_UEAuthentication_Confirmation_Response();
+        TemporaryData temporaryData = this.temporaryXRESstarStorage.get(seaf.servingNetworkName);
+        if (temporaryData == null) {
+            return null;
+        }
+        this.temporaryXRESstarStorage.remove(seaf.servingNetworkName);
+        return new Nausf_UEAuthentication_Confirmation_Response(true, temporaryData.Kseaf, temporaryData.SUPI);
     }
 }

@@ -7,10 +7,23 @@ import Implementation.structure.Message;
 public class Nausf_UEAuthentication_Confirmation_Response implements Message {
     //3GPP TS 33.501 V15.34.1 Page 45
 
-    //TODO: Include Kseaf
+    //Indicating wether the authentication was successful.
+    public final boolean wasSuccessful;
+
+    //Kseaf
+    public final byte[] Kseaf;
+
+    //SUPI: Might be null.
+    public final byte[] SUPI;
 
     @Override
     public String getName() {
         return "Nausf_UEAuthentication Authenticate Response";
+    }
+
+    public Nausf_UEAuthentication_Confirmation_Response(boolean wasSuccessful, byte[] Kseaf, byte[] SUPI) {
+        this.wasSuccessful = wasSuccessful;
+        this.Kseaf = Kseaf;
+        this.SUPI = SUPI;
     }
 }
