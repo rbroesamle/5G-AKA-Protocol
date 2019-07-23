@@ -1,5 +1,7 @@
 package Implementation.helper;
 
+import java.util.Arrays;
+
 public class Calculator {
 
     public static byte[] xor(byte[] a, byte[] b) {
@@ -27,4 +29,7 @@ public class Calculator {
         return result;
     }
 
+    public static boolean equals(byte[] a, byte[] b) {
+        return Arrays.equals(a, b);
+    }
 }

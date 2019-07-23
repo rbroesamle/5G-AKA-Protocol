@@ -1,6 +1,11 @@
 package Implementation.protocol.entities;
 
+import Implementation.helper.Calculator;
+import Implementation.helper.Converter;
+import Implementation.protocol.additional.KDF;
+import Implementation.protocol.additional.MAF;
 import Implementation.protocol.additional.SIDF;
+import Implementation.protocol.data.Data_AUTN;
 import Implementation.protocol.messages.Authentication_Request;
 import Implementation.protocol.messages.Authentication_Response;
 import Implementation.protocol.messages.N1_Registration_Request;
@@ -8,13 +13,19 @@ import Implementation.structure.Entity;
 import Implementation.structure.Message;
 
 import java.security.PublicKey;
+import java.util.HashMap;
 
 public class UE extends Entity {
+
+    private final byte[] K;
 
     private final byte[] SUPI;
     private final PublicKey publicKey;
 
-    public UE(byte[] SUPI, PublicKey publicKey) {
+    private HashMap<byte[], byte[]> Kseafs = new HashMap<>();
+
+    public UE(byte[] K, byte[] SUPI, PublicKey publicKey) {
+        this.K = K;
         this.SUPI = SUPI;
         this.publicKey = publicKey;
     }
@@ -46,8 +57,73 @@ public class UE extends Entity {
     }
 
     private Authentication_Response calculateAuthResponse(Authentication_Request authRequest, SEAF seaf) {
-        //TODO
+        Data_AUTN AUTN = authRequest.AUTN;
         //TODO: Verify freshness, as described on page 45.
-        return new Authentication_Response();
+        byte[] RAND = authRequest.RAND;
+
+        byte[] AK = MAF.f5(this.K, RAND);
+        byte[] SQN = Calculator.xor(AUTN.SQNxorAK, AK);
+
+        byte[] XMAC = KDF.f1(K, Converter.concatenateBytes(SQN, RAND, AUTN.AMF));
+        if (!Calculator.equals(XMAC, AUTN.MAC)) {
+            System.out.println(getName() + ": The calculated XMAC doesn't equal to the received MAC");
+            return null;
+        }
+
+        byte[] RES = KDF.f2(K, RAND);
+
+        byte[] CK = MAF.f3(K, RAND);
+        byte[] IK = MAF.f4(K, RAND);
+
+
+        byte[] KEY = Converter.concatenateBytes(CK, IK);
+
+
+        //Derive Kausf
+        //3GPP TS 33.501 V15.34.1 Page 154
+        byte[] Fc_Kausf = Converter.intToBytes(0x6A);
+        byte[][] Pis_Kausf = {
+                seaf.servingNetworkName,
+                AUTN.SQNxorAK
+        };
+        int SQNxorAKLength = Converter.shrinkBytes(AUTN.SQNxorAK).length == 0 ? 0x00 : 0x06;
+        byte[][] Lis_Kausf = {
+                null,
+                Converter.intToBytes(SQNxorAKLength)
+        };
+        byte[] Kausf = KDF.deriveKey(KEY, Fc_Kausf, Pis_Kausf, Lis_Kausf);
+
+
+        //Derive Kseaf
+        //3GPP TS 33.501 V15.34.1 Page 155
+        byte[] Fc = Converter.intToBytes(0x6C);
+        byte[][] Pis = {
+                seaf.servingNetworkName
+        };
+        byte[][] Lis = {
+                null
+        };
+        byte[] Kseaf = KDF.deriveKey(Kausf, Fc, Pis, Lis);
+        this.Kseafs.put(seaf.servingNetworkName, Kseaf);
+
+
+        //Derive RES*
+        //3GPP TS 33.501 V15.34.1 Page 155
+        byte[] Fc_RESstar = Converter.intToBytes(0x6B);
+        byte[][] Pis_RESstar = {
+                seaf.servingNetworkName,
+                RAND,
+                RES
+        };
+        int RANDLength = Converter.shrinkBytes(RAND).length == 0 ? 0x00 : 0x10;
+        byte[][] Lis_RESstar = {
+                null,
+                Converter.intToBytes(RANDLength),
+                null
+        };
+        byte[] RESstar = KDF.deriveKey(KEY, Fc_RESstar, Pis_RESstar, Lis_RESstar);
+
+
+        return new Authentication_Response(RESstar);
     }
 }

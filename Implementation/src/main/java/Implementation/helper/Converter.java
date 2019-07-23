@@ -2,7 +2,6 @@ package Implementation.helper;
 
 import javax.xml.bind.DatatypeConverter;
 import java.math.BigInteger;
-import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 
 public class Converter {
@@ -29,7 +28,19 @@ public class Converter {
     }
 
     public static int bytesToInt(byte[] data) {
-        return ByteBuffer.wrap(data).getInt();
+        if (data == null || data.length == 0) {
+            return 0;
+        }
+        byte[] expandedData;
+        if (data.length < 4) {
+            expandedData = expandBytesToLength(data, 4);
+        } else {
+            expandedData = data;
+        }
+        return (0xff & expandedData[0]) << 24 |
+                (0xff & expandedData[1]) << 16 |
+                (0xff & expandedData[2]) << 8 |
+                (0xff & expandedData[3]) << 0;
     }
 
     public static byte[] shrinkBytes(byte[] data) {

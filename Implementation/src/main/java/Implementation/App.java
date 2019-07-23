@@ -1,5 +1,7 @@
 package Implementation;
 
+import Implementation.helper.Generator;
+import Implementation.protocol.additional.ParameterLength;
 import Implementation.protocol.entities.AUSF;
 import Implementation.protocol.entities.SEAF;
 import Implementation.protocol.entities.UDM;
@@ -9,6 +11,8 @@ import Implementation.structure.Message;
 import io.reactivex.Flowable;
 import io.reactivex.schedulers.Schedulers;
 
+import java.security.*;
+
 public class App {
 
     public static void main(String[] args) {
@@ -16,10 +20,28 @@ public class App {
     }
 
     private static void runProtocol() {
-        UE ue = new UE(null, null);
-        SEAF seaf = new SEAF(null);
+        byte[] K = Generator.randomBytes(ParameterLength.K);
+        byte[] SUPI = Generator.randomBytes(ParameterLength.K);
+        byte[] SNN = Generator.randomBytes(ParameterLength.K);
+        byte[] AMF = Generator.randomBytes(ParameterLength.AMF);
+
+        PublicKey publicKey = null;
+        PrivateKey privateKey = null;
+        try {
+            KeyPairGenerator generator = KeyPairGenerator.getInstance("RSA");
+            generator.initialize(512);
+            KeyPair pair = generator.generateKeyPair();
+            publicKey = pair.getPublic();
+            privateKey = pair.getPrivate();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+
+
+        UE ue = new UE(K, SUPI, publicKey);
+        SEAF seaf = new SEAF(SNN);
         AUSF ausf = new AUSF();
-        UDM udm = new UDM(null, null, null);
+        UDM udm = new UDM(K, AMF, privateKey);
 
         seaf.ausf = ausf;
         seaf.ue = ue;
@@ -65,7 +87,7 @@ public class App {
 
         for (int i = 0; i < numberOfMessages; i++) {
             final int j = i;
-            entities[i] = new UE(null, null);
+            entities[i] = new UE(null, null, null);
             messages[i] = () -> "" + j;
             entities[i].prepareMessage(messages[i], seaf);
         }
