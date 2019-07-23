@@ -59,6 +59,7 @@ public class UE extends Entity {
     private Authentication_Response calculateAuthResponse(Authentication_Request authRequest, SEAF seaf) {
         Data_AUTN AUTN = authRequest.AUTN;
         //TODO: Verify freshness, as described on page 45.
+        //TODO: Check if the separation bit of the AMF is set to 1, as described on page 45.
         byte[] RAND = authRequest.RAND;
 
         byte[] AK = MAF.f5(this.K, RAND);

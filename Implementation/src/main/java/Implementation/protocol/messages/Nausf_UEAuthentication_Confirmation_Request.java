@@ -7,10 +7,15 @@ import Implementation.structure.Message;
 public class Nausf_UEAuthentication_Confirmation_Request implements Message {
     //3GPP TS 33.501 V15.34.1 Page 45
 
-    //TODO: Include RES*
+    //RES*
+    public final byte[] RESstar;
 
     @Override
     public String getName() {
         return "Nausf_UEAuthentication Authenticate Request";
+    }
+
+    public Nausf_UEAuthentication_Confirmation_Request(byte[] RESstar) {
+        this.RESstar = RESstar;
     }
 }

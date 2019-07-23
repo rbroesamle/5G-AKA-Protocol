@@ -1,10 +1,13 @@
 package Implementation.protocol.entities;
 
+import Implementation.helper.Calculator;
+import Implementation.helper.Converter;
+import Implementation.helper.SHA256;
 import Implementation.protocol.messages.*;
 import Implementation.structure.Entity;
 import Implementation.structure.Message;
 
-public class SEAF  extends Entity {
+public class SEAF extends Entity {
 
     public AUSF ausf = null;
     public UE ue = null;
@@ -46,6 +49,8 @@ public class SEAF  extends Entity {
             UE ue = (UE) sender;
 
             if (calculateHresAndCompare(authResponse, ue)) {
+                //Consider authentication as successful.
+                System.out.println(getName() + " is considering the authentication as successful.");
                 Nausf_UEAuthentication_Confirmation_Request confirmRequest = getConfirmRequest(authResponse, ue);
 
                 sendMessage(confirmRequest, this.ausf);
@@ -70,7 +75,6 @@ public class SEAF  extends Entity {
     }
 
     /**
-     *
      * @param authResponse
      * @param ausf
      * @return true if timer is not expired
@@ -80,24 +84,39 @@ public class SEAF  extends Entity {
         return true;
     }
 
+    private HXRESstar hXRESSstar = new HXRESstar();
+
     private Authentication_Request getAuthRequest(Nausf_UEAuthentication_Authenticate_Response authResponse, AUSF ausf) {
+        hXRESSstar.HXRESstar = authResponse.seAV.HXRESstar;
+        hXRESSstar.RAND = authResponse.seAV.RAND;
         //TODO: Store the HXRES* temporary.
         return new Authentication_Request(authResponse.seAV.RAND, authResponse.seAV.AUTN);
     }
 
     /**
-     *
      * @param authResponse
      * @param ue
      * @return true if calculated HXRES equals the previously stored one.
      */
     private boolean calculateHresAndCompare(Authentication_Response authResponse, UE ue) {
         //TODO
-        return true;
+        //Derive HXRESstar
+        //3GPP TS 33.501 V15.34.1 Page 155
+        byte[] P0 = this.hXRESSstar.RAND;
+        byte[] P1 = authResponse.RESstar;
+        byte[] S = Converter.concatenateBytes(P0, P1);
+
+        byte[] HRESstar = SHA256.encode(S);
+        return Calculator.equals(this.hXRESSstar.HXRESstar, HRESstar);
     }
 
     private Nausf_UEAuthentication_Confirmation_Request getConfirmRequest(Authentication_Response authResponse, UE ue) {
-        //TODO
-        return new Nausf_UEAuthentication_Confirmation_Request();
+        return new Nausf_UEAuthentication_Confirmation_Request(authResponse.RESstar);
+    }
+
+    private class HXRESstar {
+        //TODO: Improve this.
+        byte[] HXRESstar;
+        byte[] RAND;
     }
 }
