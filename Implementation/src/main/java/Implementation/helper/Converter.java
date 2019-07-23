@@ -2,7 +2,6 @@ package Implementation.helper;
 
 import javax.xml.bind.DatatypeConverter;
 import java.math.BigInteger;
-import java.nio.charset.StandardCharsets;
 
 public class Converter {
 
@@ -12,14 +11,6 @@ public class Converter {
 
     public static byte[] hexToBytes(String data) {
         return DatatypeConverter.parseHexBinary(data);
-    }
-
-    public static byte[] stringToBytes(String data) {
-        return data.getBytes(StandardCharsets.UTF_8);
-    }
-
-    public static String bytesToString(byte[] data) {
-        return new String(data, StandardCharsets.UTF_8);
     }
 
     public static byte[] intToBytes(int data) {

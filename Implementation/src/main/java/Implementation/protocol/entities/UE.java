@@ -22,7 +22,8 @@ public class UE extends Entity {
     private final byte[] SUPI;
     private final PublicKey publicKey;
 
-    private HashMap<byte[], byte[]> Kseafs = new HashMap<>();
+    //Saving the Kseaf for the corresponding SNN in hex-format.
+    private HashMap<String, byte[]> Kseafs = new HashMap<>();
 
     public UE(byte[] K, byte[] SUPI, PublicKey publicKey) {
         this.K = K;
@@ -105,7 +106,7 @@ public class UE extends Entity {
                 null
         };
         byte[] Kseaf = KDF.deriveKey(Kausf, Fc, Pis, Lis);
-        this.Kseafs.put(seaf.servingNetworkName, Kseaf);
+        this.Kseafs.put(Converter.bytesToHex(seaf.servingNetworkName), Kseaf);
 
 
         //Derive RES*
@@ -126,5 +127,15 @@ public class UE extends Entity {
 
 
         return new Authentication_Response(RESstar);
+    }
+
+    //Custom function for displaying the Kseaf.
+    public void printKseafForSNN(byte[] SNN) {
+        byte[] Kseaf = this.Kseafs.get(Converter.bytesToHex(SNN));
+        if (Kseaf != null) {
+            System.out.println(getName() + ": Kseaf:    " + Converter.bytesToHex(Kseaf));
+        } else {
+            System.out.println(getName() + ": Kseaf: null");
+        }
     }
 }

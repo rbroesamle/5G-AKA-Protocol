@@ -1,5 +1,6 @@
 package Implementation.protocol.entities;
 
+import Implementation.App;
 import Implementation.helper.Calculator;
 import Implementation.helper.Converter;
 import Implementation.helper.SHA256;
@@ -7,10 +8,15 @@ import Implementation.protocol.messages.*;
 import Implementation.structure.Entity;
 import Implementation.structure.Message;
 
+import java.util.HashMap;
+
 public class SEAF extends Entity {
 
     public AUSF ausf = null;
     public UE ue = null;
+
+    //Saving the Kseaf for the corresponding SUPI in hex-format.
+    private HashMap<String, byte[]> Kseafs = new HashMap<>();
 
     public final byte[] servingNetworkName;
 
@@ -57,7 +63,17 @@ public class SEAF extends Entity {
             }
         } else if (message instanceof Nausf_UEAuthentication_Confirmation_Response && sender instanceof AUSF) {
             //Received Nausf_UEAuthentication_ Authenticate Response (/Confirmation Response)
-            System.out.println("Authentication was successful.");
+            Nausf_UEAuthentication_Confirmation_Response confirmationResponse = (Nausf_UEAuthentication_Confirmation_Response) message;
+            AUSF ausf = (AUSF) sender;
+            if (confirmationResponse.wasSuccessful && confirmationResponse.Kseaf != null) {
+                System.out.println("Received authentication confirmation from " + ausf.getName());
+                if (confirmationResponse.SUPI != null) {
+                    this.Kseafs.put(Converter.bytesToHex(confirmationResponse.SUPI), confirmationResponse.Kseaf);
+                } else {
+                    //TODO: Find SUPI and save the Kseaf.
+                }
+                App.callback();
+            }
         } else {
             String name = message == null ? null : message.getName();
             System.err.println(getName() + ": Received an unusual message: " + (name == null ? "" : name) + ". Ignoring it.");
@@ -118,5 +134,15 @@ public class SEAF extends Entity {
         //TODO: Improve this.
         byte[] HXRESstar;
         byte[] RAND;
+    }
+
+    //Custom function for displaying the Kseaf.
+    public void printKseafForSUPI(byte[] SUPI) {
+        byte[] Kseaf = this.Kseafs.get(Converter.bytesToHex(SUPI));
+        if (Kseaf != null) {
+            System.out.println(getName() + ": Kseaf:  " + Converter.bytesToHex(Kseaf));
+        } else {
+            System.out.println(getName() + ": Kseaf: null");
+        }
     }
 }

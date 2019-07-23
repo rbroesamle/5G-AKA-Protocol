@@ -19,14 +19,20 @@ public class App {
         runProtocol();
     }
 
-    private static void runProtocol() {
-        byte[] K = Generator.randomBytes(ParameterLength.K);
-        byte[] SUPI = Generator.randomBytes(ParameterLength.K);
-        byte[] SNN = Generator.randomBytes(ParameterLength.K);
-        byte[] AMF = Generator.randomBytes(ParameterLength.AMF);
+    private static byte[] K = Generator.randomBytes(ParameterLength.K);
+    private static byte[] SUPI = Generator.randomBytes(ParameterLength.K);
+    private static byte[] SNN = Generator.randomBytes(ParameterLength.K);
+    private static byte[] AMF = Generator.randomBytes(ParameterLength.AMF);
+    private static PublicKey publicKey = null;
+    private static PrivateKey privateKey = null;
 
-        PublicKey publicKey = null;
-        PrivateKey privateKey = null;
+    private static UE ue;
+    private static SEAF seaf;
+    private static AUSF ausf;
+    private static UDM udm;
+
+    private static void runProtocol() {
+
         try {
             KeyPairGenerator generator = KeyPairGenerator.getInstance("RSA");
             generator.initialize(512);
@@ -38,10 +44,10 @@ public class App {
         }
 
 
-        UE ue = new UE(K, SUPI, publicKey);
-        SEAF seaf = new SEAF(SNN);
-        AUSF ausf = new AUSF();
-        UDM udm = new UDM(K, AMF, privateKey);
+        ue = new UE(K, SUPI, publicKey);
+        seaf = new SEAF(SNN);
+        ausf = new AUSF();
+        udm = new UDM(K, AMF, privateKey);
 
         seaf.ausf = ausf;
         seaf.ue = ue;
@@ -57,6 +63,16 @@ public class App {
         }
     }
 
+    public static void callback() {
+        if (ue != null) {
+            ue.printKseafForSNN(SNN);
+        }
+        if (seaf != null) {
+            seaf.printKseafForSUPI(SUPI);
+        }
+    }
+
+    /*
     private static void ownImplementation() {
         int numberOfMessages = 100;
         Entity[] entities = new UE[numberOfMessages];
@@ -120,4 +136,5 @@ public class App {
             e.printStackTrace();
         }
     }
+    */
 }
