@@ -2,17 +2,19 @@ package Implementation;
 
 import Implementation.helper.Generator;
 import Implementation.protocol.additional.ParameterLength;
-import Implementation.protocol.entities.AUSF;
-import Implementation.protocol.entities.SEAF;
-import Implementation.protocol.entities.UDM;
-import Implementation.protocol.entities.UE;
+import Implementation.protocol.entities.*;
 
 import java.security.*;
 
 public class App {
 
     public static void main(String[] args) {
-        runProtocol();
+        generateKeyPair();
+
+        //UE ue = new UE(K, SUPI, publicKey);
+        UE ue = new EvilUE(K, SUPI, publicKey, SUPI_victim);
+
+        runProtocol(ue);
     }
 
     private static byte[] K = Generator.randomBytes(ParameterLength.K);
@@ -22,13 +24,14 @@ public class App {
     private static PublicKey publicKey = null;
     private static PrivateKey privateKey = null;
 
+    private static byte[] SUPI_victim = Generator.randomBytes(ParameterLength.K);
+
     private static UE ue;
     private static SEAF seaf;
     private static AUSF ausf;
     private static UDM udm;
 
-    private static void runProtocol() {
-
+    private static void generateKeyPair() {
         try {
             KeyPairGenerator generator = KeyPairGenerator.getInstance("RSA");
             generator.initialize(512);
@@ -38,19 +41,20 @@ public class App {
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
+    }
 
+    private static void runProtocol(UE ue) {
+        App.ue = ue;
+        App.seaf = new SEAF(SNN);
+        App.ausf = new AUSF();
+        App.udm = new UDM(K, AMF, privateKey);
 
-        ue = new UE(K, SUPI, publicKey);
-        seaf = new SEAF(SNN);
-        ausf = new AUSF();
-        udm = new UDM(K, AMF, privateKey);
+        App.seaf.ausf = App.ausf;
+        App.seaf.ue = App.ue;
+        App.ausf.udm = App.udm;
+        App.ausf.seaf = App.seaf;
 
-        seaf.ausf = ausf;
-        seaf.ue = ue;
-        ausf.udm = udm;
-        ausf.seaf = seaf;
-
-        ue.initiateAuthentication(seaf);
+        App.ue.initiateAuthentication(App.seaf);
 
         try {
             Thread.sleep(2000);
@@ -69,7 +73,7 @@ public class App {
             ue.printKseafForSNN(SNN);
         }
         if (seaf != null) {
-            seaf.printKseafForSUPI(SUPI);
+            seaf.printKseafForSUPI(SUPI_victim);
         }
     }
 

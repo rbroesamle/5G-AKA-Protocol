@@ -19,7 +19,7 @@ public class UE extends Entity {
     private final byte[] K;
 
     private final byte[] SUPI;
-    private final PublicKey publicKey;
+    final PublicKey publicKey;
 
     //Saving the Kseaf for the corresponding SNN in hex-format.
     private HashMap<String, byte[]> Kseafs = new HashMap<>();

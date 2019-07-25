@@ -36,7 +36,7 @@ public abstract class Entity {
         this.preparedMessage = new _Send();
     }
 
-    public void sendMessage(Message message, Entity receiver) {
+    public synchronized void sendMessage(Message message, Entity receiver) {
         if (message == null || receiver == null) {
             return;
         }
@@ -47,7 +47,7 @@ public abstract class Entity {
             this.preparedMessage.start();
             this.preparedMessage = null;
         } else {
-            System.err.println("Preparation of the message failed. Messagename: " + message.getName());
+            System.err.println("Preparation of the message failed. Message name: " + message.getName());
         }
     }
 
