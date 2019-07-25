@@ -59,7 +59,12 @@ public class App {
         }
     }
 
-    public static void callback() {
+    public static void callback(boolean wasSuccessful) {
+        if (wasSuccessful) {
+            System.out.println("Authentication was successful.");
+        } else {
+            System.err.println("Authentication failed.");
+        }
         if (ue != null) {
             ue.printKseafForSNN(SNN);
         }

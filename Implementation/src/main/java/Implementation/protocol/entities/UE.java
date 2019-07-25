@@ -1,5 +1,6 @@
 package Implementation.protocol.entities;
 
+import Implementation.App;
 import Implementation.helper.Calculator;
 import Implementation.helper.Converter;
 import Implementation.protocol.additional.KDF;
@@ -40,13 +41,18 @@ public class UE extends Entity {
             //Received Authentication Request
             Authentication_Request authRequest = (Authentication_Request) message;
             SEAF seaf = (SEAF) sender;
+            System.out.println(getName() + ": Received " + authRequest.getName() + " from " + seaf.getName());
 
             Message authResponse = calculateAuthResponse(authRequest, seaf);
 
             sendMessage(authResponse, sender);
         } else if (message instanceof Authentication_Reject && sender instanceof SEAF) {
             //Received Authentication Reject
-            System.out.println("Authentication failed.");
+            Authentication_Reject authReject = (Authentication_Reject) message;
+            SEAF seaf = (SEAF) sender;
+            System.out.println(getName() + ": Received " + authReject.getName() + " from " + seaf.getName());
+
+            App.callback(false);
         } else {
             String name = message == null ? null : message.getName();
             System.err.println(getName() + ": Received an unusual message: " + (name == null ? "" : name) + ". Ignoring it.");
@@ -138,9 +144,9 @@ public class UE extends Entity {
     public void printKseafForSNN(byte[] SNN) {
         byte[] Kseaf = this.Kseafs.get(Converter.bytesToHex(SNN));
         if (Kseaf != null) {
-            System.out.println(getName() + ": Kseaf:    " + Converter.bytesToHex(Kseaf));
+            System.out.println(" " + getName() + ": Kseaf:    " + Converter.bytesToHex(Kseaf));
         } else {
-            System.out.println(getName() + ": Kseaf: null");
+            System.out.println(" " + getName() + ": Kseaf: null");
         }
     }
 }

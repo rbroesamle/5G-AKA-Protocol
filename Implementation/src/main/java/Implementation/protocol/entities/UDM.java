@@ -37,6 +37,7 @@ public class UDM extends Entity {
             //Received Nudm_UEAuthentication_ Get Request
             Nudm_UEAuthentication_Get_Request getRequest = (Nudm_UEAuthentication_Get_Request) message;
             AUSF ausf = (AUSF) sender;
+            System.out.println(getName() + ": Received " + getRequest.getName() + " from " + ausf.getName());
 
             //Always choose 5G-AKA as authentication method.
             Data_5G_HE_AV AV = generateAVsAndInvokeSIDF(getRequest, ausf);
