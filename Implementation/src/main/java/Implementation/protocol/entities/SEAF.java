@@ -80,6 +80,10 @@ public class SEAF extends Entity {
                 Authentication_Reject authenticationReject = new Authentication_Reject();
                 sendMessage(authenticationReject, this.ue);
             }
+        } else if (message instanceof Authentication_Failure && sender instanceof UE) {
+            //Received Authentication Failure
+            //TODO
+            //Maybe initiate new authentication here.
         } else {
             String name = message == null ? null : message.getName();
             System.err.println(getName() + ": Received an unusual message: " + (name == null ? "" : name) + ". Ignoring it.");

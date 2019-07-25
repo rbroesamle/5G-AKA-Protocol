@@ -6,10 +6,7 @@ import Implementation.protocol.additional.KDF;
 import Implementation.protocol.additional.MAF;
 import Implementation.protocol.additional.SIDF;
 import Implementation.protocol.data.Data_AUTN;
-import Implementation.protocol.messages.Authentication_Reject;
-import Implementation.protocol.messages.Authentication_Request;
-import Implementation.protocol.messages.Authentication_Response;
-import Implementation.protocol.messages.N1_Registration_Request;
+import Implementation.protocol.messages.*;
 import Implementation.structure.Entity;
 import Implementation.structure.Message;
 
@@ -44,7 +41,7 @@ public class UE extends Entity {
             Authentication_Request authRequest = (Authentication_Request) message;
             SEAF seaf = (SEAF) sender;
 
-            Authentication_Response authResponse = calculateAuthResponse(authRequest, seaf);
+            Message authResponse = calculateAuthResponse(authRequest, seaf);
 
             sendMessage(authResponse, sender);
         } else if (message instanceof Authentication_Reject && sender instanceof SEAF) {
@@ -61,9 +58,13 @@ public class UE extends Entity {
         sendMessage(n1, seaf);
     }
 
-    private Authentication_Response calculateAuthResponse(Authentication_Request authRequest, SEAF seaf) {
+    private Message calculateAuthResponse(Authentication_Request authRequest, SEAF seaf) {
         Data_AUTN AUTN = authRequest.AUTN;
-        //TODO: Verify freshness, as described on page 45.
+        //TODO: Verify freshness of AUTN, as described on page 45.
+        if (/*AUTN is not valid*/false) {
+            System.out.println(getName() + ": The AUTN is not valid.");
+            return new Authentication_Failure(/*TODO: Indicate the resaon for failure. See 6.1.3.3.1*/);
+        }
         //TODO: Check if the separation bit of the AMF is set to 1, as described on page 45.
         byte[] RAND = authRequest.RAND;
 
@@ -73,7 +74,7 @@ public class UE extends Entity {
         byte[] XMAC = KDF.f1(K, Converter.concatenateBytes(SQN, RAND, AUTN.AMF));
         if (!Calculator.equals(XMAC, AUTN.MAC)) {
             System.out.println(getName() + ": The calculated XMAC doesn't equal to the received MAC");
-            return null;
+            return new Authentication_Failure(/*TODO: Indicate the resaon for failure. See 6.1.3.3.1*/);
         }
 
         byte[] RES = KDF.f2(K, RAND);
