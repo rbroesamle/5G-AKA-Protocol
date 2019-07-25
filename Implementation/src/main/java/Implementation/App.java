@@ -11,8 +11,10 @@ public class App {
     public static void main(String[] args) {
         generateKeyPair();
 
-        //UE ue = new UE(K, SUPI, publicKey);
-        UE ue = new EvilUE(K, SUPI, publicKey, SUPI_victim);
+        UE ue;
+
+        //ue = new UE(K, SUPI, publicKey);// Normal
+        ue = new EvilUE(K, SUPI, publicKey, SUPI_victim);//Vulnerability
 
         runProtocol(ue);
     }

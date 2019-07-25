@@ -24,11 +24,11 @@ public class EvilUE extends UE {
         super.initiateAuthentication(seaf);
     }
 
-    boolean firstMessage = true;
+    private boolean firstMessage = true;
 
     @Override
     public void onReceiveMessage(Message message, Entity sender) {
-        if(firstMessage && message instanceof Authentication_Request && sender instanceof SEAF) {
+        if (firstMessage && message instanceof Authentication_Request && sender instanceof SEAF) {
             firstMessage = false;
         } else if (message instanceof Authentication_Request && sender instanceof SEAF) {
             System.out.println(getName() + ": Ignoring all further authenticate messages.");
