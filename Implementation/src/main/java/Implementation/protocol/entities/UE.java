@@ -6,6 +6,7 @@ import Implementation.protocol.additional.KDF;
 import Implementation.protocol.additional.MAF;
 import Implementation.protocol.additional.SIDF;
 import Implementation.protocol.data.Data_AUTN;
+import Implementation.protocol.messages.Authentication_Reject;
 import Implementation.protocol.messages.Authentication_Request;
 import Implementation.protocol.messages.Authentication_Response;
 import Implementation.protocol.messages.N1_Registration_Request;
@@ -46,6 +47,9 @@ public class UE extends Entity {
             Authentication_Response authResponse = calculateAuthResponse(authRequest, seaf);
 
             sendMessage(authResponse, sender);
+        } else if (message instanceof Authentication_Reject && sender instanceof SEAF) {
+            //Received Authentication Reject
+            System.out.println("Authentication failed.");
         } else {
             String name = message == null ? null : message.getName();
             System.err.println(getName() + ": Received an unusual message: " + (name == null ? "" : name) + ". Ignoring it.");

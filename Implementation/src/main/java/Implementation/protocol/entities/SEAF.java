@@ -57,22 +57,28 @@ public class SEAF extends Entity {
             if (calculateHresAndCompare(authResponse, ue)) {
                 //Consider authentication as successful.
                 System.out.println(getName() + " is considering the authentication as successful.");
-                Nausf_UEAuthentication_Confirmation_Request confirmRequest = getConfirmRequest(authResponse, ue);
-
-                sendMessage(confirmRequest, this.ausf);
+            } else {
+                //Consider authentication as unsuccessful.
+                System.out.println(getName() + " is considering the authentication as unsuccessful.");
+                //TODO: Remember that the authentication has failed.
             }
+            Nausf_UEAuthentication_Confirmation_Request confirmRequest = getConfirmRequest(authResponse, ue);
+
+            sendMessage(confirmRequest, this.ausf);
         } else if (message instanceof Nausf_UEAuthentication_Confirmation_Response && sender instanceof AUSF) {
             //Received Nausf_UEAuthentication_ Authenticate Response (/Confirmation Response)
             Nausf_UEAuthentication_Confirmation_Response confirmationResponse = (Nausf_UEAuthentication_Confirmation_Response) message;
             AUSF ausf = (AUSF) sender;
             if (confirmationResponse.wasSuccessful && confirmationResponse.Kseaf != null) {
-                System.out.println("Received authentication confirmation from " + ausf.getName());
                 if (confirmationResponse.SUPI != null) {
                     this.Kseafs.put(Converter.bytesToHex(confirmationResponse.SUPI), confirmationResponse.Kseaf);
                 } else {
                     //TODO: Find SUPI and save the Kseaf.
                 }
                 App.callback();
+            } else {
+                Authentication_Reject authenticationReject = new Authentication_Reject();
+                sendMessage(authenticationReject, this.ue);
             }
         } else {
             String name = message == null ? null : message.getName();
@@ -115,7 +121,6 @@ public class SEAF extends Entity {
      * @return true if calculated HXRES equals the previously stored one.
      */
     private boolean calculateHresAndCompare(Authentication_Response authResponse, UE ue) {
-        //TODO
         //Derive HXRESstar
         //3GPP TS 33.501 V15.34.1 Page 155
         byte[] P0 = this.hXRESSstar.RAND;
