@@ -74,9 +74,7 @@ public class KDF {
         //TODO: Find the correct algorithm
         byte[] longVersion = Converter.expandBytesToLength(HmacSHA256.encode(key, data), 8);
         byte[] result = new byte[ParameterLength.MAC];
-        for (int i = 0; i < result.length; i++) {
-            result[i] = longVersion[i];
-        }
+        System.arraycopy(longVersion, 0, result, 0, result.length);
         return result;
     }
 

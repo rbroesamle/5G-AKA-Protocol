@@ -12,9 +12,7 @@ public class MAF {
         //TODO: Find the correct algorithm
         byte[] longVersion = Converter.expandBytesToLength(HmacSHA256.encode(key, data), 16);
         byte[] result = new byte[ParameterLength.CK];
-        for (int i = 0; i < result.length; i++) {
-            result[i] = longVersion[i];
-        }
+        System.arraycopy(longVersion, 0, result, 0, result.length);
         return result;
     }
 
@@ -23,9 +21,7 @@ public class MAF {
         //TODO: Find the correct algorithm
         byte[] longVersion = Converter.expandBytesToLength(HmacSHA256.encode(key, data), 16);
         byte[] result = new byte[ParameterLength.IK];
-        for (int i = 0; i < result.length; i++) {
-            result[i] = longVersion[i];
-        }
+        System.arraycopy(longVersion, 0, result, 0, result.length);
         return result;
     }
 
@@ -34,9 +30,7 @@ public class MAF {
         //TODO: Find the correct algorithm
         byte[] longVersion = Converter.expandBytesToLength(HmacSHA256.encode(key, data), 6);
         byte[] result = new byte[ParameterLength.AK];
-        for (int i = 0; i < result.length; i++) {
-            result[i] = longVersion[i];
-        }
+        System.arraycopy(longVersion, 0, result, 0, result.length);
         return result;
     }
 }

@@ -4,7 +4,7 @@ public abstract class Entity {
 
     private Send preparedMessage = null;
 
-    private abstract class Send extends Thread {
+    private abstract static class Send extends Thread {
         public abstract Message getMessage();
 
         public abstract Entity getReceiver();

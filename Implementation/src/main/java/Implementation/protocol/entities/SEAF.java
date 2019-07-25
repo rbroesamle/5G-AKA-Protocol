@@ -18,7 +18,7 @@ public class SEAF extends Entity {
     //Saving the Kseaf for the corresponding SUPI in hex-format.
     private HashMap<String, byte[]> Kseafs = new HashMap<>();
 
-    public final byte[] servingNetworkName;
+    final byte[] servingNetworkName;
 
     public SEAF(byte[] servingNetworkName) {
         this.servingNetworkName = servingNetworkName;
@@ -149,7 +149,7 @@ public class SEAF extends Entity {
         return new Nausf_UEAuthentication_Confirmation_Request(authResponse.RESstar);
     }
 
-    private class HXRESstar {
+    private static class HXRESstar {
         //TODO: Improve this.
         byte[] HXRESstar;
         byte[] RAND;

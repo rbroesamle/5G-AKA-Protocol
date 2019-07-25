@@ -84,7 +84,7 @@ public class AUSF extends Entity {
     //This HashMap is for temporarily storing the Kseaf and the XRES* for a specific SNN.
     private HashMap<byte[], TemporaryData> temporaryXRESstarStorage = new HashMap<>();
 
-    private class TemporaryData {
+    private static class TemporaryData {
         final byte[] Kseaf;
         final byte[] XRESstar;
         final byte[] SUPI;
