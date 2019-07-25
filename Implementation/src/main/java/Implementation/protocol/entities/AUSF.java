@@ -164,7 +164,7 @@ public class AUSF extends Entity {
         if (temporaryData == null) {
             return false;
         }
-        //TODO: Inform UDM about successful authentication, as described on page 45 message 11.
+        //TODO: Inform UDM about successful authentication, as described on page 45 step 11.
         return Calculator.equals(confirmRequest.RESstar, temporaryData.XRESstar);
     }
 

@@ -6,7 +6,9 @@ public abstract class Entity {
 
     private abstract class Send extends Thread {
         public abstract Message getMessage();
+
         public abstract Entity getReceiver();
+
         public abstract void run();
     }
 
