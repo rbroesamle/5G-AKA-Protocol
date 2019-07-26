@@ -1,0 +1,94 @@
+@startuml
+
+skinparam SequenceMessageAlignment center
+skinparam SequenceArrowColor Black
+skinparam SequenceLifeLineBorderColor Black
+
+skinparam NoteTextAlignment center
+skinparam NoteBackgroundColor White
+skinparam NoteBorderColor Black
+
+skinparam ParticipantPadding 70
+skinparam ParticipantBorderColor Black
+skinparam ParticipantBackgroundColor White
+
+skinparam Padding 1
+skinparam Shadowing<<note>> false
+skinparam DefaultFontName Helvetica Neue
+
+
+participant UE
+participant SEAF
+participant AUSF
+participant "UDM/ARPF/\nSIDF" as UDM
+
+
+autonumber 1 "<b>[0]"
+
+UE -> SEAF : N1 message\n//**(SUCI or 5G GUTI)**//
+
+SEAF -> AUSF : Nausf_UEAuthentication_Authenticate\nRequest //**(SUCI or SUPI, SN-Name)**//
+
+AUSF -> UDM : Nudm_UEAuthentication_Get\nRequest //**(SUCI or SUPI, SN-Name)**//
+
+rnote <<note>> over UDM
+**[4]** Deconceal SUCI to SUPI
+end note
+
+rnote <<note>> over UDM
+**[5]** Authentication Method
+Selection
+end note
+
+== 5G AKA ==
+
+rnote <<note>> over UDM
+**[6]** Generate
+Authentication Vector
+End note
+
+autonumber 7 "<b>[0]"
+
+UDM -> AUSF : Nudm_Authentication_Get\nResponse //**(5G HE AV, [SUPI])**//
+
+rnote <<note>> over AUSF
+**[8]** Store XRES*
+end note
+
+rnote <<note>> over AUSF
+**[9]** Calculate HXRES*
+end note
+
+autonumber 10 "<b>[0]"
+
+AUSF -> SEAF : Nausf_UEAuthentication_Authenticate\nResponse //**(5G SE AV)**//
+
+SEAF -> UE : Authentication Request
+
+rnote <<note>> over UE
+**[12]** Calculate Authentication
+Response (RES*)
+end note
+
+autonumber 13 "<b>[0]"
+
+UE -> SEAF : Authentication Response
+
+rnote <<note>> over SEAF
+**[14]** Calculate HRES* and 
+compare to HXRES*
+end note
+
+autonumber 15 "<b>[0]"
+
+SEAF -> AUSF : Nausf_UEAuthentication_Authenticate\nRequest //**(RES*)**//
+
+rnote <<note>> over AUSF
+**[16]** RES* Verification
+end note
+
+autonumber 17 "<b>[0]"
+
+AUSF -> SEAF : Nausf_UEAuthentication_Authenticate\nResponse //**(Result, [SUPI], Kseaf)**//
+
+@enduml
