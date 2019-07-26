@@ -9,6 +9,8 @@ import Implementation.structure.Entity;
 import Implementation.structure.Message;
 
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class SEAF extends Entity {
 
@@ -28,6 +30,9 @@ public class SEAF extends Entity {
     public String getName() {
         return "SEAF";
     }
+
+    //This Queue contains a boolean to remember if the comparison of HXRES* and HRES* was successful.
+    private Queue<Boolean> authenticationConfirmationQueue = new LinkedList<>();
 
     @Override
     public void onReceiveMessage(Message message, Entity sender) {
@@ -60,10 +65,11 @@ public class SEAF extends Entity {
             if (calculateHresAndCompare(authResponse, ue)) {
                 //Consider authentication as successful.
                 System.out.println("  " + getName() + " is considering the authentication as successful.");
+                authenticationConfirmationQueue.add(true);
             } else {
                 //Consider authentication as unsuccessful.
                 System.err.println("  " + getName() + " is considering the authentication as unsuccessful.");
-                //TODO: Remember that the authentication has failed.
+                authenticationConfirmationQueue.add(false);
             }
             Nausf_UEAuthentication_Confirmation_Request confirmRequest = getConfirmRequest(authResponse, ue);
 
@@ -74,7 +80,12 @@ public class SEAF extends Entity {
             AUSF ausf = (AUSF) sender;
             System.out.println(getName() + ": Received " + confirmResponse.getName() + " from " + ausf.getName());
 
-            if (confirmResponse.wasSuccessful && confirmResponse.Kseaf != null) {
+            boolean hashComparisonWasSuccessful = false;
+            if (!authenticationConfirmationQueue.isEmpty()) {
+                hashComparisonWasSuccessful = authenticationConfirmationQueue.poll();
+            }
+
+            if (hashComparisonWasSuccessful && confirmResponse.wasSuccessful && confirmResponse.Kseaf != null) {
                 if (confirmResponse.SUPI != null) {
                     this.Kseafs.put(Converter.bytesToHex(confirmResponse.SUPI), confirmResponse.Kseaf);
                 } else {
@@ -123,9 +134,10 @@ public class SEAF extends Entity {
     private HXRESstar hXRESSstar = new HXRESstar();
 
     private Authentication_Request getAuthRequest(Nausf_UEAuthentication_Authenticate_Response authResponse, AUSF ausf) {
+        //Storing the HXRES* temporary.
         hXRESSstar.HXRESstar = authResponse.seAV.HXRESstar;
         hXRESSstar.RAND = authResponse.seAV.RAND;
-        //TODO: Store the HXRES* temporary.
+
         return new Authentication_Request(authResponse.seAV.RAND, authResponse.seAV.AUTN);
     }
 
