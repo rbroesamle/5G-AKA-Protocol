@@ -1,0 +1,51 @@
+@startuml
+
+skinparam SequenceMessageAlignment center
+skinparam SequenceArrowColor Black
+skinparam SequenceLifeLineBorderColor Black
+
+skinparam NoteTextAlignment center
+skinparam NoteBackgroundColor White
+skinparam NoteBorderColor<<black>> Black
+skinparam NoteBorderColor<<red>> Red
+
+skinparam ParticipantPadding 70
+skinparam ParticipantBorderColor Black
+skinparam ParticipantBackgroundColor White
+
+skinparam Padding 1
+skinparam Shadowing<<note>> false
+skinparam DefaultFontName Helvetica Neue
+
+
+participant UE
+participant SEAF
+participant AUSF
+participant "UDM/ARPF/\nSIDF" as UDM
+
+
+...
+
+autonumber 11 "<b>[0]"
+
+SEAF -> UE : Authentication Request\n//**(RAND, AUTN)**//
+
+rnote <<note>> <<black>> over UE
+**[12]** Calculate
+Authentication Response
+end note
+
+rnote <<note>> <<red>> over UE
+**[1*]** Synchronisation or MAC failure
+End note
+
+autonumber 2 "<b>[0*]"
+
+UE -> SEAF : Authentication Failure\n//**(CAUSE, [AUTS])**//
+
+rnote <<note>> <<black>> over SEAF
+**[3*]** Initiate new authentication or
+consider authentication as unsuccessful.
+end note
+
+@enduml

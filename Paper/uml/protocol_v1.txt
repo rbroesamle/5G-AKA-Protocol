@@ -63,16 +63,16 @@ autonumber 10 "<b>[0]"
 
 AUSF -> SEAF : Nausf_UEAuthentication_Authenticate\nResponse //**(5G SE AV)**//
 
-SEAF -> UE : Authentication Request
+SEAF -> UE : Authentication Request\n//**(RAND, AUTN)**//
 
 rnote <<note>> over UE
-**[12]** Calculate Authentication
-Response (RES*)
+**[12]** Calculate 
+Authentication Response
 end note
 
 autonumber 13 "<b>[0]"
 
-UE -> SEAF : Authentication Response
+UE -> SEAF : Authentication Response\n//**(RES*)**//
 
 rnote <<note>> over SEAF
 **[14]** Calculate HRES* and 

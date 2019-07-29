@@ -1,0 +1,105 @@
+@startuml
+
+skinparam SequenceMessageAlignment center
+skinparam SequenceArrowColor Black
+skinparam SequenceLifeLineBorderColor Black
+
+skinparam NoteTextAlignment center
+skinparam NoteBackgroundColor White
+skinparam NoteBorderColor<<black>> Black
+skinparam NoteBorderColor<<red>> Red
+
+skinparam ParticipantPadding 70
+skinparam ParticipantBorderColor Black
+skinparam ParticipantBackgroundColor White
+
+skinparam Padding 1
+skinparam Shadowing<<note>> false
+skinparam DefaultFontName Helvetica Neue
+
+
+participant UE
+participant SEAF
+participant AUSF
+participant "UDM/ARPF/\nSIDF" as UDM
+
+
+== RES* failure in SEAF ==
+
+...
+
+autonumber 13 "<b>[0]"
+
+UE -> SEAF : Authentication Response\n//**(RES*)**//
+
+rnote <<note>> <<black>> over SEAF
+**[14]** Calculate HRES* and 
+compare to HXRES*
+end note
+
+rnote <<note>> <<red>> over SEAF
+**[1']** HRES* and HXRES* 
+Don't coincide
+end note
+
+autonumber 15 "<b>[0]"
+
+SEAF -> AUSF : Nausf_UEAuthentication_Authenticate\nRequest //**(RES*)**//
+
+rnote <<note>> <<black>> over AUSF
+**[16]** RES* Verification
+end note
+
+autonumber 17 "<b>[0]"
+
+AUSF -> SEAF : Nausf_UEAuthentication_Authenticate\nResponse //**(Result, [SUPI], Kseaf)**//
+
+rnote <<note>> <<black>> over SEAF
+**[2']** Reject authentication
+(or initiate Identification procedure)
+end note
+
+autonumber 3 "<b>[0'']"
+
+SEAF -> UE : Authentication Reject
+
+== RES* failure in AUSF ==
+
+...
+
+autonumber 13 "<b>[0]"
+
+UE -> SEAF : Authentication Response\n//**(RES*)**//
+
+rnote <<note>> <<black>> over SEAF
+**[14]** Calculate HRES* and 
+compare to HXRES*
+end note
+
+autonumber 15 "<b>[0]"
+
+SEAF -> AUSF : Nausf_UEAuthentication_Authenticate\nRequest //**(RES*)**//
+
+rnote <<note>> <<black>> over AUSF
+**[16]** RES* Verification
+end note
+
+rnote <<note>> <<red>> over AUSF
+**[1']** RES* and XRES* 
+Don't coincide
+end note
+
+autonumber 17 "<b>[0]"
+
+AUSF -> SEAF : Nausf_UEAuthentication_Authenticate\nResponse //**(Result, [SUPI], Kseaf)**//
+
+rnote <<note>> <<black>> over SEAF
+**[2']** Reject authentication
+(or initiate Identification procedure)
+end note
+
+autonumber 3 "<b>[0'']"
+
+SEAF -> UE : Authentication Reject
+
+@enduml
