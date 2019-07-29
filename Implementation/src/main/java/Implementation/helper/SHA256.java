@@ -5,6 +5,11 @@ import java.security.NoSuchAlgorithmException;
 
 public class SHA256 {
 
+    /**
+     * Encode SHA256
+     * @param data Data
+     * @return SHA256 encoded data.
+     */
     public static byte[] encode(byte[] data) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");

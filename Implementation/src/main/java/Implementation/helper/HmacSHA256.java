@@ -7,6 +7,12 @@ import java.security.NoSuchAlgorithmException;
 
 public class HmacSHA256 {
 
+    /**
+     * Encode HMAC-SHA256
+     * @param key Key
+     * @param data Data
+     * @return HMAC-SHA256 encoded data.
+     */
     public static byte[] encode(byte[] key, byte[] data) {
         try {
             Mac mac = Mac.getInstance("HmacSHA256");

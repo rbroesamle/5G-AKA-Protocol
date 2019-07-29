@@ -5,19 +5,39 @@ import java.math.BigInteger;
 
 public class Converter {
 
+    /**
+     * Bytes to HEX
+     * @param data Data
+     * @return A string containing a hex representation of the data
+     */
     public static String bytesToHex(byte[] data) {
         return DatatypeConverter.printHexBinary(data);
     }
 
+    /**
+     * HEX to bytes
+     * @param data Data
+     * @return A byte array containing the contents of a string in hex representation.
+     */
     public static byte[] hexToBytes(String data) {
         return DatatypeConverter.parseHexBinary(data);
     }
 
+    /**
+     * Int to bytes
+     * @param data Data
+     * @return A byte array containing the integer from data.
+     */
     public static byte[] intToBytes(int data) {
         BigInteger bigInteger = BigInteger.valueOf(data);
         return shrinkBytes(bigInteger.toByteArray());
     }
 
+    /**
+     * Bytes to int
+     * @param data Data
+     * @return An integer containing the contents of the data.
+     */
     public static int bytesToInt(byte[] data) {
         if (data == null || data.length == 0) {
             return 0;
@@ -34,6 +54,11 @@ public class Converter {
                 (0xff & expandedData[3]) << 0;
     }
 
+    /**
+     * Shrink Bytes
+     * @param data Data
+     * @return The data with all preceding zeros removed.
+     */
     public static byte[] shrinkBytes(byte[] data) {
         int cap = -1;
         for (int i = 0; i < data.length; i++) {
@@ -56,6 +81,12 @@ public class Converter {
         return arr;
     }
 
+    /**
+     * Expand bytes to length
+     * @param data Data
+     * @param length Length
+     * @return Add preceding zeros until the length Length has been reached.
+     */
     public static byte[] expandBytesToLength(byte[] data, int length) {
         if (data == null) {
             return new byte[length];
@@ -70,6 +101,11 @@ public class Converter {
         return arr;
     }
 
+    /**
+     * Concatenate Bytes
+     * @param data Data
+     * @return A byte array with the contents of Data in one array.
+     */
     public static byte[] concatenateBytes(byte[]... data) {
         int length = 0;
         for (byte[] array : data) {
@@ -87,6 +123,12 @@ public class Converter {
         return result;
     }
 
+    /**
+     * Split bytes
+     * @param data Data
+     * @param lengths Lengths
+     * @return Spliting the data from right to left into arrays of size Length.
+     */
     public static byte[][] splitBytes(byte[] data, int... lengths) {
         int index = 0;
         byte[][] result = new byte[lengths.length][];
