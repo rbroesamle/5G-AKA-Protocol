@@ -66,9 +66,11 @@ public class AUSF extends Entity {
                 confirmResponse = new Nausf_UEAuthentication_Confirmation_Response(false, null, null);
                 //Consider authentication as unsuccessful.
                 System.err.println("  " + getName() + " is considering the authentication as unsuccessful.");
+                sendMessage(new Authentication_Information(false), this.udm);
             } else {
                 //Consider authentication as successful.
                 System.out.println("  " + getName() + " is considering the authentication as successful.");
+                sendMessage(new Authentication_Information(true), this.udm);
             }
             sendMessage(confirmResponse, seaf);
 
@@ -97,8 +99,8 @@ public class AUSF extends Entity {
     }
 
     /**
-     * @param authRequest
-     * @param seaf
+     * @param authRequest Authentication Request
+     * @param seaf SEAF
      * @return true if SEAF is entitled to use the ServingNetworkName
      */
     private boolean checkIfSeafIsEntitledToUseSnName(Nausf_UEAuthentication_Authenticate_Request authRequest, SEAF seaf) {
@@ -160,8 +162,8 @@ public class AUSF extends Entity {
     }
 
     /**
-     * @param confirmRequest
-     * @param seaf
+     * @param confirmRequest Authentication Confirmation Request
+     * @param seaf SEAF
      * @return true if the verification was successful.
      */
     private boolean verifyConfirmRequest(Nausf_UEAuthentication_Confirmation_Request confirmRequest, SEAF seaf) {

@@ -6,6 +6,7 @@ import Implementation.protocol.additional.SIDF;
 import Implementation.protocol.data.Data_5G_HE_AV;
 import Implementation.protocol.data.Data_AUTN;
 import Implementation.protocol.helper.AuthenticationVector;
+import Implementation.protocol.messages.Authentication_Information;
 import Implementation.protocol.messages.Nudm_Authentication_Get_Response;
 import Implementation.protocol.messages.Nudm_UEAuthentication_Get_Request;
 import Implementation.structure.Entity;
@@ -45,6 +46,17 @@ public class UDM extends Entity {
             Nudm_Authentication_Get_Response authInfoResp = getGetResponse(getRequest, ausf, AV);
 
             sendMessage(authInfoResp, ausf);
+        } else if (message instanceof Authentication_Information && sender instanceof AUSF) {
+            //Received Authentication Information
+            Authentication_Information authInformation = (Authentication_Information) message;
+            AUSF ausf = (AUSF) sender;
+            System.out.println(getName() + ": Received " + authInformation.getName() + " from " + ausf.getName());
+
+            if (authInformation.authenticationSuccessful) {
+                System.out.println("  " + getName() + " is considering the authentication as successful.");
+            } else {
+                System.err.println("  " + getName() + " is considering the authentication as unsuccessful.");
+            }
         } else {
             String name = message == null ? null : message.getName();
             System.err.println(getName() + ": Received an unusual message: " + (name == null ? "" : name) + ". Ignoring it.");
