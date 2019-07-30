@@ -4,15 +4,143 @@
 Das 5G-AKA-Protokoll ist eines von mehreren Protokollen des 5G-Standards.
 Vor Allem das EAP-AKA-Protokoll und das 5G-AKA-Protokoll sind f\"ur den sicheren Austausch eines Schl\"ussels zust\"andig. 
 Bei beiden Protokollen ist der erste Teil der Gleiche bis bei dem Provider eines der Protokolle ausgew\"ahlt wird. %3GPP TS 33.501 V15.34.1 Page 40
-Bei beiden Protokollen ist auch der Authentifizierungsvorgang sehr \"ahnlich, wobei jedoch der das 5G-AKA-Protokoll das EAP-AKA-Protokoll darum erweitert, dass des dem Provider, ''home network'' genannt, eine erfolgreiche Authentifizierung nachweist. %3GPP TS 33.501 V15.34.1 Page 43
+Bei beiden Protokollen ist auch der Authentifizierungsvorgang sehr \"ahnlich, wobei jedoch der das 5G-AKA-Protokoll das EAP-AKA-Protokoll darum erweitert, dass es dem Provider, ''home network'' genannt, eine erfolgreiche Authentifizierung nachweist. %3GPP TS 33.501 V15.34.1 Page 43
 Daher wird in dieser Ausarbeitung haupts\"achlich auf das 5G-AKA-Protokoll eingegangen.
 
-Beide Protokolle werden gr\"o{\ss}tenteils in der Spezifikation TS 33.501 des 3GPP beschrieben.
+Beide Protokolle werden gr\"o{\ss}tenteils in der Spezifikation TS 33.501 des 3GPP beschrieben.%3GPP TS 33.501 V15.34.1
 Dabei wird die zurzeit neueste Version V15.34.1 herangezogen.
+
+\section{Ziele}
+
+TODO
 
 \section{Das Protokoll}
 
-Hier wird der Hauptteil stehen.
-Falls mehrere Kapitel gewünscht, entweder mehrmals \texttt{\textbackslash{}chapter} benutzen oder pro Kapitel eine eigene Datei anlegen und \texttt{ausarbeitung.tex} anpassen.
+\subsection{Entities}
 
-LaTeX-Hinweise stehen in \cref{chap:latextipps}.
+In dem Protokoll werden vier grundlegende Entit\"aten beschrieben.
+Diese sind das \gls{ue}, die \gls{seaf}, die \gls{ausf} und das \gls{udm}.
+
+\glsreset{ue}
+\subsubsection{\gls{ue}}
+
+Das \gls{ue} befindet sich auf dem Smartphone des Nutzers.
+Es l\"asst sich in das \gls{me} und das \gls{usim} unterteilen.
+In dem \gls{usim} werden f\"ur die Authentifizierung ben\"otigte Schl\"ussel und Benutzerkennungen gespeichert, die f\"ur die eindeutige Identifizierung und Authentifizierung des \gls{ue} ben\"otigt werden. %3GPP TS 33.501 V15.34.1 Page 24
+In dem \gls{me} werden die Schl\"ussel, die f\"ur die Kommunikation nach dem 5G-AKA-Protokoll ben\"otigt werden berechnet.
+
+\glsreset{seaf}
+\subsubsection{\gls{seaf}}
+
+Die \gls{seaf} ist Teil des mit dem \gls{ue} kommunizierenden Netzwerks, auch \textit{''Serving Network''‚} genannt.
+Sie kommuniziert mit dem \gls{ue} und mit dem korrekten Provider des Benutzers.
+Nach erfolgreicher Authentifizierung haben das \gls{ue} und die \gls{seaf} beide einen gemeinsamen Schl\"ussel.%3GPP TS 33.501 V15.34.1 Page 37
+
+\glsreset{ausf}
+\subsubsection{\gls{ausf}}
+
+Die \gls{ausf} ist Teil des Providers, bei dem sich der Benutzer die hier verwendete SIM-Karte gekauft hat, auch \textit{''Home Environment''} genannt.
+Sie kommuniziert mit der \gls{seaf} und validiert die Antwort des \gls{ue} f\"ur die \gls{seaf}.
+
+\glsreset{udm}
+\subsubsection{\gls{udm}}
+
+Das \gls{udm} ist, wie auch die \gls{ausf} Teil des \textit{''Home Environment''}.
+Grunds\"atzlich funktioniert es jedoch nicht ohne die \gls{arpf} und die \gls{sidf}.
+Daher wird im Weiteren Verlauf oft die Abk\"urzung \gls{udm}/\gls{arpf}/\gls{sidf} verwendet.
+
+Das \gls{udm} und die \gls{arpf} generieren Authentifizierungsvektoren aus den Schl\"usseln, die sie mit dem \gls{usim} teilen.
+Die \gls{sidf} gerechnet die Benutzerkennung f\"ur den \gls{udm} und die \gls{arpf} aus einer verschl\"usselten Benutzerkennung, die sie von dem \gls{ausf} erh\"alt.
+
+
+\subsection{Wichtige Definitionen}
+
+\glsreset{5g-av}
+\subsubsection{\gls{5g-av}}
+
+\glsreset{5g-guti}
+\subsubsection{\gls{5g-guti}}
+
+\glsreset{5g-he-av}
+\subsubsection{\gls{5g-he-av}}
+
+\glsreset{5g-se-av}
+\subsubsection{\gls{5g-se-av}}
+
+\glsreset{ak}
+\subsubsection{\gls{ak}}
+
+\glsreset{amf}
+\subsubsection{\gls{amf}}
+
+\glsreset{autn}
+\subsubsection{\gls{autn}}
+
+\glsreset{ck}
+\subsubsection{\gls{ck}}
+
+\glsreset{hres*}
+\subsubsection{\gls{hres*}}
+
+\glsreset{hxres*}
+\subsubsection{\gls{hxres*}}
+
+\glsreset{ik}
+\subsubsection{\gls{ik}}
+
+\glsreset{k-ausf}
+\subsubsection{\gls{k-ausf}}
+
+\glsreset{k-seaf}
+\subsubsection{\gls{k-seaf}}
+
+\glsreset{rand}
+\subsubsection{\gls{rand}}
+
+\glsreset{res}
+\subsubsection{\gls{res}}
+
+\glsreset{res*}
+\subsubsection{\gls{res*}}
+
+\glsreset{sn-name}
+\subsubsection{\gls{sn-name}}
+
+\glsreset{suci}
+\subsubsection{\gls{suci}}
+
+\glsreset{supi}
+\subsubsection{\gls{supi}}
+
+\glsreset{xres}
+\subsubsection{\gls{xres}}
+
+\glsreset{xres*}
+\subsubsection{\gls{xres*}}
+
+
+
+
+\subsection{Weitere Begriffe}
+
+\glsreset{abba}
+\subsubsection{\gls{abba}}
+
+\glsreset{ng-ksi}
+\subsubsection{\gls{ng-ksi}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
