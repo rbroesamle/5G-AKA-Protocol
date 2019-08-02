@@ -62,9 +62,11 @@ Die \gls{sidf} gerechnet die Benutzerkennung f\"ur den \gls{udm} und die \gls{ar
 \glsunset{amf}
 \glsunset{autn}
 \glsunset{ck}
+\glsunset{f12345}
 \glsunset{hres*}
 \glsunset{hxres*}
 \glsunset{ik}
+\glsunset{k}
 \glsunset{k-ausf}
 \glsunset{k-seaf}
 \glsunset{mac}
@@ -96,12 +98,37 @@ Die \gls{sidf} gerechnet die Benutzerkennung f\"ur den \gls{udm} und die \gls{ar
 
 \glsreset{amf}
 \subsubsection{\gls{amf}}
+Das \gls{amf} ist eine 16 Bit lange Zahl. %3GPP TS 33.102 V15.1.0 Page 32
+Die 16 Bits des \gls{amf} sind von ''0'' bis ''15'' durchnummeriert. %3GPP TS 33.102 V15.1.0 Page 79
+0 steht hier f\"ur das \textit{''most significant bit''} und 15 steht f\"ur das \textit{''least significant bit''}.
+
+\begin{itemize}
+\item Bit ''0'', auch \textit{''separation bit''} genannt, wird f\"ur das \gls{eps} verwendet und wird bei der Verwendung des \gls{amf} mei{\ss}t explizit angegeben. \\
+\item Bits ''1'' bis ''7'' sind f\"ur eine zuk\"unftige Spezifikation reserviert und sollen auf 0 gesetzt werden. \\
+\item Bits ''8'' bis ''15'' k\"onnen f\"ur propriet\"are Zwecke verwendet werden, sind aber nicht explizit festgelegt. 
+Sie k\"onnen verwendet werden um providerspezifische Anpassungen festzulegen.
+Zum Beispiel k\"onnten mehrere Authentifikations-Algorithmen unterst\"utzt werden, indem die Bits ''8'' bis ''15'' den Algorithmus festlegen oder es k\"onnten die Verifikationsparameter der \gls{sqn} durch die Bits bestimmt werden. %3GPP TS 33.102 V15.1.0 Page 77
+\end{itemize}
 
 \glsreset{autn}
 \subsubsection{\gls{autn}}
 
 \glsreset{ck}
 \subsubsection{\gls{ck}}
+
+\glsreset{f12345}
+\subsubsection{\gls{f12345}}
+Mit diesen Funktionen werden \gls{ak}, \gls{ck}, \gls{ik} \gls{res} bzw. \gls{xres} und \gls{mac} bzw. \gls{xmac} berechnet. %3GPP TS 33.102 V15.1.0 Page 26
+\begin{itemize}
+\item f1 ist eine \textit{''Message authentication function''}.
+Sie berechnet in Abh\"angigkeit von \gls{k} den \gls{mac} bzw. \gls{xmac} und bekommt als Eingabe die Konkatenation von \gls{sqn}, \gls{rand} und \gls{amf} (\gls{sqn} || \gls{rand} || \gls{amf}). \\
+\item f2 ist eine, m\"oglicherweise verk\"urzte, \textit{''Message authentication function''}.
+Sie berechnet in Abh\"angigkeit von \gls{k} die \gls{res} bzw. \gls{xres} und bekommt \gls{rand} als Eingabe.
+\item f3, f4 und f5 sind \textit{''Key generating functions''}.
+f3 berechnet \gls{ck}, f4 berechnet \gls{ik} und f5 berechnet \gls{ak}.
+Alle drei bekomment \gls{rand} als Eingabe und sind abh\"angig von \gls{k}.
+Falls \gls{sqn} keine R\"uckschl\"usse auf die Identit\"at oder Position des Benutzers zul\"asst wird f5 = 0 gesetzt.
+\end{itemize}
 
 \glsreset{hres*}
 \subsubsection{\gls{hres*}}
@@ -111,6 +138,14 @@ Die \gls{sidf} gerechnet die Benutzerkennung f\"ur den \gls{udm} und die \gls{ar
 
 \glsreset{ik}
 \subsubsection{\gls{ik}}
+
+\glsreset{k}
+\subsubsection{\gls{k}}
+\gls{k} ist ein Langzeitschl\"ussel mit einer L\"ange von 128 oder 256 Bits. %3GPP TS 33.102 V15.1.0 Page 32
+Die tats\"achliche L\"ange ist nicht spezifiziert und wird m\"oglicherweise von Provider festgelegt. %3GPP TS 33.102 V15.1.0 Page 32
+
+\gls{k} soll auf dem \gls{udm}/\gls{arpf} und in einer manipulationssicheren Hardwarekomponente auf dem \gls{ue} gespeichert werden.  %3GPP TS 33.501 V15.34.1 Page 29
+Er wird f\"ur die Generierung von \gls{ak}, \gls{ck}, \gls{ik} \gls{res} bzw. \gls{xres} und \gls{mac} bzw. \gls{xmac} ben\"otigt. 
 
 \glsreset{k-ausf}
 \subsubsection{\gls{k-ausf}}
