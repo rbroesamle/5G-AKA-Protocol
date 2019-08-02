@@ -7,7 +7,7 @@ Bei beiden Protokollen ist der erste Teil der Gleiche bis bei dem Provider eines
 Bei beiden Protokollen ist auch der Authentifizierungsvorgang sehr \"ahnlich, wobei jedoch der das 5G-AKA-Protokoll das EAP-AKA-Protokoll darum erweitert, dass es dem Provider, ''home network'' genannt, eine erfolgreiche Authentifizierung nachweist. %3GPP TS 33.501 V15.34.1 Page 43
 Daher wird in dieser Ausarbeitung haupts\"achlich auf das 5G-AKA-Protokoll eingegangen.
 
-Beide Protokolle werden gr\"o{\ss}tenteils in der Spezifikation TS 33.501 des 3GPP beschrieben.%3GPP TS 33.501 V15.34.1
+Beide Protokolle werden gr\"o{\ss}tenteils in der Spezifikation TS 33.501 des 3GPP beschrieben. %3GPP TS 33.501 V15.34.1
 Dabei wird die zurzeit neueste Version V15.34.1 herangezogen.
 
 \section{Ziele}
@@ -54,6 +54,30 @@ Die \gls{sidf} gerechnet die Benutzerkennung f\"ur den \gls{udm} und die \gls{ar
 
 
 \subsection{Wichtige Definitionen}
+\glsunset{5g-av}
+\glsunset{5g-guti}
+\glsunset{5g-he-av}
+\glsunset{5g-se-av}
+\glsunset{ak}
+\glsunset{amf}
+\glsunset{autn}
+\glsunset{ck}
+\glsunset{hres*}
+\glsunset{hxres*}
+\glsunset{ik}
+\glsunset{k-ausf}
+\glsunset{k-seaf}
+\glsunset{mac}
+\glsunset{rand}
+\glsunset{res}
+\glsunset{res*}
+\glsunset{sn-name}
+\glsunset{sqn}
+\glsunset{suci}
+\glsunset{supi}
+\glsunset{xmac}
+\glsunset{xres}
+\glsunset{xres*}
 
 \glsreset{5g-av}
 \subsubsection{\gls{5g-av}}
@@ -94,8 +118,16 @@ Die \gls{sidf} gerechnet die Benutzerkennung f\"ur den \gls{udm} und die \gls{ar
 \glsreset{k-seaf}
 \subsubsection{\gls{k-seaf}}
 
+\glsreset{mac}
+\subsubsection{\gls{mac}}
+
 \glsreset{rand}
 \subsubsection{\gls{rand}}
+\gls{rand} ist eine 128 Bit lange zuf\"allige Zahl. %3GPP TS 33.102 V15.1.0 Page 32
+Sie wird f\"ur die Generierung von \gls{ak}, \gls{ck}, \gls{ik} \gls{res} bzw. \gls{xres} und \gls{mac} bzw. \gls{xmac} ben\"otigt. 
+\gls{rand} soll eine unvorhersehbare Zahl sein, wie genau sie generiert wird ist jedoch nicht beschrieben. %3GPP TS 33.102 V15.1.0 Page 25
+
+Sie wird vom \gls{udm}/\gls{arpf} erzeugt und an das \gls{ue} weitergeleitet. Diese Entit\"aten generieren auch die oben genannten Schl\"ussel \gls{ak}, \gls{ck}, \gls{ik}, usw.
 
 \glsreset{res}
 \subsubsection{\gls{res}}
@@ -106,11 +138,26 @@ Die \gls{sidf} gerechnet die Benutzerkennung f\"ur den \gls{udm} und die \gls{ar
 \glsreset{sn-name}
 \subsubsection{\gls{sn-name}}
 
+\glsreset{sqn}
+\subsubsection{\gls{sqn}}
+\gls{sqn} ist eine Zahl mit einer L\"ange von 48 Bits. %3GPP TS 33.102 V15.1.0 Page 32
+Aus ihr wird der \gls{mac} bwz. \gls{xmac} erzeugt. %3GPP TS 33.102 V15.1.0 Page 25
+
+F\"ur die Generierugn der \gls{sqn} muss das \gls{udm}/\gls{arpf} folgende Bedingungen erf\"ullen:\\%3GPP TS 33.102 V15.1.0 Page 25
+\begin{enumerate}
+\item Der Erzeugungsmechanismus der \gls{sqn} soll eine Re-Synchronisations Prozedur beinhalten.\\
+\item Falls die \gls{sqn} R\"uckschl\"usse auf die Identit\"at oder Position des Nutzers zul\"asst, dann soll der \gls{ak} verwendet werden um die \gls{sqn} zu verbergen.\\
+\item Der Erzeugungsmechanismus soll gegen den \"Uberlauf der \gls{sqn} (\textit{''Wrap around Protection''}) gesch\"utzt sein, da sonst bereits verwendete Schl\"ussel erneut verwendet werden k\"onnten. 
+\end{enumerate}
+
 \glsreset{suci}
 \subsubsection{\gls{suci}}
 
 \glsreset{supi}
 \subsubsection{\gls{supi}}
+
+\glsreset{xmac}
+\subsubsection{\gls{xmac}}
 
 \glsreset{xres}
 \subsubsection{\gls{xres}}
