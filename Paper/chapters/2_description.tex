@@ -95,6 +95,10 @@ Die \gls{sidf} gerechnet die Benutzerkennung f\"ur den \gls{udm} und die \gls{ar
 
 \glsreset{ak}
 \subsubsection{\gls{ak}}
+Der \gls{ak} hat eine L\"ange von 48 Bits und wird zum verschl\"usseln der \gls{sqn} verwendet. %3GPP TS 33.102 V15.1.0 Page 32
+L\"asst die \gls{sqn} keine R\"uckschl\"usse auf die Identit\"at oder Position der Nutzers zu so kann der \gls{ak} auch auf 0 gesetzt werden. %3GPP TS 33.102 V15.1.0 Page 25
+
+Der \gls{ak} wird mit der \textit{''Key generating function''} f5 berechnet. Diese Funktion bekommt \gls{rand} als Eingabe und ist von \gls{k} abh\"angig. %3GPP TS 33.102 V15.1.0 Page 26
 
 \glsreset{amf}
 \subsubsection{\gls{amf}}
@@ -112,9 +116,23 @@ Zum Beispiel k\"onnten mehrere Authentifikations-Algorithmen unterst\"utzt werde
 
 \glsreset{autn}
 \subsubsection{\gls{autn}}
+Der \gls{autn} besteht aus den drei Komponenten \gls{sqn}$ \oplus $\gls{ak}, \gls{amf} und \gls{mac}.
+
+\begin{itemize}
+\item Das \gls{amf} wird ben\"otigt um \gls{mac} zu berechen und um providerspezifische Anpassungen vorzunehmen.
+\item Der \gls{mac} wird ben\"otigt um ihn mit dem \gls{xmac} zu vergleichen.
+\item Die \gls{sqn}$ \oplus $\gls{ak} soll die \gls{sqn} \"ubermitte\"ln.
+Sie wird mit dem \gls{ak} verschl\"usselt um die Identit\"at und Position der Benutzers nicht preiszugeben.
+Ist \gls{ak} = 0, dann kann davon ausgegangen werden dass die \gls{sqn} alleine weder Identit\"at noch Position des Benutzers preisgibt.
+\end{itemize}
 
 \glsreset{ck}
 \subsubsection{\gls{ck}}
+Der \gls{ck} ist ein 128 Bit langer Schl\"ussel. %3GPP TS 33.102 V15.1.0 Page 32
+Er wird von der \textit{''Key generating function''} f3 berechnet.
+Diese Funktion ist von \gls{k} abh\"angig und bekommt \gls{rand} als Eingabe. %3GPP TS 33.102 V15.1.0 Page 26
+
+Der \gls{ck} und der \gls{ik} werden ben\"otigt um \gls{k-ausf} zu berechnen.
 
 \glsreset{f12345}
 \subsubsection{\gls{f12345}}
@@ -138,6 +156,11 @@ Falls \gls{sqn} keine R\"uckschl\"usse auf die Identit\"at oder Position des Ben
 
 \glsreset{ik}
 \subsubsection{\gls{ik}}
+Der \gls{ik} ist ein 128 Bit langer Schl\"ussel. %3GPP TS 33.102 V15.1.0 Page 32
+Er wird von der \textit{''Key generating function''} f4 berechnet.
+Diese Funktion ist von \gls{k} abh\"angig und bekommt \gls{rand} als Eingabe. %3GPP TS 33.102 V15.1.0 Page 26
+
+Der \gls{ik} wird zusammen mit dem \gls{ck} ben\"otigt um \gls{k-ausf} zu berechnen.
 
 \glsreset{k}
 \subsubsection{\gls{k}}
@@ -155,6 +178,10 @@ Er wird f\"ur die Generierung von \gls{ak}, \gls{ck}, \gls{ik} \gls{res} bzw. \g
 
 \glsreset{mac}
 \subsubsection{\gls{mac}}
+Der \gls{mac} hat eine L\"ange von 64 Bits und wird, wie auch der \gls{xmac}, mit der \textit{''Message authentication function''} f1 berechnet. %3GPP TS 33.102 V15.1.0 Page 32
+Die Funktion f1 ist von \gls{k} abh\"angig und bekommt als Eingabe die Konkatenation von \gls{sqn}, \gls{rand} und \gls{amf} (\gls{sqn} || \gls{rand} || \gls{amf}). %3GPP TS 33.102 V15.1.0 Page 26
+
+Der \gls{mac} wird von der \gls{udm}/\gls{arpf} berechnet und an die \gls{ausf} geschickt, damit er im weiteren Verlauf des Protokolls vom \gls{ue} mit dem \gls{xmac} vergleichen werden kann.
 
 \glsreset{rand}
 \subsubsection{\gls{rand}}
@@ -166,6 +193,12 @@ Sie wird vom \gls{udm}/\gls{arpf} erzeugt und an das \gls{ue} weitergeleitet. Di
 
 \glsreset{res}
 \subsubsection{\gls{res}}
+Die \gls{res} hat eine variable L\"ange von bis zu 416 Bytes. %3GPP TS 33.102 V15.1.0 Page 32
+Sie wird von dem \gls{ue} mit der \textit{''Message authentication function''} f2 berechnet.
+Deise Funktion bekommt \gls{rand} als Eingabe und ist von \gls{k} abh\"angig. %3GPP TS 33.102 V15.1.0 Page 26
+
+Die \gls{res} wird von der \gls{ausf} mit der \gls{xres} verglichen.
+Stimmen sie nicht \"uberein so bricht die \gls{ausf} die Authentifizierung ab. %3GPP TS 33.501 V15.34.1 Page 45
 
 \glsreset{res*}
 \subsubsection{\gls{res*}}
@@ -193,9 +226,21 @@ F\"ur die Generierugn der \gls{sqn} muss das \gls{udm}/\gls{arpf} folgende Bedin
 
 \glsreset{xmac}
 \subsubsection{\gls{xmac}}
+Der \gls{xmac} hat eine L\"ange von 64 Bits und wird wie auch der \gls{mac} mit der Funktion f1 berechnet. %3GPP TS 33.102 V15.1.0 Page 32
+Die \textit{''Message authentication function''} f1 ist von \gls{k} abh\"angig und bekommt als Eingabe die Konkatenation von \gls{sqn}, \gls{rand} und \gls{amf} (\gls{sqn} || \gls{rand} || \gls{amf}). %3GPP TS 33.102 V15.1.0 Page 27
+
+Der \gls{xmac} wird von dem \gls{ue} berechnet und mit dem \gls{mac} verglichen. 
+Den \gls{mac} hat das \gls{ue} bereits von der \gls{seaf} erhalten.
+Stimmen \gls{mac} und \gls{xmac} nicht \"uberein, so soll das \gls{ue} die Authentifizierung abbrechen. %3GPP TS 33.102 V15.1.0 Page 27
 
 \glsreset{xres}
 \subsubsection{\gls{xres}}
+Die \gls{xres} hat eine variable L\"ange von bis zu 416 Bytes. %3GPP TS 33.102 V15.1.0 Page 32
+Sie wird, wie auch die \gls{res}, mit der \textit{''Message authentication function''} f2 berechnet. 
+Diese Funktion ist von \gls{k} abh\"angig undbekommt \gls{rand} als Eingabe. %3GPP TS 33.102 V15.1.0 Page 26
+
+Die \gls{ausf} vergleicht \gls{res} und \gls{xres} miteinander.
+Stimmen sie nicht \"uberein so bricht die \gls{ausf} die Authentifizierung ab. %3GPP TS 33.501 V15.34.1 Page 45
 
 \glsreset{xres*}
 \subsubsection{\gls{xres*}}
@@ -207,6 +252,9 @@ F\"ur die Generierugn der \gls{sqn} muss das \gls{udm}/\gls{arpf} folgende Bedin
 
 \glsreset{abba}
 \subsubsection{\gls{abba}}
+
+\glsreset{auts}
+\subsubsection{\gls{auts}}
 
 \glsreset{ng-ksi}
 \subsubsection{\gls{ng-ksi}}
