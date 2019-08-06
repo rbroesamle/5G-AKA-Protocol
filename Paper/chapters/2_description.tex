@@ -69,6 +69,7 @@ Die \gls{sidf} gerechnet die Benutzerkennung f\"ur den \gls{udm} und die \gls{ar
 \glsunset{k}
 \glsunset{k-ausf}
 \glsunset{k-seaf}
+\glsunset{kdf}
 \glsunset{mac}
 \glsunset{rand}
 \glsunset{res}
@@ -150,9 +151,19 @@ Falls \gls{sqn} keine R\"uckschl\"usse auf die Identit\"at oder Position des Ben
 
 \glsreset{hres*}
 \subsubsection{\gls{hres*}}
+\gls{hres*} ist der Hash von \gls{res*}.
+Er wird von der \gls{seaf} mit Hilfe des SHA-256-Algorithmus berechnet. %3GPP TS 33.501 V15.34.1 Page 155
+Eingabe des SHA-256-Algorithmus ist die Konkatenation von \gls{rand} und \gls{res*} (\gls{rand} || \gls{res*}).
+
+\gls{hres*} setzt sich aus den 128 \textit{''least significant''} Bits von der Ausgabe des SHA-256 zusammen.
 
 \glsreset{hxres*}
 \subsubsection{\gls{hxres*}}
+\gls{hxres*} ist der Hash von \gls{xres*}.
+Er wird von der \gls{ausf} mit Hilfe des SHA-256-Algorithmus berechnet. %3GPP TS 33.501 V15.34.1 Page 155
+Eingabe des SHA-256-Algorithmus ist die Konkatenation von \gls{rand} und \gls{xres*} (\gls{rand} || \gls{xres*}).
+
+\gls{hxres*} setzt sich aus den 128 \textit{''least significant''} Bits von der Ausgabe des SHA-256 zusammen.
 
 \glsreset{ik}
 \subsubsection{\gls{ik}}
@@ -172,9 +183,48 @@ Er wird f\"ur die Generierung von \gls{ak}, \gls{ck}, \gls{ik} \gls{res} bzw. \g
 
 \glsreset{k-ausf}
 \subsubsection{\gls{k-ausf}}
+\gls{k-ausf} l\"asst sich mit Hilfe der \gls{kdf} berechnen.
+Dabei sind folgende Werte Eingabeparameter der \gls{kdf}: %3GPP TS 33.501 V15.34.1 Page 154
+\begin{itemize}
+\item KEY = Konkatenation von \gls{ck} und \gls{ik} (\gls{ck} || \gls{ik})
+\item Fc = 0x6A
+\item P0 = \gls{sn-name}
+\item P1 = Konkatenation von \gls{sqn} und \gls{ak} (\gls{sqn} || \gls{ak}).
+\end{itemize}
+Die Ausgabe der \gls{kdf} ist der \gls{k-ausf}.
+
+\gls{k-ausf} wird von der \gls{arpf} und dem \gls{ue} berechnet und wird f\"ur die Berechnung von \gls{k-seaf} ben\"otigt.
 
 \glsreset{k-seaf}
 \subsubsection{\gls{k-seaf}}
+\gls{k-seaf} wird von der \gls{ausf} und dem \gls{ue} berechnet.
+Er l\"asst sich mit Hilfe der \gls{kdf} berechnen.
+Dabei sind folgende Werte Eingabeparameter der \gls{kdf}: %3GPP TS 33.501 V15.34.1 Page 155
+\begin{itemize}
+\item KEY = \gls{k-ausf}
+\item Fc = 0x6C
+\item P0 = \gls{sn-name}
+\end{itemize}
+Die Ausgabe der \gls{kdf} ist der \gls{k-seaf}.
+
+\glsreset{kdf}
+\subsubsection{\gls{kdf}}
+Die \gls{kdf} wird f\"ur die Berechnung von \gls{k-ausf}, \gls{k-seaf} und \gls{res*} bzw. \gls{xres*} ben\"otigt.
+
+Die Eingabeparameter der \gls{kdf} sind KEY, Fc, P0, $ \dots $, Pn und optional auch L0, $ \dots $, Ln.
+
+Um den Schl\"ussel zu berechnen muss zuerst der Wert S berechnet werden. %3GPP TS 33.220 V15.4.0 Page 46
+S ist von den Eingabeparametern Fc und P1,$ \dots $, Pn abh\"angig.
+Er l\"asst sich folgenderma{\ss}en zusammensetzen: 
+
+S = Fc || P0 || L0 || P1 || L1 || $ \dots $ || Pn || Ln 
+
+Die L\"ange von allen P1, $ \dots $, Pn ist durch 8 teilbar und L1, $ \dots $, Ln sind genau 16 Bit gro{\ss} und geben die L\"angen der Parameter P1, $ \dots $, Pn an. 
+Das hei{\ss}t, dass Li die Anzahl der Bytes, die mindestens ben\"otigt werden um Pi zu speichern, bin\"ar in 16 Bits kodiert. \\
+Zum Beispiel: Ist P0 16 Bit und P1 24 Bit lang, dann hat L0 den Wert 0x02 und L1 den Wert 0x03.
+
+Die Ausgabe der \gls{kdf} ist das Ergebnis folgender Rechnung: \\
+Ausgabe = HMAC-SHA-256(KEY, S) \\
 
 \glsreset{mac}
 \subsubsection{\gls{mac}}
@@ -202,6 +252,19 @@ Stimmen sie nicht \"uberein so bricht die \gls{ausf} die Authentifizierung ab. %
 
 \glsreset{res*}
 \subsubsection{\gls{res*}}
+\gls{res*} l\"asst sich, wie auch \gls{xres*}, mit Hilfe der \gls{kdf} berechnen.
+Dabei sind folgende Werte Eingabeparameter der \gls{kdf}: %3GPP TS 33.501 V15.34.1 Page 155
+\begin{itemize}
+\item KEY = Konkatenation von \gls{ck} und \gls{ik} (\gls{ck} || \gls{ik})
+\item Fc = 0x6B
+\item P0 = \gls{sn-name}
+\item P1 = \gls{rand}
+\item P2 = \gls{res}
+\end{itemize}
+
+\gls{res*} setzt sich aus den 128 \textit{''least significant''} Bits von der Ausgabe der \gls{kdf} zusammen.
+\gls{res*} wird f\"ur die Berechnung von \gls{hres*} ben\"otigt.
+Es wird vom \gls{ue} berechnet.
 
 \glsreset{sn-name}
 \subsubsection{\gls{sn-name}}
@@ -244,6 +307,20 @@ Stimmen sie nicht \"uberein so bricht die \gls{ausf} die Authentifizierung ab. %
 
 \glsreset{xres*}
 \subsubsection{\gls{xres*}}
+\gls{xres*} l\"asst sich, wie auch \gls{res*}, mit Hilfe der \gls{kdf} berechnen.
+Dabei sind folgende Werte Eingabeparameter der \gls{kdf}: %3GPP TS 33.501 V15.34.1 Page 155
+\begin{itemize}
+\item KEY = Konkatenation von \gls{ck} und \gls{ik} (\gls{ck} || \gls{ik})
+\item Fc = 0x6B
+\item P0 = \gls{sn-name}
+\item P1 = \gls{rand}
+\item P2 = \gls{xres}
+\end{itemize}
+
+\gls{xres*} setzt sich aus den 128 \textit{''least significant''} Bits von der Ausgabe der \gls{kdf} zusammen.
+\gls{xres*} wird f\"ur die Berechnung von \gls{hxres*} ben\"otigt.
+Es wird von der \gls{arpf} berechnet.
+
 
 
 
