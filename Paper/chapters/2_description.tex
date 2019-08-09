@@ -53,7 +53,6 @@ Die \gls{sidf} gerechnet die Benutzerkennung (\glsunset{supi}\gls{supi}) f\"ur d
 
 
 \subsection{Wichtige Definitionen}
-\glsunset{5g-av}
 \glsunset{5g-guti}
 \glsunset{5g-he-av}
 \glsunset{5g-se-av}
@@ -86,17 +85,31 @@ Die \gls{sidf} gerechnet die Benutzerkennung (\glsunset{supi}\gls{supi}) f\"ur d
 \glsunset{xres}
 \glsunset{xres*}
 
-\glsreset{5g-av}
-\subsubsection{\gls{5g-av}}
-
 \glsreset{5g-guti}
 \subsubsection{\gls{5g-guti}}
+Der \gls{5g-guti} kann wie auch der \gls{suci}, f\"ur die Initiierung der Authentifizierung verwendet werden.
+Er besteht aus zwei Teilen mit denen man das \gls{amf}, welches den \gls{5g-guti} erstellt hat, und das \gls{ue}, welches dem \gls{5g-guti} zugeordnet wurde, eindeutig identifizieren kann. %3GPP TS 23.003 V15.7.0 Page 35
+Diese Teile sind der \gls{guami} und der \gls{5g-tmsi}.
+
+\gls{5g-guti} = \gls{guami} || \gls{5g-tmsi}
+
+\gls{guami} = \gls{mcc} || \gls{mnc} || AMF Identifier
+
+AMF Identifier = AMF Region Id || AMF Set Id || AMF Pointer
+
+Der \gls{5g-tmsi} hat eine L\"ange von 32 Bits, die AMF Region Id hat eine L\"ange von 8 Bits, die AMF Set Id hat eine L\"ange von 10 Bits und der AMF Pointer hat eine L\"ange von 6 Bits. %3GPP TS 23.003 V15.7.0 Page 36
 
 \glsreset{5g-he-av}
 \subsubsection{\gls{5g-he-av}}
+Der \gls{5g-he-av} wird von dem \gls{udm} erstellt und an die \gls{ausf} geschickt.
+
+Er beinhaltet \gls{rand}, \gls{autn}, \gls{xres*} und \gls{k-ausf}. %3GPP TS 33.501 V15.34.1 Page 44
 
 \glsreset{5g-se-av}
 \subsubsection{\gls{5g-se-av}}
+Der \gls{5g-se-av} wird von der \gls{ausf} erstellt und an die \gls{seaf} geschickt.
+
+Er beinhaltet \gls{rand}, \gls{autn} und \gls{hxres*}. %3GPP TS 33.501 V15.34.1 Page 44
 
 \glsreset{ak}
 \subsubsection{\gls{ak}}
