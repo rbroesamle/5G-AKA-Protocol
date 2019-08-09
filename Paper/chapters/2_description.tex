@@ -47,10 +47,9 @@ Sie kommuniziert mit der \gls{seaf} und validiert die Antwort des \gls{ue} f\"ur
 
 Das \gls{udm} ist, wie auch die \gls{ausf} Teil des \textit{''Home Environment''}.
 Grunds\"atzlich funktioniert es jedoch nicht ohne die \gls{arpf} und die \gls{sidf}.
-Daher wird im Weiteren Verlauf oft die Abk\"urzung \gls{udm}/\gls{arpf}/\gls{sidf} verwendet.
 
 Das \gls{udm} und die \gls{arpf} generieren Authentifizierungsvektoren aus den Schl\"usseln, die sie mit dem \gls{usim} teilen.
-Die \gls{sidf} gerechnet die Benutzerkennung f\"ur den \gls{udm} und die \gls{arpf} aus einer verschl\"usselten Benutzerkennung, die sie von dem \gls{ausf} erh\"alt.
+Die \gls{sidf} gerechnet die Benutzerkennung (\glsunset{supi}\gls{supi}) f\"ur den \gls{udm} und die \gls{arpf} aus einer verschl\"usselten Benutzerkennung (\glsunset{suci}\gls{suci}), die sie von dem \gls{ausf} erh\"alt.
 
 
 \subsection{Wichtige Definitionen}
@@ -66,18 +65,23 @@ Die \gls{sidf} gerechnet die Benutzerkennung f\"ur den \gls{udm} und die \gls{ar
 \glsunset{hres*}
 \glsunset{hxres*}
 \glsunset{ik}
+\glsunset{imsi}
 \glsunset{k}
 \glsunset{k-ausf}
 \glsunset{k-seaf}
 \glsunset{kdf}
 \glsunset{mac}
+\glsunset{mcc}
+\glsunset{mnc}
 \glsunset{rand}
 \glsunset{res}
 \glsunset{res*}
+\glsunset{sidf}
 \glsunset{sn-name}
 \glsunset{sqn}
 \glsunset{suci}
 \glsunset{supi}
+\glsunset{supi-type}
 \glsunset{xmac}
 \glsunset{xres}
 \glsunset{xres*}
@@ -117,7 +121,10 @@ Zum Beispiel k\"onnten mehrere Authentifikations-Algorithmen unterst\"utzt werde
 
 \glsreset{autn}
 \subsubsection{\gls{autn}}
-Der \gls{autn} besteht aus den drei Komponenten \gls{sqn}$ \oplus $\gls{ak}, \gls{amf} und \gls{mac}.
+Der \gls{autn} besteht aus den drei Komponenten \gls{sqn}$ \oplus $\gls{ak}, \gls{amf} und \gls{mac}. 
+Er ist wie folgt aufgebaut: %3GPP TS 33.102 V15.1.0 Page 25
+
+\gls{autn} = \gls{sqn}$ \oplus $\gls{ak} || \gls{amf} || \gls{mac}
 
 \begin{itemize}
 \item Das \gls{amf} wird ben\"otigt um \gls{mac} zu berechen und um providerspezifische Anpassungen vorzunehmen.
@@ -172,6 +179,14 @@ Er wird von der \textit{''Key generating function''} f4 berechnet.
 Diese Funktion ist von \gls{k} abh\"angig und bekommt \gls{rand} als Eingabe. %3GPP TS 33.102 V15.1.0 Page 26
 
 Der \gls{ik} wird zusammen mit dem \gls{ck} ben\"otigt um \gls{k-ausf} zu berechnen.
+
+\glsreset{imsi}
+\subsubsection{\gls{imsi}}
+Die \gls{imsi} ist bis zu 15 Zeichen lang und besteht aus dem \gls{mcc}, dem \gls{mnc} und der \gls{msin}. %3GPP TS 23.003 V15.7.0 Page 26
+
+\gls{imsi} = \gls{mcc} || \gls{mnc} || \gls{msin}
+
+Die \gls{msin} ist bis zu 9 Zeichen lang und identifiziert den Benutzer eindeutig. %3GPP TS 23.003 V15.7.0 Page 26
 
 \glsreset{k}
 \subsubsection{\gls{k}}
@@ -232,6 +247,17 @@ Der \gls{mac} hat eine L\"ange von 64 Bits und wird, wie auch der \gls{xmac}, mi
 Die Funktion f1 ist von \gls{k} abh\"angig und bekommt als Eingabe die Konkatenation von \gls{sqn}, \gls{rand} und \gls{amf} (\gls{sqn} || \gls{rand} || \gls{amf}). %3GPP TS 33.102 V15.1.0 Page 26
 
 Der \gls{mac} wird von der \gls{udm}/\gls{arpf} berechnet und an die \gls{ausf} geschickt, damit er im weiteren Verlauf des Protokolls vom \gls{ue} mit dem \gls{xmac} vergleichen werden kann.
+
+\glsreset{mcc}
+\subsubsection{\gls{mcc}}
+Der \gls{mcc} ist drei Zeichen lang und identifiziert das Land in dem sich der Provider befindet eindeutig. %3GPP TS 23.003 V15.7.0 Page 26
+
+\glsreset{mnc}
+\subsubsection{\gls{mnc}}
+Der \gls{mnc} ist zwei oder drei Zeichen lang. %3GPP TS 23.003 V15.7.0 Page 26
+Die genaue L\"ange ist vom \gls{mcc} abh\"angig und somit von Land zu Land unterschiedlich.
+Der \gls{mnc} und der \gls{mcc} zusammen identifizieren den Provider eindeutig.
+
 
 \glsreset{rand}
 \subsubsection{\gls{rand}}
@@ -295,9 +321,62 @@ F\"ur die Generierugn der \gls{sqn} muss das \gls{udm}/\gls{arpf} folgende Bedin
 
 \glsreset{suci}
 \subsubsection{\gls{suci}}
+Der \gls{suci} ist die verschl\"usselte Version des \gls{supi}.
+Er l\"asst sich mit der \gls{sidf} in den \gls{supi} umwandeln.
+
+Er ist wie folgt aufgebaut: %3GPP TS 23.003 V15.7.0 Page 27
+
+\gls{suci} = \gls{supi-type} || Home Network Identifier || Routing Indicator || Protection Scheme Id || Home Network Public Key Id || Scheme Output
+
+\begin{itemize}
+\item Der Home Network Identifier ist von dem \gls{supi-type} abh\"angig.
+\begin{itemize}
+\item Wenn der \gls{supi-type} den \gls{imsi} angibt, dann entspricht der Home Network Identifier dem \gls{mcc} gefolgt von dem \gls{mnc}. (Home Network Identifier = \gls{mcc} || \gls{mnc})
+\item Wenn der \gls{supi-type} den Network Specific Identifier angibt, dann entspricht der Home Network Identifier einer \"ahnichen Form des Network Access Identifiers, wie er beim \gls{supi} verwendet wird. (Home Network Identifier = username@realm)
+Er ist genauer im Dokument IETF RFC 7542 spezifiziert. %IETF RFC 7542 Page 10 fort folgend
+\end{itemize}
+\item Der Routing Indicator besteht aus 1 bis zu 4 Zeichen. %3GPP TS 23.003 V15.7.0 Page 28
+Er erlaubt es der \gls{seaf} zusammen mit dem Home Network Identifier eine Verbindung mit der korrekten \gls{ausf} aufzubauen.
+Falls kein Routing Indicator konfiguriert ist soll er auf 0 gesetzt werden.
+\item Der Protection Scheme Identifier kann Werte von 0 bis 15 annehmen.
+Die genaue Definition der einzelnen Algorithmen ist im Annex C des 3GPP TS 33.501 V15.34.1 zu finden. %3GPP TS 33.501 V15.34.1 Page 168
+\begin{itemize}
+\item Der Wert 0 bedeutet, dass das Null Scheme verwendet wird.
+\item Der Wert 1 bedeutet, dass das Profile A verwendet wird.
+\item Der Wert 2 bedeutet, dass das Profile B verwendet wird.
+\item Die Werte 3 bis 11 sind f\"ur zuk\"unftige Spezifikationen reserviert.
+\item Die Werte 12 bis 15 sind f\"ur providerspezifische Algorithmen reserviert.
+\end{itemize}
+\item Der Home Network Public Key Identifier kann Werte von 0 bis 255 annehmen.
+Er wird genutzt den Public Key zu identifizieren, der f\"ur die Verschl\"usselung des \gls{supi} verwendet wird.
+\item Der Scheme Output ist die Ausgabe des Verschl\"usselungs-Algorithmus.
+Die genaue Definition des Scheme Outputs ist im Annex C des 3GPP TS 33.501 V15.34.1 zu finden. %3GPP TS 33.501 V15.34.1 Page 168
+\end{itemize}
 
 \glsreset{supi}
 \subsubsection{\gls{supi}}
+Der \gls{supi} ist f\"ur jeden Nutzer global eindeutig. 
+Er ist wie folgt aufgebaut: %3GPP TS 23.003 V15.7.0 Page 27
+
+\gls{supi} = \gls{supi-type} || Home Network Identifier
+
+Der Identifier ist von dem \gls{supi-type} abh\"angig und kann folgende Werte annehmen:
+
+\begin{itemize}
+\item Wenn der \gls{supi-type} den \gls{imsi} angibt, dann entspricht der Home Network Identifier dem \gls{imsi}. (Home Network Identifier = \gls{imsi})
+\item Wenn der \gls{supi-type} den Network Specific Identifier angibt, dann entspricht der Home Network Identifier dem Network Access Identifier. (Home Network Identifier = Network Access Identifier)
+Der Network Access Identifier hat die Form $ username@realm $. 
+Er ist genauer im Dokument IETF RFC 7542 spezifiziert. %IETF RFC 7542 Page 10 fort folgend
+\end{itemize}
+
+\glsreset{supi-type}
+\subsubsection{\gls{supi-type}}
+Der \gls{supi-type} kann Werte von 0 bis 7 annehmen. %3GPP TS 23.003 V15.7.0 Page 27
+\begin{itemize}
+\item Der Wert 0 bedeutet, dass der Home Network Identifier den \gls{imsi} angibt.
+\item Der Wert 1 bedeutet, dass der Home Network Identifier den Network Specific Identifier angibt.
+\item Die Werte 2 bis 7 sind f\"ur zuk\"unftige Spezifikation reserviert.
+\end{itemize}
 
 \glsreset{xmac}
 \subsubsection{\gls{xmac}}
