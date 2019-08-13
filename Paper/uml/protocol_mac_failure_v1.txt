@@ -31,8 +31,7 @@ autonumber 11 "<b>[0]"
 SEAF -> UE : Authentication Request\n//**(RAND, AUTN)**//
 
 rnote <<note>> <<black>> over UE
-**[12]** Calculate
-Authentication Response
+**[12]** Calculate RES*
 end note
 
 rnote <<note>> <<red>> over UE

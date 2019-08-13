@@ -5,7 +5,6 @@ Das 5G-AKA-Protokoll ist eines von mehreren Protokollen des 5G-Standards.
 Vor Allem das EAP-AKA-Protokoll und das 5G-AKA-Protokoll sind f\"ur den sicheren Austausch eines Schl\"ussels zust\"andig. 
 Bei beiden Protokollen ist der erste Teil der Gleiche bis bei dem Provider eines der Protokolle ausgew\"ahlt wird. %3GPP TS 33.501 V15.34.1 Page 40
 Bei beiden Protokollen ist auch der Authentifizierungsvorgang sehr \"ahnlich, wobei jedoch der das 5G-AKA-Protokoll das EAP-AKA-Protokoll darum erweitert, dass es dem Provider, ''home network'' genannt, eine erfolgreiche Authentifizierung nachweist. %3GPP TS 33.501 V15.34.1 Page 43
-Daher wird in dieser Ausarbeitung haupts\"achlich auf das 5G-AKA-Protokoll eingegangen.
 
 Das 5G-AKA-Protokoll wird gr\"o{\ss}tenteils in der Spezifikation TS 33.501 des 3GPP beschrieben. %3GPP TS 33.501 V15.34.1
 Dabei wird die zurzeit neueste Version V15.34.1 herangezogen.
@@ -398,7 +397,7 @@ Die \textit{''Message authentication function''} f1 ist von \gls{k} abh\"angig u
 
 Der \gls{xmac} wird von dem \gls{ue} berechnet und mit dem \gls{mac} verglichen. 
 Den \gls{mac} hat das \gls{ue} bereits von der \gls{seaf} erhalten.
-Stimmen \gls{mac} und \gls{xmac} nicht \"uberein, so soll das \gls{ue} die Authentifizierung abbrechen. %3GPP TS 33.102 V15.1.0 Page 27
+Stimmen \gls{mac} und \gls{xmac} nicht \"uberein, so ist die Authentifizierung fehlgeschlagen. %3GPP TS 33.102 V15.1.0 Page 27
 
 \glsreset{xres}
 \subsubsection{\gls{xres}}
@@ -426,9 +425,6 @@ Dabei sind folgende Werte Eingabeparameter der \gls{kdf}: %3GPP TS 33.501 V15.34
 Es wird von der \gls{arpf} berechnet.
 
 
-
-
-
 \subsection{Weitere Begriffe}
 
 \glsreset{abba}
@@ -440,6 +436,122 @@ Es wird von der \gls{arpf} berechnet.
 \glsreset{ng-ksi}
 \subsubsection{\gls{ng-ksi}}
 
+
+\subsection{Authentifikationsprozedur}
+
+Die \cref{fig:protocol_v1} zeigt eine erfolgreiche Authentifizierung.
+Nach dem Ende der Prozedur haben sich alle Entit\"aten auf den \textit{''Anchor Key''} \gls{k-seaf} geeinigt.
+Dieser wird als Grundlage f\"ur die weitere Kommunikation verwendet.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{uml/protocol_v1.png}
+  \caption{Erfolgreiche Authentifikation}
+  \label{fig:protocol_v1}
+\end{figure}
+
+Die einzelnen Nachrichten lassen sich folgenderma{\ss}en beschreiben: %3GPP TS 33.501 V15.34.1 Page 40 und 44
+
+\begin{enumerate}
+%1
+\item Das \gls{ue} sende in Schritt 1 die \textit{N1 message} an die \gls{seaf} und beginnt damit die Authentifikationsprozedur.
+Diese Nachricht beinhaltet entweder den \gls{suci} oder den \gls{5g-guti}.
+Sie werden sp\"ater von dem \gls{udm}/\gls{arpf} zur Authentifizierung des \gls{ue} verwendet.
+
+%2
+\item Nach dem Empfangen der \textit{N1 message} sendet die \gls{seaf} in Schritt 2 den \textit{Nausf\_UEAuthentication\_ Authenticate Request} an die \gls{ausf}.
+Falls in der \textit{N1 message} der \gls{5g-guti} enthalten ist, dann soll daraus der \gls{supi} abgeleitet und an die \gls{ausf} gesendet werden, ansonsten wird der \gls{suci} weitergeleitet.
+Zus\"atzlich wird noch der \gls{sn-name} mitgesendet.
+Dies ist n\"otig, da das \gls{udm} den \gls{sn-name} f\"ur die Generierung des \gls{5g-he-av} ben\"otigt.
+
+%3
+\item Nach dem Empfangen des \textit{Nausf\_UEAuthentication\_Authenticate Request}s sendet die \gls{ausf} den \textit{Nudm\_UEAuthentication\_Get Request} an das \gls{udm}.
+Er enth\"alt den \gls{suci} oder \gls{supi} und den \gls{sn-name}, den die \gls{ausf} aus \textit{Schritt 2} erhalten hat.
+
+%4
+\item Falls die \gls{ausf} in \textit{Schritt 3} den \gls{suci} an das \gls{udm} gesendet hat, dann wird in diesem Schritt aus dem \gls{suci} der \gls{supi} abgeleitet.
+Hierf\"ur wird die \gls{sidf} verwendet.
+
+%5
+\item In diesem Schritt wird die Authentifikationsmethode ausgew\"ahlt.
+Das \gls{udm} kann zwischen dem EAP-AKA' und dem 5G-AKA Protokoll w\"ahlen.
+Da in dieser Ausarbeitung nur auf das 5G-AKA-Protokoll eingegangen wird wird angenommen das hier immer das 5G-AKA-Protokoll als Authentifikationsmethode gew\"ahlt wird.
+
+%6
+\item In diesem Schritt wird der \gls{5g-he-av} generiert.
+Hierf\"ur wird der \gls{sn-name} und der \gls{supi} ben\"otigt, den das \gls{udm} in \textit{Schritt 3} erhalten oder in \textit{Schritt 4} erzeugt hat.
+
+%7
+\item In diesem Schritt sendet das \gls{udm} die \textit{Nudm\_Authentication\_Get Response} an die \gls{ausf}.
+Sie beinhaltet den \gls{5g-he-av}, der in \textit{Schritt 6} generiert wurde.
+Falls das \gls{udm} in \textit{Schritt 3} den \gls{suci} erhalten und in \textit{Schritt 4} den \gls{supi} erzeugt hat, dann wird der \gls{supi} in der \textit{Nudm\_Authentication\_Get Response} mitgeschickt.
+
+%8
+\item In Schritt 8 wird die \gls{xres*}, die in dem \gls{5g-he-av} aus \textit{Schritt 7} enthalten ist, zwischengespeichert, da sie in \textit{Schritt 16} f\"ur die Verifikation von \gls{res*} ben\"otigt wird.
+Des Weiteren wird auch der \gls{k-ausf}, welcher auch in dem \gls{5g-he-av} enthalten ist, zwischengespeichert.
+
+%9
+\item In diesem Schritt wird aus der \gls{xres*} die \gls{hxres*} gerechnet.
+Des Weiteren wird der \gls{5g-se-av} f\"ur \textit{Schritt 10} aus dem \gls{5g-he-av} berechnet.
+Daf\"ur wird die \gls{xres*} durch die \gls{hxres*} ersetzt und der \gls{k-ausf} entfernt.
+
+%10
+\item Nachdem der \gls{5g-se-av} in \textit{Schritt 9} erzeugt wurde wird er in Schritt 10 mit der \textit{Nausf\_UEAuthentication\_Authenticate Response} an die \gls{seaf} gesendet.
+
+%11
+\item Nach dem Erhalten der \textit{Nausf\_UEAuthentication\_Authenticate Response} wird die \gls{seaf} in Schritt 11 den \textit{Authentication Request}  an das \gls{ue} schicken.
+Er beinhaltet die \gls{rand} und das \gls{autn} den die \gls{seaf} in \textit{Schritt 10} erhalten hat.
+Des Weiteren wird die \gls{hxres*}, die in dem \gls{5g-se-av} enthalten ist bei der \gls{seaf} zwischengespeichert, da sie noch f\"ur \textit{Schritt 14} ben\"otigt wird.
+
+%12
+\item Nachdem das \gls{ue} den \textit{Authentication Request} von der \gls{seaf} erhalten hat wird in Schritt 12 aus der \gls{rand} und dem \gls{autn} die \gls{res*} f\"ur die \textit{Authentication Response} berechnet.
+Es wird auch der \gls{xmac} berechnet und mit dem \gls{mac}, der in dem \gls{autn} enthalten ist, verglichen.
+Stimmen \gls{xmac} und \gls{mac} \"uberein, so wird die Authentifizierung fortgesetzt.
+Stimmen sie nicht \"uberein oder kann der \gls{autn} nicht angenommen werden, so wird die Authentifizierung als Fehlgeschlagen angesehen und es wird bei \cref{fig:protocol_mac_failure_v1} weitergemacht.
+
+%13
+\item In Schritt 13 wird die \gls{res*}, die in \textit{Schritt 12} berechnet wurde, in der \textit{Authentication Response} vom \gls{ue} an die \gls{seaf} gesendet.
+
+%14
+\item Nachdem die \gls{seaf} die \textit{Authentication Response} vom \gls{ue} erhalten hat berechnet sie aus der \gls{res*} die \gls{hres*} und vergleicht sie mit der \gls{hxres*}, die sie in \textit{Schritt 11} zwischengespeichert hat.
+Stimmen sie \"ubereinn so wird bei \textit{Schritt 15} weitergemacht.
+Stimmen sie nicht \"uberein, so wird bei dem Abschnitt \textit{''HRES* failure in \gls{seaf}''} in \cref{fig:protocol_res*_verification_failure_v1} weitergemacht.
+
+%15
+\item In Schritt 15 sendet die \gls{seaf} den \textit{Nausf\_UEAuthentication\_Authenticate Request} an die \gls{ausf}.
+Er beinhaltet die \gls{res*} aus der \textit{Authentication Response}.
+
+%16
+\item Nachdem die \gls{ausf} den \textit{Nausf\_UEAuthentication\_Authenticate Request} erhalten hat vergleicht sie die \gls{res*} mit der \gls{xres*}, die sie in \textit{Schritt 8} zwischengespeichert hat.
+Stimmen sie \"ubereinn so wird bei \textit{Schritt 17} weitergemacht.
+Stimmen sie nicht \"uberein, so wird bei dem Abschnitt \textit{''RES* failure in \gls{seaf}''} in \cref{fig:protocol_res*_verification_failure_v1} weitergemacht.
+
+%17
+\item In Schritt 17 sendet die \gls{ausf} die \textit{Nausf\_UEAuthenticarion\_Authenticate Response} an die \gls{seaf}.
+Sie beinhaltet das Ergebnis des Vergleichs von \gls{res*} und \gls{xres*} aus \textit{Schritt 16} und den \textit{''Anchor Key''} \gls{k-seaf}.
+Wenn die \gls{ausf} in \textit{Schritt 7} den \gls{supi} erhalten hat, dann wird dieser nun auch an die \gls{seaf} weitergeleitet.
+\end{enumerate}
+
+
+\subsection{Fehlgeschlagene Authentifikation}
+
+\subsubsection{Fehlschlag beim Vergleich von \gls{mac} und \gls{xmac}}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{uml/protocol_mac_failure_v1.png}
+  \caption{Fehlschlag beim Vergleich von \gls{mac} und \gls{xmac}}
+  \label{fig:protocol_mac_failure_v1}
+\end{figure}
+
+\subsubsection{Fehlschlag beim Vergleich von \gls{res*} bzw. \gls{hres*} mit \gls{xres*} bzw. \gls{hxres*}}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{uml/protocol_res*_verification_failure_v1.png}
+  \caption{Fehlschlag beim Vergleich von \gls{res*} bzw. \gls{hres*} mit \gls{xres*} bzw. \gls{hxres*}}
+  \label{fig:protocol_res*_verification_failure_v1}
+\end{figure}
 
 
 

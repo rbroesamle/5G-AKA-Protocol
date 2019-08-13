@@ -66,8 +66,7 @@ AUSF -> SEAF : Nausf_UEAuthentication_Authenticate\nResponse //**(5G SE AV)**//
 SEAF -> UE : Authentication Request\n//**(RAND, AUTN)**//
 
 rnote <<note>> over UE
-**[12]** Calculate 
-Authentication Response
+**[12]** Calculate RES*
 end note
 
 autonumber 13 "<b>[0]"

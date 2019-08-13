@@ -24,7 +24,7 @@ participant AUSF
 participant "UDM/ARPF/\nSIDF" as UDM
 
 
-== RES* failure in SEAF ==
+== HRES* failure in SEAF ==
 
 ...
 
