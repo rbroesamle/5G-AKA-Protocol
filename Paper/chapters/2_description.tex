@@ -500,6 +500,7 @@ Daf\"ur wird die \gls{xres*} durch die \gls{hxres*} ersetzt und der \gls{k-ausf}
 
 %10
 \item Nachdem der \gls{5g-se-av} in \textit{Schritt 9} erzeugt wurde wird er in Schritt 10 mit der \textit{Nausf\_UEAuthentication\_Authenticate Response} an die \gls{seaf} gesendet.
+Erh\"alt die \gls{seaf} diese Nachricht nicht, so soll mit \textit{Schritt 2'} von \cref{fig:protocol_res*_verification_failure_v1} fortgefahren werden.
 
 %11
 \item Nach dem Erhalten der \textit{Nausf\_UEAuthentication\_Authenticate Response} wird die \gls{seaf} in Schritt 11 den \textit{Authentication Request}  an das \gls{ue} schicken.
@@ -580,7 +581,24 @@ Die genaue Beschreibung der Re-Authentifizierungsprozedur ist im Dokument TS 24.
   \label{fig:protocol_res*_verification_failure_v1}
 \end{figure}
 
+\begin{enumerate}
+%1'
+\item[1'.] Im Abschnitt \textit{''HRES* failure in SEAF''} wird bei Schritt 1' festgestellt, dass \gls{hres*} und \gls{hxres*}, die in \textit{Schritt 14} verglichen wurden, nicht \"ubereinstimmen. 
+Es wird trotzdem die Nachricht aus \textit{Schritt 15} gesendet und auf die Antwort der \gls{ausf} gewartet. \\
+Im Abschnitt \textit{''RES* failure in AUSF''} wird bei Schritt 1' festgestellt, dass \gls{res*} und \gls{xres*}, die in \textit{Schritt 16} verglichen wurden nicht \"ubereinstimmen.
+Dies wird der \gls{seaf} in \textit{Schritt 17} mit dem \textit{Result} Parameter mitgeteilt.
 
+%2'
+\item[2'.] Im Schritt 2' wird die Authentifizierung als nicht erfolgreich angesehen und es wird entweder eine neue Authentifizierung initiiert oder die Authentifizierung wird abgebrochen.
+Dies ist der Fall wenn der Vergleich aus dem \textit{Schritt 1'} im Abschnitt \textit{''RES* failure in AUSF''} oder im Abschnitt \textit{''HRES* failure in SEAF''} fehlschl\"agt.
+Schl\"agt er in \textit{Schritt 1'} aus Abschnitt \textit{''HRES* failure in SEAF''} fehl, so wird unabh\"angig von dem \textit{Result} Parameter aus \textit{Schritt 17} die Authentifizierung als nicht erfolgreich angesehen.
+Des Weiteren wird die Authentifizierung als nicht erfolgreich angesehen wenn die Nachricht aus \textit{Schritt 10} nicht von der \gls{seaf} erhalten wird.
+Die Authentifizierung wird abgebrochen wenn die \gls{seaf} in \textit{Schritt 1} den \gls{suci} erhalten hat.
+Falls die \gls{seaf} in \textit{Schritt 1} den \gls{5g-guti} erhalten hat, so soll die \textit{Identification procedure} gestartet werden, durch die die \gls{seaf} den \gls{suci} vom \gls{ue} erhalten soll.
+
+%3'
+\item[3'.] Falls in \textit{Schritt 1} die \gls{seaf} den \gls{suci} erhalten hat soll in Schritt 3' die \textit{Authentication Reject} Nachricht an das \gls{ue} gesendet werden.
+\end{enumerate}
 
 
 
