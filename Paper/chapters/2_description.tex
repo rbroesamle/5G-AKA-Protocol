@@ -429,6 +429,14 @@ Es wird von der \gls{arpf} berechnet.
 
 \glsreset{abba}
 \subsubsection{\gls{abba}}
+Der \gls{abba} Parameter soll einen \textit{''Anti-bidding down''}-Schutz f\"ur Sicherheitsfeatures gew\"ahrleisten, die es verhindern sollen, dass \"altere Sicherheitsfeatures verwendet werden obwohl alle Parteien neuere Sicherheitsfeatures unterst\"utzen. %3GPP TS 33.501 V15.34.1 Page 22
+Des Weiteren soll damit angegeben werden welche Sicherheitsfeatures in diesem Netzwerk aktiv sind.
+
+Der \gls{abba} Parameter wird von der \gls{seaf} an das \gls{ue} gesendet.
+Er hat eine variable L\"ange und kann folgende Werte annehmen:
+\begin{itemize}
+\item Zurzeit kann der \gls{abba} Parameter nur den Wert 0x0000 annehmen. Dieser Wert steht f\"ur die bisher definierten Sicherheitsfeatures. %3GPP TS 33.501 V15.34.1 Page 156
+\end{itemize}
 
 \glsreset{auts}
 \subsubsection{\gls{auts}}
