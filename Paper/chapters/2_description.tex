@@ -441,7 +441,7 @@ Er hat eine variable L\"ange und kann folgende Werte annehmen:
 \glsreset{auts}
 \subsubsection{\gls{auts}}
 Die \gls{seaf} erh\"alt den \gls{auts} Parameter von dem \gls{ue} nach einer beim \gls{ue} fehlgeschlagenen Authentifizierung.
-Der \gls{auts} Parameter enth\"alt zwei der \gls{sqn} und dem \gls{mac} \"ahnelnde Werte, die jedoch nicht miteinander in Korelation stehen.
+Der \gls{auts} Parameter enth\"alt zwei der \gls{sqn} und dem \gls{mac} \"ahnelnde Werte, die jedoch nicht miteinander in Korrelation stehen. %3GPP TS 33.102 V15.1.0 Page 27
 
 \gls{auts} = Conc(\gls{sqn}) || MACS
 
@@ -454,6 +454,9 @@ Die \gls{sqn} ist hier die Sequenznummer der \textit{''Mobile Station''}.
 
 \glsreset{ng-ksi}
 \subsubsection{\gls{ng-ksi}}
+Der \gls{ng-ksi} identifiziert den K\textsubscript{AMF} eindeutig.%3GPP TS 33.501 V15.34.1 Page 54
+Er wird von der \gls{seaf} an das \gls{ue} geschickt und wird nach einer erfolgreichen Authentifizierung ben\"otigt um den K\textsubscript{AMF} zu identifizieren.
+Er kann entweder vom Typ \textit{''Native''} oder vom Typ \textit{''Mapped''} sein.%3GPP TS 33.501 V15.34.1 Page 54
 
 
 \subsection{Authentifikationsprozedur}
