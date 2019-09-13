@@ -1,0 +1,58 @@
+@startuml
+
+skinparam SequenceMessageAlignment center
+skinparam SequenceArrowColor Black
+skinparam SequenceLifeLineBorderColor Black
+
+skinparam NoteTextAlignment center
+skinparam NoteBackgroundColor White
+skinparam NoteBorderColor Black
+
+skinparam ParticipantPadding 70
+skinparam ParticipantBorderColor Black
+skinparam ParticipantBackgroundColor White
+
+skinparam Padding 1
+skinparam Shadowing<<note>> false
+skinparam DefaultFontName Helvetica Neue
+
+
+participant UE
+participant eNodeB
+participant MME
+participant HSS
+
+
+autonumber 0 "<b>[0]"
+
+UE <-> eNodeB : RRC Procedure
+
+UE -> eNodeB : Attach Request\n//**(IMSI or GUTI)**//
+
+eNodeB -> MME : Attach Request
+
+MME -> HSS : Auth Request\n//**(IMSI or GUTI, SN-Id)**//
+
+rnote <<note>> over HSS
+**[4]** Generate AV
+end note
+
+autonumber 5 "<b>[0]"
+
+HSS -> MME : Auth Response\n//**(AUTH, XRES, Keys)**//
+
+MME -> UE : Auth Request\n//**(AUTH)**//
+
+rnote <<note>> over UE
+**[7]** Check AUTH
+end note
+
+autonumber 8 "<b>[0]"
+
+UE -> MME : Auth Response\n//**(RES)**//
+
+rnote <<note>> over MME
+**[9]** RES = XRES ? If yes, do key derivation
+end note
+
+@enduml
