@@ -11,7 +11,7 @@ Es ist für den Austausch eines Schlüssels zur weiteren Kommunikation zuständi
 
 Die Entitäten des 4G EPS-AKA Protokolls lassen sich in die drei Teile \textit{User Equipment}, \textit{''Serving Network''} und \textit{''Home Network''} unterteilen.
 Das \gls{ue} ist das \textit{User Equipment} und stellt die Komponenten dar, die sich bei dem Benutzer befinden, z.B. im Smartphone.
-Die \gls{enodeb} und dei \gls{mme} sind Teil des \textit{''Serving Network''} und befinden sich bei dem Netzbetreiber, der das Netzwerk dem Benutzer zur Verfügung stellt.
+Die \gls{enodeb} und die \gls{mme} sind Teil des \textit{''Serving Network''} und befinden sich bei dem Netzbetreiber, der das Netzwerk dem Benutzer zur Verfügung stellt.
 Der \gls{hss} ist Teil des \textit{''Home Network''} und befindet sich bei dem Netzbetreiber, der dem Benutzer z.B. die SIM-Karte ausgestellt hat. %A Comparative Introduction of 4G and 5G Authentication
 
 \subsection{Das Protokoll}
@@ -21,6 +21,45 @@ Der \gls{hss} ist Teil des \textit{''Home Network''} und befindet sich bei dem N
   \includegraphics[width=\textwidth]{uml/4g-protocol_v1.png}
   \caption{Erfolgreiche Authentifikation}
   \label{fig:protocol_v1}
-\end{figure}
+\end{figure} %A Comparative Introduction of 4G and 5G Authentication
+
+\begin{enumerate}
+\setcounter{enumi}{-1}
+%0
+\item Bevor das 4G EPS-AKA Protokoll mit \textit{Schritt 1} starten kann muss die \gls{rrc} Prozedur zwischen dem \gls{ue} und der \gls{enodeb} erfolgreich abgeschlossen sein.
+
+%1
+\item In Schritt 1 schickt das \gls{ue} den \textit{Attach Request} an den \gls{enodeb} und beginnt somit das 4G EPS-AKA Protokoll.
+Die Nachricht enthält entweder die \gls{imsi} oder den \gls{guti} und wird durch das erfolgreiche abschließen der \gls{rrc} Prozedur ausgelöst.
+
+%2
+\item In Schritt 2 wird der \textit{Attach Request} aus \textit{Schritt 1} von der \gls{enodeb} an die \gls{mme} weitergesendet.
+
+%3
+\item In Schritt 3 sendet die \gls{mme} eine \textit{Auth Request} Nachricht an den \gls{hss}.
+Sie enthält entweder die \gls{imsi} oder den \gls{guti}, den die \gls{mme} in \textit{Schritt 2} von der \gls{enodeb} in der \textit{Attach Request} Nachricht erhalten hat und zusätzlich noch die \gls{sn-id} des \textit{''Serving Networks''} zu dem die \gls{mme} gehört.
+
+%4
+\item In Schritt 4 wird aus dem geheimen Schlüssel \textit{K}, den sowohl der \gls{hss} wie auch das \gls{ue} kennen, der \gls{av} generiert.
+Er beinhaltet unteranderem die \gls{xres}, die später mit der Antwort des \gls{ue}, \gls{res}, verglichen werden soll, den \gls{auth}, den das \gls{ue} für die Berechnung der \gls{res} benötigt und kryptographischen Schlüssel die im weiteren Verlauf benötigt werden.
+
+%5
+\item In Schritt 5 wird der in \textit{Schritt 4} generierte \gls{av} mit der \textit{Auth Response} Nachricht an die \gls{mme} gesendet.
+
+%6
+\item In Schritt 6 sendet die \gls{mme} einen \textit{Auth Request} direkt an das \gls{ue}.
+Er enthält den \gls{auth}, den das \gls{ue} zur Berechnung der \gls{res} benötigt.
+
+%7
+\item In Schritt 7 wird der \gls{auth}, den das \gls{ue} von der \gls{mme} erhalten hat überprüft und daraus die \gls{res} berechnet.
+
+%8
+\item In Schritt 8 wird die \gls{res}, die in \textit{Schritt 7} berechnet wurde in einer \textit{Auth Response} Nachricht an die \gls{mme} gesendet.
+
+%9
+\item Nach erhalt der \textit{Auth Response} Nachricht wird in Schritt 9 überprüft ob die \gls{res}, die die \gls{mme} in \textit{Schritt 8} erhalten hat, mit der \gls{xres}, die die \gls{mme} in \textit{Schritt 5} erhalten hat, übereinstimmt.
+Ist dies der Fall, so wird aus den kryptographischen Schlüsseln, die die \gls{mme} ebenfalls in \textit{Schritt 5} erhalten hat, unteranderem der \gls{k-asme} der \gls{asme} berechnet, der beispielsweise für die Berechnung weiterer Schlüssel nach der erfolgreichen Authentifizierung benötigt wird.%3GPP TS 33.401 Page 19
+\end{enumerate}
+
 
 \section{Unterschiede von 4G EPG-AKA und 5G-AKA}

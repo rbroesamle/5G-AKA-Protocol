@@ -52,7 +52,7 @@ autonumber 8 "<b>[0]"
 UE -> MME : Auth Response\n//**(RES)**//
 
 rnote <<note>> over MME
-**[9]** RES = XRES ? If yes, do key derivation
+**[9]** Check if RES = XRES
 end note
 
 @enduml
