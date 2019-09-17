@@ -14,6 +14,10 @@ Das \gls{ue} ist das \textit{User Equipment} und stellt die Komponenten dar, die
 Die \gls{enodeb} und die \gls{mme} sind Teil des \textit{''Serving Network''} und befinden sich bei dem Netzbetreiber, der das Netzwerk dem Benutzer zur Verfügung stellt.
 Der \gls{hss} ist Teil des \textit{''Home Network''} und befindet sich bei dem Netzbetreiber, der dem Benutzer z.B. die SIM-Karte ausgestellt hat. %A Comparative Introduction of 4G and 5G Authentication
 
+\subsection{Ziele}
+
+TODO
+
 \subsection{Das Protokoll}
 
 \begin{figure}[H]
@@ -51,13 +55,13 @@ Er beinhaltet unteranderem die \gls{xres}, die später mit der Antwort des \gls{
 Er enthält den \gls{auth}, den das \gls{ue} zur Berechnung der \gls{res} benötigt.
 
 %7
-\item In Schritt 7 wird der \gls{auth}, den das \gls{ue} von der \gls{mme} erhalten hat überprüft und daraus die \gls{res} berechnet.
+\item Nachdem das \gls{ue} den \gls{auth} Parameter aus \textit{Schritt 6} erhalten hat wird er in Schritt 7 überprüft und daraus die \gls{res} berechnet.
 
 %8
 \item In Schritt 8 wird die \gls{res}, die in \textit{Schritt 7} berechnet wurde in einer \textit{Auth Response} Nachricht an die \gls{mme} gesendet.
 
 %9
-\item Nach erhalt der \textit{Auth Response} Nachricht wird in Schritt 9 überprüft ob die \gls{res}, die die \gls{mme} in \textit{Schritt 8} erhalten hat, mit der \gls{xres}, die die \gls{mme} in \textit{Schritt 5} erhalten hat, übereinstimmt.
+\item Nach Erhalt der \textit{Auth Response} Nachricht wird in Schritt 9 überprüft ob die \gls{res}, die die \gls{mme} in \textit{Schritt 8} erhalten hat, mit der \gls{xres}, die die \gls{mme} in \textit{Schritt 5} erhalten hat, übereinstimmt.
 Ist dies der Fall, so wird aus den kryptographischen Schlüsseln, die die \gls{mme} ebenfalls in \textit{Schritt 5} erhalten hat, unteranderem der \gls{k-asme} der \gls{asme} berechnet, der beispielsweise für die Berechnung weiterer Schlüssel nach der erfolgreichen Authentifizierung benötigt wird.%3GPP TS 33.401 Page 19
 \end{enumerate}
 
