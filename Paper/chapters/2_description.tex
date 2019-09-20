@@ -4,7 +4,7 @@
 Das 5G-AKA-Protokoll ist eines von mehreren Protokollen des 5G-Standards.
 Vor Allem das EAP-AKA-Protokoll und das 5G-AKA-Protokoll sind f\"ur den sicheren Austausch eines Schl\"ussels zust\"andig. 
 Bei beiden Protokollen ist der erste Teil der Gleiche bis bei dem Provider eines der Protokolle ausgew\"ahlt wird. %3GPP TS 33.501 V15.34.1 Page 40
-Bei beiden Protokollen ist auch der Authentifizierungsvorgang sehr \"ahnlich, wobei jedoch der das 5G-AKA-Protokoll das EAP-AKA-Protokoll darum erweitert, dass es dem Provider, ''home network'' genannt, eine erfolgreiche Authentifizierung nachweist. %3GPP TS 33.501 V15.34.1 Page 43
+Bei beiden Protokollen ist auch der Authentifizierungsvorgang sehr \"ahnlich, wobei jedoch der das 5G-AKA-Protokoll das EAP-AKA-Protokoll darum erweitert, dass es dem Provider, \textit{Home Network} genannt, eine erfolgreiche Authentifizierung nachweist. %3GPP TS 33.501 V15.34.1 Page 43
 
 Das 5G-AKA-Protokoll wird gr\"o{\ss}tenteils in der Spezifikation TS 33.501 des 3GPP beschrieben. %3GPP TS 33.501 V15.34.1
 Dabei wird die zurzeit neueste Version V15.34.1 herangezogen.
@@ -31,20 +31,20 @@ In dem \gls{me} werden die Schl\"ussel, die f\"ur die Kommunikation nach dem 5G-
 \glsreset{seaf}
 \subsubsection{\gls{seaf}}
 
-Die \gls{seaf} ist Teil des mit dem \gls{ue} kommunizierenden Netzwerks, auch \textit{''Serving Network''‚} genannt.
+Die \gls{seaf} ist Teil des mit dem \gls{ue} kommunizierenden Netzwerks, auch \textit{Serving Network}, genannt.
 Sie kommuniziert mit dem \gls{ue} und mit dem Provider des Benutzers.
 Nach erfolgreicher Authentifizierung haben das \gls{ue} und die \gls{seaf} beide einen gemeinsamen Schl\"ussel.%3GPP TS 33.501 V15.34.1 Page 37
 
 \glsreset{ausf}
 \subsubsection{\gls{ausf}}
 
-Die \gls{ausf} ist Teil des Providers, bei dem sich der Benutzer die hier verwendete SIM-Karte gekauft hat, auch \textit{''Home Network''} genannt.
+Die \gls{ausf} ist Teil des Providers, bei dem sich der Benutzer die hier verwendete SIM-Karte gekauft hat, auch \textit{Home Network} genannt.
 Sie kommuniziert mit der \gls{seaf} und validiert die Antwort des \gls{ue} f\"ur die \gls{seaf}.
 
 \glsreset{udm}
 \subsubsection{\gls{udm}}
 
-Das \gls{udm} ist, wie auch die \gls{ausf} Teil des \textit{''Home Network''}.
+Das \gls{udm} ist, wie auch die \gls{ausf} Teil des \textit{Home Network}.
 Grunds\"atzlich funktioniert es jedoch nicht ohne die \gls{arpf} und die \gls{sidf}.
 
 Das \gls{udm} und die \gls{arpf} generieren Authentifizierungsvektoren aus den Schl\"usseln, die sie mit dem \gls{usim} teilen.
@@ -162,7 +162,7 @@ Mit diesen Funktionen werden \gls{ak}, \gls{ck}, \gls{ik} \gls{res} bzw. \gls{xr
 Sie berechnet in Abh\"angigkeit von \gls{k} den \gls{mac} bzw. \gls{xmac} und bekommt als Eingabe die Konkatenation von \gls{sqn}, \gls{rand} und \gls{amf} (\gls{sqn} || \gls{rand} || \gls{amf}). \\
 \item f2 ist eine, m\"oglicherweise verk\"urzte, \textit{''Message authentication function''}.
 Sie berechnet in Abh\"angigkeit von \gls{k} die \gls{res} bzw. \gls{xres} und bekommt \gls{rand} als Eingabe.
-\item f3, f4 und f5 sind \textit{''Key generating functions''}.
+\item f3, f4 und f5 sind \textit{''Key generating function''}s.
 f3 berechnet \gls{ck}, f4 berechnet \gls{ik} und f5 berechnet \gls{ak}.
 Alle drei bekomment \gls{rand} als Eingabe und sind abh\"angig von \gls{k}.
 Falls \gls{sqn} keine R\"uckschl\"usse auf die Identit\"at oder Position des Benutzers zul\"asst wird f5 = 0 gesetzt.
@@ -309,13 +309,13 @@ Es wird vom \gls{ue} berechnet.
 Der \gls{sn-name} wird f\"ur die Berechnung von \gls{res*} bzw. \gls{xres*}, \gls{k-ausf} und \gls{k-seaf} ben\"otigt.
 Er hat zwei Zwecke: %3GPP TS 33.501 V15.34.1 Page 39
 \begin{itemize}
-\item Es bindet den \gls{k-seaf}, auch  \textit{''Anchor Key''}  genannt, an die \gls{seaf}, auch \textit{''Serving Network''} genannt, indem es die \gls{sn-id} beinhaltet.
+\item Es bindet den \gls{k-seaf}, auch  \textit{''Anchor Key''}  genannt, an die \gls{seaf}, auch \textit{Serving Network} genannt, indem es die \gls{sn-id} beinhaltet.
 \item Es stellt sicher, dass der \textit{''Anchor Key''} nur f\"ur die Authentifizierung in 5G-Netzwerken verwendbar ist, indem es den Service Code ''5G'' beinhaltet.
 \end{itemize}
 Der \gls{sn-name} ist wie folgt aufgebaut: %3GPP TS 33.501 V15.34.1 Page 39
 
 Er beginnt mit dem Service code ''5G'' gefolgt von dem Trennzeichen '':'' und der \gls{sn-id}.
-Die \gls{sn-id} ist f\"ur jedes \textit{''Serving Network''} eindeutig.
+Die \gls{sn-id} ist f\"ur jedes \textit{Serving Network} eindeutig.
 
 \gls{sn-name} = ''5G'' || '':'' || \gls{sn-id}
 

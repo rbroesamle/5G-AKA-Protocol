@@ -9,10 +9,10 @@ Beide Protokolle sind \textit{Authentication and Key Agreement} Protokolle und h
 Das 4G EPS-AKA Protokoll ist eines von mehreren Protokollen des 4G Standards.
 Es ist für den Austausch eines Schlüssels zur weiteren Kommunikation zuständig.
 
-Die Entitäten des 4G EPS-AKA Protokolls lassen sich in die drei Teile \textit{User Equipment}, \textit{''Serving Network''} und \textit{''Home Network''} unterteilen.
+Die Entitäten des 4G EPS-AKA Protokolls lassen sich in die drei Teile \textit{User Equipment}, \textit{Serving Network} und \textit{Home Network} unterteilen.
 Das \gls{ue} ist das \textit{User Equipment} und stellt die Komponenten dar, die sich bei dem Benutzer befinden, z.B. im Smartphone.
-Die \gls{enodeb} und die \gls{mme} sind Teil des \textit{''Serving Network''} und befinden sich bei dem Netzbetreiber, der das Netzwerk dem Benutzer zur Verfügung stellt.
-Der \gls{hss} ist Teil des \textit{''Home Network''} und befindet sich bei dem Netzbetreiber, der dem Benutzer z.B. die SIM-Karte ausgestellt hat. %A Comparative Introduction of 4G and 5G Authentication
+Die \gls{enodeb} und die \gls{mme} sind Teil des \textit{Serving Network} und befinden sich bei dem Netzbetreiber, der das Netzwerk dem Benutzer zur Verfügung stellt.
+Der \gls{hss} ist Teil des \textit{Home Network} und befindet sich bei dem Netzbetreiber, der dem Benutzer z.B. die SIM-Karte ausgestellt hat. %A Comparative Introduction of 4G and 5G Authentication
 
 \subsection{Ziele}
 
@@ -41,7 +41,7 @@ Die Nachricht enthält entweder die \gls{imsi} oder den \gls{guti} und wird durc
 
 %3
 \item In Schritt 3 sendet die \gls{mme} eine \textit{Auth Request} Nachricht an den \gls{hss}.
-Sie enthält entweder die \gls{imsi} oder den \gls{guti}, den die \gls{mme} in \textit{Schritt 2} von der \gls{enodeb} in der \textit{Attach Request} Nachricht erhalten hat und zusätzlich noch die \gls{sn-id} des \textit{''Serving Networks''} zu dem die \gls{mme} gehört.
+Sie enthält entweder die \gls{imsi} oder den \gls{guti}, den die \gls{mme} in \textit{Schritt 2} von der \gls{enodeb} in der \textit{Attach Request} Nachricht erhalten hat und zusätzlich noch die \gls{sn-id} des \textit{Serving Network}s zu dem die \gls{mme} gehört.
 
 %4
 \item In Schritt 4 wird aus dem geheimen Schlüssel \textit{K}, den sowohl der \gls{hss} wie auch das \gls{ue} kennen, der \gls{av} generiert.
@@ -76,13 +76,13 @@ Das 4G-EPS-AKA Protokoll und das 5G-AKA Protokoll unterscheiden sich in folgende
 In beiden Protokollen beginnt bei dem \gls{ue} die Authentifizierung und ist der symmetrischen Langzeitschlüssel \gls{k} gespeichert.
 
 %Serving Network
-\item Das \textit{''Serving Network''} besteht im 4G EPS-AKA Protokoll aus der \gls{mme}. 
-Die \gls{enodeb} kann auch als Teil des \textit{''Serving Network''}s gesehen werden.
-Im 5G-AKA Protokoll hingegen besteht das \textit{''Serving Network''} nur aus der \gls{seaf}.
+\item Das \textit{Serving Network} besteht im 4G EPS-AKA Protokoll aus der \gls{mme}. 
+Die \gls{enodeb} kann auch als Teil des \textit{Serving Network}s gesehen werden.
+Im 5G-AKA Protokoll hingegen besteht das \textit{Serving Network} nur aus der \gls{seaf}.
 
 %Home Network
-\item Im 4G EPS-AKA Protokoll besteht das \textit{''Home Network''} nur aus dem \gls{hss}.
-Im 5G-AKA Protokoll hingegen gesteht das \textit{''Home Network''} aus der \gls{ausf} und aus dem \gls{udm}/\gls{arpf}/\gls{sidf}.
+\item Im 4G EPS-AKA Protokoll besteht das \textit{Home Network} nur aus dem \gls{hss}.
+Im 5G-AKA Protokoll hingegen gesteht das \textit{Home Network} aus der \gls{ausf} und aus dem \gls{udm}/\gls{arpf}/\gls{sidf}.
 
 %Trust Model
 \item Sowohl im 4G EPS-AKA wie auch im 5G-AKA Protokoll wird für die Authentifizierung der symmetrischer Langzeitschlüssel \gls{k} benötigt.
@@ -93,7 +93,7 @@ Beim 5G-AKA Protokoll ist \gls{k} im \gls{ue} und im \gls{udm}/\gls{arpf} gespei
 \item Jedes \gls{ue} hat eine Zeichenfolge, die es eindeutig identifiziert.
 Diese ist jedoch bei den beiden Protokollen unterschiedlich.
 
-Beim 4G EPS-AKA Protokoll kann bei der Kommunikation zwischen \gls{ue} und \textit{''Serving Network''} die \gls{imsi} oder der \gls{guti} und bei der Kommunikation zwischen \textit{''Serving Network''} und \textit{''Home Network''} nur die \gls{imsi} verwendet werden um das \gls{ue} eindeutig zu identifizieren.
+Beim 4G EPS-AKA Protokoll kann bei der Kommunikation zwischen \gls{ue} und \textit{Serving Network} die \gls{imsi} oder der \gls{guti} und bei der Kommunikation zwischen \textit{Serving Network} und \textit{Home Network} nur die \gls{imsi} verwendet werden um das \gls{ue} eindeutig zu identifizieren.
 
-Beim 5G-AKA Protokoll hingegen kann bei der Kommunikation zwischen \gls{ue} und \textit{''Serving Network''} der \gls{suci} oder der \gls{5g-guti} und bei der Kommunikation zwischen \textit{''Serving Network''} und \textit{''Home Network''} der \gls{suci} oder der \gls{supi} verwendet werden um das \gls{ue} eindeutig zu identifizieren.
+Beim 5G-AKA Protokoll hingegen kann bei der Kommunikation zwischen \gls{ue} und \textit{Serving Network} der \gls{suci} oder der \gls{5g-guti} und bei der Kommunikation zwischen \textit{Serving Network} und \textit{Home Network} der \gls{suci} oder der \gls{supi} verwendet werden um das \gls{ue} eindeutig zu identifizieren.
 \end{itemize}
