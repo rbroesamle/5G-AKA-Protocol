@@ -94,6 +94,25 @@ Beim 5G-AKA Protokoll ist \gls{k} im \gls{ue} und im \gls{udm}/\gls{arpf} gespei
 Diese ist jedoch bei den beiden Protokollen unterschiedlich.
 
 Beim 4G EPS-AKA Protokoll kann bei der Kommunikation zwischen \gls{ue} und \textit{Serving Network} die \gls{imsi} oder der \gls{guti} und bei der Kommunikation zwischen \textit{Serving Network} und \textit{Home Network} nur die \gls{imsi} verwendet werden um das \gls{ue} eindeutig zu identifizieren.
-
 Beim 5G-AKA Protokoll hingegen kann bei der Kommunikation zwischen \gls{ue} und \textit{Serving Network} der \gls{suci} oder der \gls{5g-guti} und bei der Kommunikation zwischen \textit{Serving Network} und \textit{Home Network} der \gls{suci} oder der \gls{supi} verwendet werden um das \gls{ue} eindeutig zu identifizieren.
+
+Beim 5G-AKA Protokoll wird zwischen \gls{ue} und \textit{Serving Network} die Identität des \gls{ue} nur verschlüsselt, in Form des \gls{suci} oder des \gls{5g-guti} versendet. Beim 4G EPS-AKA Protokoll hingegen wird auch die unverschlüsselte \gls{imsi} zwischen \gls{ue} und \textit{Serving Network} versendet.
+
+%SN Identity
+\item Auch das \textit{Serving Network} kann eindeutig identifiziert werden.
+Beim 4G EPS-AKA Protokoll wird das \textit{Serving Network} durch die \gls{sn-id} identifiziert.
+Beim 5G-AKA Protokoll hingegen wird das \textit{Serving Network} durch den \gls{sn-name} identifiziert.
+
+Die \gls{sn-id} und der \gls{sn-name} unterscheiden sich jedoch nur dadurch dass dem \gls{sn-name} zusätzlich noch ''5G:'' vorangestellt wurde.
+
+%Authentication of UE decided by
+\item Die Entscheidung ob die Authentifizierung erfolgreich war wird bei beiden Protokollen unterschiedlich gehandhabt.
+
+Beim 4G EPS-AKA Protokoll entscheidet nur die \gls{mme}, die Teil des \textit{Serving Network}s ist, ob eine Authentifizierung erfolgreich war.
+Die Entscheidung wird somit nur innerhalb des \textit{Serving Network}s getroffen.
+Das \textit{Home Network} ist nicht an der Entscheidung beteiligt und wird auch nicht über den Ausgang der Authentifizierung informiert.
+
+Beim 5G-AKA Protokoll hingegen entscheiden sowohl die \gls{seaf}, die Teil des \textit{Serving Network}s ist, wie auch die \gls{ausf}, die Teil des \textit{Home Network}s ist, ob die Authentifizierung erfolgreich war.
+Die Entscheidung wird somit sowohl vom innerhalb des \textit{Serving Network}s, wie auch innerhalb des \textit{Home Network}s getroffen.
+Des Weiteren benachrichtigt die \gls{ausf} auch das \gls{udm} über den Ausgang der Authentifizierung.
 \end{itemize}
