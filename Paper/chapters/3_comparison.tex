@@ -66,4 +66,34 @@ Ist dies der Fall, so wird aus den kryptographischen Schlüsseln, die die \gls{m
 \end{enumerate}
 
 
-\section{Unterschiede von 4G EPG-AKA und 5G-AKA}
+\section{Unterschiede von 4G EPS-AKA und 5G-AKA}
+
+Das 4G-EPS-AKA Protokoll und das 5G-AKA Protokoll unterscheiden sich in folgenden Aspekten: %A Comparative Introduction of 4G and 5G Authentication
+
+\begin{itemize}
+%User Equipment
+\item Das \gls{ue} hat sowohl bei 4G-EPS-AKA, wie auch bei 5G-AKA den gleichen Namen und ahnliche Aufgaben.
+In beiden Protokollen beginnt bei dem \gls{ue} die Authentifizierung und ist der symmetrischen Langzeitschlüssel \gls{k} gespeichert.
+
+%Serving Network
+\item Das \textit{''Serving Network''} besteht im 4G EPS-AKA Protokoll aus der \gls{mme}. 
+Die \gls{enodeb} kann auch als Teil des \textit{''Serving Network''}s gesehen werden.
+Im 5G-AKA Protokoll hingegen besteht das \textit{''Serving Network''} nur aus der \gls{seaf}.
+
+%Home Network
+\item Im 4G EPS-AKA Protokoll besteht das \textit{''Home Network''} nur aus dem \gls{hss}.
+Im 5G-AKA Protokoll hingegen gesteht das \textit{''Home Network''} aus der \gls{ausf} und aus dem \gls{udm}/\gls{arpf}/\gls{sidf}.
+
+%Trust Model
+\item Sowohl im 4G EPS-AKA wie auch im 5G-AKA Protokoll wird für die Authentifizierung der symmetrischer Langzeitschlüssel \gls{k} benötigt.
+Er ist beim 4G EPS-AKA Protokoll im \gls{ue} und im \gls{hss} gespeichert.
+Beim 5G-AKA Protokoll ist \gls{k} im \gls{ue} und im \gls{udm}/\gls{arpf} gespeichert.
+
+%UE Identity
+\item Jedes \gls{ue} hat eine Zeichenfolge, die es eindeutig identifiziert.
+Diese ist jedoch bei den beiden Protokollen unterschiedlich.
+
+Beim 4G EPS-AKA Protokoll kann bei der Kommunikation zwischen \gls{ue} und \textit{''Serving Network''} die \gls{imsi} oder der \gls{guti} und bei der Kommunikation zwischen \textit{''Serving Network''} und \textit{''Home Network''} nur die \gls{imsi} verwendet werden um das \gls{ue} eindeutig zu identifizieren.
+
+Beim 5G-AKA Protokoll hingegen kann bei der Kommunikation zwischen \gls{ue} und \textit{''Serving Network''} der \gls{suci} oder der \gls{5g-guti} und bei der Kommunikation zwischen \textit{''Serving Network''} und \textit{''Home Network''} der \gls{suci} oder der \gls{supi} verwendet werden um das \gls{ue} eindeutig zu identifizieren.
+\end{itemize}

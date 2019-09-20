@@ -309,15 +309,17 @@ Es wird vom \gls{ue} berechnet.
 Der \gls{sn-name} wird f\"ur die Berechnung von \gls{res*} bzw. \gls{xres*}, \gls{k-ausf} und \gls{k-seaf} ben\"otigt.
 Er hat zwei Zwecke: %3GPP TS 33.501 V15.34.1 Page 39
 \begin{itemize}
-\item Es bindet den \gls{k-seaf}, auch  \textit{''Anchor Key''}  genannt, an die \gls{seaf}, auch \textit{''Serving Network''} genannt, indem es die SN-Id beinhaltet.
+\item Es bindet den \gls{k-seaf}, auch  \textit{''Anchor Key''}  genannt, an die \gls{seaf}, auch \textit{''Serving Network''} genannt, indem es die \gls{sn-id} beinhaltet.
 \item Es stellt sicher, dass der \textit{''Anchor Key''} nur f\"ur die Authentifizierung in 5G-Netzwerken verwendbar ist, indem es den Service Code ''5G'' beinhaltet.
 \end{itemize}
 Der \gls{sn-name} ist wie folgt aufgebaut: %3GPP TS 33.501 V15.34.1 Page 39
 
-Er beginnt mit dem Service code ''5G'' gefolgt von dem Trennzeichen '':'' und der SN-Id.
-Die SN-Id ist f\"ur jedes \textit{''Serving Network''} unterschiedlich.
+Er beginnt mit dem Service code ''5G'' gefolgt von dem Trennzeichen '':'' und der \gls{sn-id}.
+Die \gls{sn-id} ist f\"ur jedes \textit{''Serving Network''} eindeutig.
 
-\gls{sn-name} = ''5G'' || '':'' || SN-Id
+\gls{sn-name} = ''5G'' || '':'' || \gls{sn-id}
+
+\gls{sn-id} = \gls{mcc} || \gls{mnc}
 
 \glsreset{sqn}
 \subsubsection{\gls{sqn}}
