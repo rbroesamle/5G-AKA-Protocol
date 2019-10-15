@@ -1,6 +1,5 @@
 package Implementation.helper;
 
-import javax.xml.bind.DatatypeConverter;
 import java.math.BigInteger;
 
 public class Converter {
@@ -11,16 +10,11 @@ public class Converter {
      * @return A string containing a hex representation of the data
      */
     public static String bytesToHex(byte[] data) {
-        return DatatypeConverter.printHexBinary(data);
-    }
-
-    /**
-     * HEX to bytes
-     * @param data Data
-     * @return A byte array containing the contents of a string in hex representation.
-     */
-    public static byte[] hexToBytes(String data) {
-        return DatatypeConverter.parseHexBinary(data);
+        StringBuilder builder = new StringBuilder();
+        for (byte b : data) {
+            builder.append(String.format("%02X", b));
+        }
+        return builder.toString();
     }
 
     /**

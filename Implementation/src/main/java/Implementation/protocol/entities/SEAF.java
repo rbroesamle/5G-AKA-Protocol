@@ -40,7 +40,9 @@ public class SEAF extends Entity {
             //Received N1 Registration Request
             N1_Registration_Request n1 = (N1_Registration_Request) message;
             UE ue = (UE) sender;
-            System.out.println(getName() + ": Received " + n1.getName() + " from " + ue.getName());
+            if (App.LOG_MESSAGES) {
+                System.out.println(ue.getName() + " -> " + getName() + " : " + n1.getName());
+            }
 
             Nausf_UEAuthentication_Authenticate_Request authRequest = getAuthRequest(n1, ue);
 
@@ -49,7 +51,9 @@ public class SEAF extends Entity {
             //Received Nausf_UEAuthentication_ Authenticate Response
             Nausf_UEAuthentication_Authenticate_Response authResponse = (Nausf_UEAuthentication_Authenticate_Response) message;
             AUSF ausf = (AUSF) sender;
-            System.out.println(getName() + ": Received " + authResponse.getName() + " from " + ausf.getName());
+            if (App.LOG_MESSAGES) {
+                System.out.println(ausf.getName() + " -> " + getName() + " : " + authResponse.getName());
+            }
 
             if (checkExpiryTimer(authResponse, ausf)) {
                 Authentication_Request authRequest = getAuthRequest(authResponse, ausf);
@@ -60,15 +64,21 @@ public class SEAF extends Entity {
             //Received Authentication Response
             Authentication_Response authResponse = (Authentication_Response) message;
             UE ue = (UE) sender;
-            System.out.println(getName() + ": Received " + authResponse.getName() + " from " + ue.getName());
+            if (App.LOG_MESSAGES) {
+                System.out.println(ue.getName() + " -> " + getName() + " : " + authResponse.getName());
+            }
 
             if (calculateHresAndCompare(authResponse, ue)) {
                 //Consider authentication as successful.
-                System.out.println("  " + getName() + " is considering the authentication as successful.");
+                if (App.DETAILED_AUTH_INFO) {
+                    System.out.println("  " + getName() + " is considering the authentication as successful.");
+                }
                 authenticationConfirmationQueue.add(true);
             } else {
                 //Consider authentication as unsuccessful.
-                System.err.println("  " + getName() + " is considering the authentication as unsuccessful.");
+                if (App.DETAILED_AUTH_INFO) {
+                    System.err.println("  " + getName() + " is considering the authentication as unsuccessful.");
+                }
                 authenticationConfirmationQueue.add(false);
             }
             Nausf_UEAuthentication_Confirmation_Request confirmRequest = getConfirmRequest(authResponse, ue);
@@ -78,7 +88,9 @@ public class SEAF extends Entity {
             //Received Nausf_UEAuthentication_ Authenticate Response (/Confirmation Response)
             Nausf_UEAuthentication_Confirmation_Response confirmResponse = (Nausf_UEAuthentication_Confirmation_Response) message;
             AUSF ausf = (AUSF) sender;
-            System.out.println(getName() + ": Received " + confirmResponse.getName() + " from " + ausf.getName());
+            if (App.LOG_MESSAGES) {
+                System.out.println(ausf.getName() + " -> " + getName() + " : " + confirmResponse.getName());
+            }
 
             boolean hashComparisonWasSuccessful = false;
             if (!authenticationConfirmationQueue.isEmpty()) {
@@ -100,14 +112,19 @@ public class SEAF extends Entity {
             //Received Authentication Failure
             Authentication_Failure authFailure = (Authentication_Failure) message;
             UE ue = (UE) sender;
-            System.out.println(getName() + ": Received " + authFailure.getName() + " from " + ue.getName());
+            if (App.LOG_MESSAGES) {
+                System.out.println(ue.getName() + " -> " + getName() + " : " + authFailure.getName());
+            }
 
             //TODO
             App.callback(false);
             //Maybe initiate new authentication here.
         } else {
-            String name = message == null ? null : message.getName();
-            System.err.println(getName() + ": Received an unusual message: " + (name == null ? "" : name) + ". Ignoring it.");
+            String messageName = message == null ? "?" : message.getName();
+            String senderName = sender == null ? "?" : sender.getName();
+            if (App.LOG_MESSAGES) {
+                System.err.println(senderName + " -> " + getName() + " : " + messageName);
+            }
         }
     }
 
@@ -168,12 +185,7 @@ public class SEAF extends Entity {
     }
 
     //Custom function for displaying the Kseaf.
-    public void printKseafForSUPI(byte[] SUPI) {
-        byte[] Kseaf = this.Kseafs.get(Converter.bytesToHex(SUPI));
-        if (Kseaf != null) {
-            System.out.println(" " + getName() + ": Kseaf:  " + Converter.bytesToHex(Kseaf));
-        } else {
-            System.out.println(" " + getName() + ": Kseaf: null");
-        }
+    public byte[] getKseafForSUPI(byte[] SUPI) {
+        return this.Kseafs.get(Converter.bytesToHex(SUPI));
     }
 }

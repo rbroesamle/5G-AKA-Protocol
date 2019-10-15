@@ -1,5 +1,7 @@
 package Implementation;
 
+import Implementation.helper.Calculator;
+import Implementation.helper.Converter;
 import Implementation.helper.Generator;
 import Implementation.protocol.additional.ParameterLength;
 import Implementation.protocol.entities.*;
@@ -8,15 +10,71 @@ import java.security.*;
 
 public class App {
 
+    //--------- Settings -----------
+
+    /*
+     * This property decides if a successful run of the protocol or the Vulnerability should be run.
+     * Acceptable values are RunMode.Protocol and RunMode.Vulnerability
+     * */
+    public static RunMode RUN_MODE = RunMode.Vulnerability;
+
+    /*
+     * This property decides if all sent messages should be printed on the console.
+     * If set to 'true' the messages will appear in the following format: 'FROM -> TO : MESSAGE_NAME'
+     * */
+    public static boolean LOG_MESSAGES = true;
+
+    /*
+     * This property decides if the result of the authentication should be printed on the console with details or not.
+     * */
+    public static boolean DETAILED_AUTH_INFO = true;
+
+    /*
+     * This property decides if the program should retry a failed run of the vulnerability.
+     * If set to 'true' the program will automatically retry a failed attempt after 2 seconds.
+     * This property is ignored if the RUN_MODE is set to RunMode.Protocol.
+     * */
+    public static boolean AUTO_REPEAT_VULNERABILITY = false;
+
+    //------------------------------
+
+    private enum RunMode {
+        Protocol,
+        Vulnerability
+    }
+
+    private static int runCount = 0;
+
     public static void main(String[] args) {
         generateKeyPair();
 
-        UE ue;
+        UE ue = null;
 
-        //ue = new UE(K, SUPI, publicKey);// Normal
-        ue = new EvilUE(K, SUPI, publicKey, SUPI_victim);//Vulnerability
+        do {
+            switch (RUN_MODE) {
+                case Protocol:
+                    ue = new UE(K, SUPI, publicKey);
+                    AUTO_REPEAT_VULNERABILITY = false;
+                    break;
+                case Vulnerability:
+                    ue = new EvilUE(K, SUPI, publicKey, SUPI_victim);
+                    break;
+                default:
+                    System.err.println("Please specify a correct RunMode. Exiting.");
+                    return;
+            }
 
-        runProtocol(ue);
+            if (runCount < 1) {
+                System.out.println("Starting protocol...\n");
+            } else {
+                System.out.println("\nStarting protocol again... (Retry Nr: " + runCount + ")\n");
+            }
+            runProtocol(ue);
+
+            runCount++;
+        } while (App.AUTO_REPEAT_VULNERABILITY);
+
+        System.out.println("\nExiting...");
     }
 
     private static byte[] K = Generator.randomBytes(ParameterLength.K);
@@ -71,77 +129,21 @@ public class App {
         } else {
             System.err.println("Authentication failed.");
         }
-        if (ue != null) {
-            ue.printKseafForSNN(SNN);
-        }
-        if (seaf != null) {
-            seaf.printKseafForSUPI(SUPI_victim);
-        }
-    }
-
-    /*
-    private static void ownImplementation() {
-        int numberOfMessages = 100;
-        Entity[] entities = new UE[numberOfMessages];
-        Message[] messages = new Message[numberOfMessages];
-        Entity seaf = new Entity() {
-            int i = -1;
-
-            @Override
-            public String getName() {
-                return null;
-            }
-
-            @Override
-            public void onReceiveMessage(Message message, Entity sender) {
-                print(message);
-            }
-
-            private synchronized void print(Message message) {
-                Integer n = new Integer(message.getName());
-                if (i < n) {
-                    i = n;
-                    System.out.println(message.getName());
-                } else {
-                    System.err.println(message.getName());
-                }
-            }
-        };
-
-        for (int i = 0; i < numberOfMessages; i++) {
-            final int j = i;
-            entities[i] = new UE(null, null, null);
-            messages[i] = () -> "" + j;
-            entities[i].prepareMessage(messages[i], seaf);
-        }
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException ex) {
-            ex.printStackTrace();
+        byte[] ueKseaf = ue.getKseafForSNN(SNN);
+        byte[] seafKseaf = null;
+        if (App.RUN_MODE == RunMode.Protocol) {
+            seafKseaf = seaf.getKseafForSUPI(SUPI);
+        } else if (App.RUN_MODE == RunMode.Vulnerability) {
+            seafKseaf = seaf.getKseafForSUPI(SUPI_victim);
         }
 
-        for (int i = 0; i < numberOfMessages; i++) {
-            entities[i].sendMessage(messages[i], seaf);
+        if (App.DETAILED_AUTH_INFO) {
+            System.out.println(" " + ue.getName() + ":   Kseaf: " + (ueKseaf == null ? "null" : Converter.bytesToHex(ueKseaf)));
+            System.out.println(" " + seaf.getName() + ": Kseaf: " + (seafKseaf == null ? "null" : Converter.bytesToHex(seafKseaf)));
         }
 
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException ex) {
-            ex.printStackTrace();
+        if (wasSuccessful && Calculator.equals(ueKseaf, seafKseaf)) {
+            App.AUTO_REPEAT_VULNERABILITY = false;
         }
     }
-
-    private static void flowable() {
-        try {
-            Flowable.range(1, 10)
-                    .parallel()
-                    .runOn(Schedulers.newThread())
-                    .sequential()
-                    .subscribe(System.out::println);
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-    */
 }

@@ -1,5 +1,6 @@
 package Implementation.protocol.entities;
 
+import Implementation.App;
 import Implementation.helper.Converter;
 import Implementation.protocol.additional.KDF;
 import Implementation.protocol.additional.SIDF;
@@ -38,7 +39,9 @@ public class UDM extends Entity {
             //Received Nudm_UEAuthentication_ Get Request
             Nudm_UEAuthentication_Get_Request getRequest = (Nudm_UEAuthentication_Get_Request) message;
             AUSF ausf = (AUSF) sender;
-            System.out.println(getName() + ": Received " + getRequest.getName() + " from " + ausf.getName());
+            if (App.LOG_MESSAGES) {
+                System.out.println(ausf.getName() + " -> " + getName() + " : " + getRequest.getName());
+            }
 
             //Always choose 5G-AKA as authentication method.
             Data_5G_HE_AV AV = generateAVsAndInvokeSIDF(getRequest, ausf);
@@ -50,16 +53,23 @@ public class UDM extends Entity {
             //Received Authentication Information
             Authentication_Information authInformation = (Authentication_Information) message;
             AUSF ausf = (AUSF) sender;
-            System.out.println(getName() + ": Received " + authInformation.getName() + " from " + ausf.getName());
+            if (App.LOG_MESSAGES) {
+                System.out.println(ausf.getName() + " -> " + getName() + " : " + authInformation.getName());
+            }
 
-            if (authInformation.authenticationSuccessful) {
-                System.out.println("  " + getName() + " is considering the authentication as successful.");
-            } else {
-                System.err.println("  " + getName() + " is considering the authentication as unsuccessful.");
+            if (App.DETAILED_AUTH_INFO) {
+                if (authInformation.authenticationSuccessful) {
+                    System.out.println("  " + getName() + " is considering the authentication as successful.");
+                } else {
+                    System.err.println("  " + getName() + " is considering the authentication as unsuccessful.");
+                }
             }
         } else {
-            String name = message == null ? null : message.getName();
-            System.err.println(getName() + ": Received an unusual message: " + (name == null ? "" : name) + ". Ignoring it.");
+            String messageName = message == null ? "?" : message.getName();
+            String senderName = sender == null ? "?" : sender.getName();
+            if (App.LOG_MESSAGES) {
+                System.err.println(senderName + " -> " + getName() + " : " + messageName);
+            }
         }
     }
 

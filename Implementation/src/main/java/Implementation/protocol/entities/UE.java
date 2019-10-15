@@ -41,7 +41,9 @@ public class UE extends Entity {
             //Received Authentication Request
             Authentication_Request authRequest = (Authentication_Request) message;
             SEAF seaf = (SEAF) sender;
-            System.out.println(getName() + ": Received " + authRequest.getName() + " from " + seaf.getName());
+            if (App.LOG_MESSAGES) {
+                System.out.println(seaf.getName() + " -> " + getName() + " : " + authRequest.getName());
+            }
 
             Message authResponse = calculateAuthResponse(authRequest, seaf);
 
@@ -50,12 +52,17 @@ public class UE extends Entity {
             //Received Authentication Reject
             Authentication_Reject authReject = (Authentication_Reject) message;
             SEAF seaf = (SEAF) sender;
-            System.out.println(getName() + ": Received " + authReject.getName() + " from " + seaf.getName());
+            if (App.LOG_MESSAGES) {
+                System.out.println(seaf.getName() + " -> " + getName() + " : " + authReject.getName());
+            }
 
             App.callback(false);
         } else {
-            String name = message == null ? null : message.getName();
-            System.err.println(getName() + ": Received an unusual message: " + (name == null ? "" : name) + ". Ignoring it.");
+            String messageName = message == null ? "?" : message.getName();
+            String senderName = sender == null ? "?" : sender.getName();
+            if (App.LOG_MESSAGES) {
+                System.err.println(senderName + " -> " + getName() + " : " + messageName);
+            }
         }
     }
 
@@ -68,7 +75,9 @@ public class UE extends Entity {
         Data_AUTN AUTN = authRequest.AUTN;
         //TODO: Verify freshness of AUTN, as described on page 45.
         if (/*AUTN is not valid*/false) {
-            System.out.println(getName() + ": The AUTN is not valid.");
+            if (App.DETAILED_AUTH_INFO) {
+                System.err.println(getName() + ": The AUTN is not valid.");
+            }
             return new Authentication_Failure(/*TODO: Indicate the resaon for failure. See 6.1.3.3.1*/);
         }
         //TODO: Check if the separation bit of the AMF is set to 1, as described on page 45.
@@ -79,7 +88,9 @@ public class UE extends Entity {
 
         byte[] XMAC = KDF.f1(K, Converter.concatenateBytes(SQN, RAND, AUTN.AMF));
         if (!Calculator.equals(XMAC, AUTN.MAC)) {
-            System.out.println(getName() + ": The calculated XMAC doesn't equal to the received MAC");
+            if (App.DETAILED_AUTH_INFO) {
+                System.out.println(getName() + ": The calculated XMAC doesn't equal to the received MAC");
+            }
             return new Authentication_Failure(/*TODO: Indicate the resaon for failure. See 6.1.3.3.1*/);
         }
 
@@ -141,12 +152,7 @@ public class UE extends Entity {
     }
 
     //Custom function for displaying the Kseaf.
-    public void printKseafForSNN(byte[] SNN) {
-        byte[] Kseaf = this.Kseafs.get(Converter.bytesToHex(SNN));
-        if (Kseaf != null) {
-            System.out.println(" " + getName() + ": Kseaf:    " + Converter.bytesToHex(Kseaf));
-        } else {
-            System.out.println(" " + getName() + ": Kseaf: null");
-        }
+    public byte[] getKseafForSNN(byte[] SNN) {
+        return this.Kseafs.get(Converter.bytesToHex(SNN));
     }
 }

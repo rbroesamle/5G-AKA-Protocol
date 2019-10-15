@@ -1,5 +1,6 @@
 package Implementation.protocol.entities;
 
+import Implementation.App;
 import Implementation.protocol.additional.SIDF;
 import Implementation.protocol.messages.Authentication_Request;
 import Implementation.protocol.messages.N1_Registration_Request;
@@ -31,7 +32,9 @@ public class EvilUE extends UE {
         if (firstMessage && message instanceof Authentication_Request && sender instanceof SEAF) {
             firstMessage = false;
         } else if (message instanceof Authentication_Request && sender instanceof SEAF) {
-            System.out.println(getName() + ": Ignoring all further authenticate messages.");
+            if (App.DETAILED_AUTH_INFO) {
+                System.out.println(getName() + ": Ignoring all further authenticate messages.");
+            }
             return;
         }
         super.onReceiveMessage(message, sender);

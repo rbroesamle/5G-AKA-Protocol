@@ -1,5 +1,6 @@
 package Implementation.protocol.entities;
 
+import Implementation.App;
 import Implementation.helper.Calculator;
 import Implementation.helper.Converter;
 import Implementation.helper.SHA256;
@@ -30,7 +31,9 @@ public class AUSF extends Entity {
             //Received Nausf_UEAuthentication_ Authenticate Request
             Nausf_UEAuthentication_Authenticate_Request authRequest = (Nausf_UEAuthentication_Authenticate_Request) message;
             SEAF seaf = (SEAF) sender;
-            System.out.println(getName() + ": Received " + authRequest.getName() + " from " + seaf.getName());
+            if (App.LOG_MESSAGES) {
+                System.out.println(seaf.getName() + " -> " + getName() + " : " + authRequest.getName());
+            }
 
             if (checkIfSeafIsEntitledToUseSnName(authRequest, seaf)) {
                 Nudm_UEAuthentication_Get_Request getRequest = getGetRequest(authRequest, seaf);
@@ -43,7 +46,9 @@ public class AUSF extends Entity {
             //Received Nudm_Authentication_Get Response
             Nudm_Authentication_Get_Response getResponse = (Nudm_Authentication_Get_Response) message;
             UDM udm = (UDM) sender;
-            System.out.println(getName() + ": Received " + getResponse.getName() + " from " + udm.getName());
+            if (App.LOG_MESSAGES) {
+                System.out.println(udm.getName() + " -> " + getName() + " : " + getResponse.getName());
+            }
 
             Data_5G_SE_AV fiveGSeAv = storeAuthDataAndCompute5GSeAv(getResponse, udm);
             if (fiveGSeAv != null) {
@@ -55,7 +60,9 @@ public class AUSF extends Entity {
             //Received Nausf_UEAuthentication_ Authenticate Request (/Confirmation Request)
             Nausf_UEAuthentication_Confirmation_Request confirmRequest = (Nausf_UEAuthentication_Confirmation_Request) message;
             SEAF seaf = (SEAF) sender;
-            System.out.println(getName() + ": Received " + confirmRequest.getName() + " from " + seaf.getName());
+            if (App.LOG_MESSAGES) {
+                System.out.println(seaf.getName() + " -> " + getName() + " : " + confirmRequest.getName());
+            }
 
             Nausf_UEAuthentication_Confirmation_Response confirmResponse = null;
             if (verifyConfirmRequest(confirmRequest, seaf)) {
@@ -65,18 +72,25 @@ public class AUSF extends Entity {
             if (confirmResponse == null) {//Always send back a message to the SEAF.
                 confirmResponse = new Nausf_UEAuthentication_Confirmation_Response(false, null, null);
                 //Consider authentication as unsuccessful.
-                System.err.println("  " + getName() + " is considering the authentication as unsuccessful.");
+                if (App.DETAILED_AUTH_INFO) {
+                    System.err.println("  " + getName() + " is considering the authentication as unsuccessful.");
+                }
                 sendMessage(new Authentication_Information(false), this.udm);
             } else {
                 //Consider authentication as successful.
-                System.out.println("  " + getName() + " is considering the authentication as successful.");
+                if (App.DETAILED_AUTH_INFO) {
+                    System.out.println("  " + getName() + " is considering the authentication as successful.");
+                }
                 sendMessage(new Authentication_Information(true), this.udm);
             }
             sendMessage(confirmResponse, seaf);
 
         } else {
-            String name = message == null ? null : message.getName();
-            System.err.println(getName() + ": Received an unusual message: " + (name == null ? "" : name) + ". Ignoring it.");
+            String messageName = message == null ? "?" : message.getName();
+            String senderName = sender == null ? "?" : sender.getName();
+            if (App.LOG_MESSAGES) {
+                System.err.println(senderName + " -> " + getName() + " : " + messageName);
+            }
         }
     }
 
