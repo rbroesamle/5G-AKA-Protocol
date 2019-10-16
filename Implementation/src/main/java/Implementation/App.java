@@ -29,13 +29,6 @@ public class App {
      * */
     public static boolean DETAILED_AUTH_INFO = true;
 
-    /*
-     * This property decides if the program should retry a failed run of the vulnerability.
-     * If set to 'true' the program will automatically retry a failed attempt after 2 seconds.
-     * This property is ignored if the RUN_MODE is set to RunMode.Protocol.
-     * */
-    public static boolean AUTO_REPEAT_VULNERABILITY = false;
-
     //------------------------------
 
     private enum RunMode {
@@ -43,36 +36,26 @@ public class App {
         Vulnerability
     }
 
-    private static int runCount = 0;
-
     public static void main(String[] args) {
         generateKeyPair();
 
         UE ue = null;
 
-        do {
-            switch (RUN_MODE) {
-                case Protocol:
-                    ue = new UE(K, SUPI, publicKey);
-                    AUTO_REPEAT_VULNERABILITY = false;
-                    break;
-                case Vulnerability:
-                    ue = new EvilUE(K, SUPI, publicKey, SUPI_victim);
-                    break;
-                default:
-                    System.err.println("Please specify a correct RunMode. Exiting.");
-                    return;
-            }
+        switch (RUN_MODE) {
+            case Protocol:
+                ue = new UE(K, SUPI, publicKey);
+                break;
+            case Vulnerability:
+                ue = new EvilUE(K, SUPI, publicKey, SUPI_victim);
+                break;
+            default:
+                System.err.println("Please specify a correct RunMode. Exiting.");
+                return;
+        }
 
-            if (runCount < 1) {
-                System.out.println("Starting protocol...\n");
-            } else {
-                System.out.println("\nStarting protocol again... (Retry Nr: " + runCount + ")\n");
-            }
-            runProtocol(ue);
+        System.out.println("Starting protocol...\n");
 
-            runCount++;
-        } while (App.AUTO_REPEAT_VULNERABILITY);
+        runProtocol(ue);
 
         System.out.println("\nExiting...");
     }
@@ -142,8 +125,11 @@ public class App {
             System.out.println(" " + seaf.getName() + ": Kseaf: " + (seafKseaf == null ? "null" : Converter.bytesToHex(seafKseaf)));
         }
 
-        if (wasSuccessful && Calculator.equals(ueKseaf, seafKseaf)) {
-            App.AUTO_REPEAT_VULNERABILITY = false;
+        if (App.RUN_MODE == RunMode.Vulnerability && App.DETAILED_AUTH_INFO &&
+                wasSuccessful && Calculator.equals(ueKseaf, seafKseaf)) {
+            System.out.println("Vulnerability was successful.");
+        } else if (App.RUN_MODE == RunMode.Vulnerability && App.DETAILED_AUTH_INFO) {
+            System.err.println("Vulnerability failed.");
         }
     }
 }
