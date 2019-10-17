@@ -6,7 +6,7 @@ public class Converter {
 
     /**
      * Bytes to HEX
-     * @param data Data
+     * @param data A byte array
      * @return A string containing a hex representation of the data
      */
     public static String bytesToHex(byte[] data) {
@@ -19,7 +19,7 @@ public class Converter {
 
     /**
      * Int to bytes
-     * @param data Data
+     * @param data An integer
      * @return A byte array containing the integer from data.
      */
     public static byte[] intToBytes(int data) {
@@ -29,7 +29,7 @@ public class Converter {
 
     /**
      * Bytes to int
-     * @param data Data
+     * @param data A byte array
      * @return An integer containing the contents of the data.
      */
     public static int bytesToInt(byte[] data) {
@@ -50,8 +50,8 @@ public class Converter {
 
     /**
      * Shrink Bytes
-     * @param data Data
-     * @return The data with all preceding zeros removed.
+     * @param data A byte array
+     * @return The data with all preceding zero bytes removed.
      */
     public static byte[] shrinkBytes(byte[] data) {
         int cap = -1;
@@ -77,7 +77,7 @@ public class Converter {
 
     /**
      * Expand bytes to length
-     * @param data Data
+     * @param data A byte array
      * @param length Length
      * @return Add preceding zeros until the length Length has been reached.
      */

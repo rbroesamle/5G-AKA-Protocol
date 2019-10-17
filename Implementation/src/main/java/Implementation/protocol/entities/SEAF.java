@@ -103,7 +103,7 @@ public class SEAF extends Entity {
                 } else {
                     //TODO: Find SUPI and save the Kseaf.
                 }
-                App.callback(true);
+                App.reportAuthResult(true);
             } else {
                 Authentication_Reject authenticationReject = new Authentication_Reject();
                 sendMessage(authenticationReject, this.ue);
@@ -117,7 +117,7 @@ public class SEAF extends Entity {
             }
 
             //TODO
-            App.callback(false);
+            App.reportAuthResult(false);
             //Maybe initiate new authentication here.
         } else {
             String messageName = message == null ? "?" : message.getName();
@@ -139,8 +139,8 @@ public class SEAF extends Entity {
     }
 
     /**
-     * @param authResponse
-     * @param ausf
+     * @param authResponse Authentication Response
+     * @param ausf AUSF
      * @return true if timer is not expired
      */
     private boolean checkExpiryTimer(Nausf_UEAuthentication_Authenticate_Response authResponse, AUSF ausf) {
@@ -148,30 +148,30 @@ public class SEAF extends Entity {
         return true;
     }
 
-    private HXRESstar hXRESSstar = new HXRESstar();
+    private HXRESstar hXRESstar = new HXRESstar();
 
     private Authentication_Request getAuthRequest(Nausf_UEAuthentication_Authenticate_Response authResponse, AUSF ausf) {
         //Storing the HXRES* temporary.
-        hXRESSstar.HXRESstar = authResponse.seAV.HXRESstar;
-        hXRESSstar.RAND = authResponse.seAV.RAND;
+        hXRESstar.HXRESstar = authResponse.seAV.HXRESstar;
+        hXRESstar.RAND = authResponse.seAV.RAND;
 
         return new Authentication_Request(authResponse.seAV.RAND, authResponse.seAV.AUTN);
     }
 
     /**
-     * @param authResponse
-     * @param ue
+     * @param authResponse Authentication Response
+     * @param ue UE
      * @return true if calculated HXRES equals the previously stored one.
      */
     private boolean calculateHresAndCompare(Authentication_Response authResponse, UE ue) {
         //Derive HXRESstar
         //3GPP TS 33.501 V15.34.1 Page 155
-        byte[] P0 = this.hXRESSstar.RAND;
+        byte[] P0 = this.hXRESstar.RAND;
         byte[] P1 = authResponse.RESstar;
         byte[] S = Converter.concatenateBytes(P0, P1);
 
         byte[] HRESstar = SHA256.encode(S);
-        return Calculator.equals(this.hXRESSstar.HXRESstar, HRESstar);
+        return Calculator.equals(this.hXRESstar.HXRESstar, HRESstar);
     }
 
     private Nausf_UEAuthentication_Confirmation_Request getConfirmRequest(Authentication_Response authResponse, UE ue) {
@@ -185,7 +185,7 @@ public class SEAF extends Entity {
     }
 
     //Custom function for displaying the Kseaf.
-    public byte[] getKseafForSUPI(byte[] SUPI) {
+    public byte[] getKseafForSUPI(byte[] SUPI) {//TODO: Mention this function as extra in the paper.
         return this.Kseafs.get(Converter.bytesToHex(SUPI));
     }
 }

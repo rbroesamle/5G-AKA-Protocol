@@ -6,7 +6,7 @@ import Implementation.protocol.additional.KDF;
 import Implementation.protocol.additional.SIDF;
 import Implementation.protocol.data.Data_5G_HE_AV;
 import Implementation.protocol.data.Data_AUTN;
-import Implementation.protocol.helper.AuthenticationVector;
+import Implementation.protocol.additional.AVGenerator;
 import Implementation.protocol.messages.Authentication_Information;
 import Implementation.protocol.messages.Nudm_Authentication_Get_Response;
 import Implementation.protocol.messages.Nudm_UEAuthentication_Get_Request;
@@ -74,7 +74,7 @@ public class UDM extends Entity {
     }
 
     private Data_5G_HE_AV generateAVsAndInvokeSIDF(Nudm_UEAuthentication_Get_Request getRequest, AUSF ausf) {
-        AuthenticationVector.Values av = AuthenticationVector.generate(this.K, this.AMF);
+        AVGenerator.AV av = AVGenerator.generate(this.K, this.AMF);
 
         byte[] KEY = Converter.concatenateBytes(av.CK, av.IK);
 

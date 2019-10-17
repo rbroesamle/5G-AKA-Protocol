@@ -16,7 +16,7 @@ public class App {
      * This property decides if a successful run of the protocol or the Vulnerability should be run.
      * Acceptable values are RunMode.Protocol and RunMode.Vulnerability
      * */
-    public static RunMode RUN_MODE = RunMode.Vulnerability;
+    private static RunMode RUN_MODE = RunMode.Vulnerability;
 
     /*
      * This property decides if all sent messages should be printed on the console.
@@ -39,8 +39,7 @@ public class App {
     public static void main(String[] args) {
         generateKeyPair();
 
-        UE ue = null;
-
+        UE ue;
         switch (RUN_MODE) {
             case Protocol:
                 ue = new UE(K, SUPI, publicKey);
@@ -92,7 +91,7 @@ public class App {
         App.ausf = new AUSF();
         App.udm = new UDM(K, AMF, privateKey);
 
-        App.seaf.ausf = App.ausf;
+        App.seaf.ausf = App.ausf;//TODO: Change to not be reliant on this...
         App.seaf.ue = App.ue;
         App.ausf.udm = App.udm;
         App.ausf.seaf = App.seaf;
@@ -106,7 +105,7 @@ public class App {
         }
     }
 
-    public static void callback(boolean wasSuccessful) {
+    public static void reportAuthResult(boolean wasSuccessful) {
         if (wasSuccessful) {
             System.out.println("Authentication was successful.");
         } else {

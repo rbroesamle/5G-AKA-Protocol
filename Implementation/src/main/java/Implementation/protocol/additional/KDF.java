@@ -5,7 +5,7 @@ import Implementation.helper.HmacSHA256;
 
 import java.util.ArrayList;
 
-public class KDF {
+public class KDF {//Key derivation function
 
     public static byte[] deriveKey(byte[] key, byte[] Fc, byte[][] Pis, byte[][] Lis) {
         //3GPP TS 33.220 V15.4.0 Page 46
@@ -67,20 +67,5 @@ public class KDF {
             bytes[i] = listS.get(i);
         }
         return bytes;
-    }
-
-    public static byte[] f1(byte[] key, byte[] data) {
-        //3GPP TS 33.102 V15.1.0 Page 26
-        //TODO: Find the correct algorithm
-        byte[] longVersion = Converter.expandBytesToLength(HmacSHA256.encode(key, data), 8);
-        byte[] result = new byte[ParameterLength.MAC];
-        System.arraycopy(longVersion, 0, result, 0, result.length);
-        return result;
-    }
-
-    public static byte[] f2(byte[] key, byte[] data) {
-        //3GPP TS 33.102 V15.1.0 Page 26
-        //TODO: Find the correct algorithm
-        return HmacSHA256.encode(key, data);
     }
 }

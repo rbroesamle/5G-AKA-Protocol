@@ -5,7 +5,7 @@ import Implementation.helper.HmacSHA256;
 
 //Message authentication function
 //3GPP TS 33.102 V15.1.0 Page 26
-public class MAF {
+public class MAF {//Message authentication functions
 
     public static byte[] f3(byte[] key, byte[] data) {
         //3GPP TS 33.102 V15.1.0 Page 26

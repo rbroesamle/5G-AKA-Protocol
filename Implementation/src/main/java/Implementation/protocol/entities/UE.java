@@ -4,6 +4,7 @@ import Implementation.App;
 import Implementation.helper.Calculator;
 import Implementation.helper.Converter;
 import Implementation.protocol.additional.KDF;
+import Implementation.protocol.additional.KGF;
 import Implementation.protocol.additional.MAF;
 import Implementation.protocol.additional.SIDF;
 import Implementation.protocol.data.Data_AUTN;
@@ -56,7 +57,7 @@ public class UE extends Entity {
                 System.out.println(seaf.getName() + " -> " + getName() + " : " + authReject.getName());
             }
 
-            App.callback(false);
+            App.reportAuthResult(false);
         } else {
             String messageName = message == null ? "?" : message.getName();
             String senderName = sender == null ? "?" : sender.getName();
@@ -86,7 +87,7 @@ public class UE extends Entity {
         byte[] AK = MAF.f5(this.K, RAND);
         byte[] SQN = Calculator.xor(AUTN.SQNxorAK, AK);
 
-        byte[] XMAC = KDF.f1(K, Converter.concatenateBytes(SQN, RAND, AUTN.AMF));
+        byte[] XMAC = KGF.f1(K, Converter.concatenateBytes(SQN, RAND, AUTN.AMF));
         if (!Calculator.equals(XMAC, AUTN.MAC)) {
             if (App.DETAILED_AUTH_INFO) {
                 System.out.println(getName() + ": The calculated XMAC doesn't equal to the received MAC");
@@ -94,7 +95,7 @@ public class UE extends Entity {
             return new Authentication_Failure(/*TODO: Indicate the resaon for failure. See 6.1.3.3.1*/);
         }
 
-        byte[] RES = KDF.f2(K, RAND);
+        byte[] RES = KGF.f2(K, RAND);
 
         byte[] CK = MAF.f3(K, RAND);
         byte[] IK = MAF.f4(K, RAND);
@@ -152,7 +153,7 @@ public class UE extends Entity {
     }
 
     //Custom function for displaying the Kseaf.
-    public byte[] getKseafForSNN(byte[] SNN) {
+    public byte[] getKseafForSNN(byte[] SNN) {//TODO: Mention this function as extra in the paper.
         return this.Kseafs.get(Converter.bytesToHex(SNN));
     }
 }

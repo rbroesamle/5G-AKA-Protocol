@@ -2,9 +2,9 @@ package Implementation.structure;
 
 public abstract class Entity {
 
-    private Send preparedMessage = null;
+    private Sender preparedMessageSender = null;
 
-    private abstract static class Send extends Thread {
+    private abstract static class Sender extends Thread {
         public abstract Message getMessage();
 
         public abstract Entity getReceiver();
@@ -17,7 +17,7 @@ public abstract class Entity {
             return;
         }
         Entity sender = this;
-        class _Send extends Send {
+        class _Sender extends Sender {
             @Override
             public Message getMessage() {
                 return message;
@@ -33,19 +33,19 @@ public abstract class Entity {
                 receiver.onReceiveMessage(message, sender);
             }
         }
-        this.preparedMessage = new _Send();
+        this.preparedMessageSender = new _Sender();
     }
 
     public synchronized void sendMessage(Message message, Entity receiver) {
         if (message == null || receiver == null) {
             return;
         }
-        if (preparedMessage == null) {
+        if (preparedMessageSender == null) {
             prepareMessage(message, receiver);
         }
-        if (preparedMessage != null && preparedMessage.getMessage() == message && preparedMessage.getReceiver() == receiver) {
-            this.preparedMessage.start();
-            this.preparedMessage = null;
+        if (preparedMessageSender != null && preparedMessageSender.getMessage() == message && preparedMessageSender.getReceiver() == receiver) {
+            this.preparedMessageSender.start();
+            this.preparedMessageSender = null;
         } else {
             System.err.println("Preparation of the message failed. Message name: " + message.getName());
         }

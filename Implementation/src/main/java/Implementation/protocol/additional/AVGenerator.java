@@ -1,15 +1,12 @@
-package Implementation.protocol.helper;
+package Implementation.protocol.additional;
 
 import Implementation.helper.Calculator;
 import Implementation.helper.Converter;
 import Implementation.helper.Generator;
-import Implementation.protocol.additional.KDF;
-import Implementation.protocol.additional.MAF;
-import Implementation.protocol.additional.ParameterLength;
 
-public class AuthenticationVector {
+public class AVGenerator {//Authentication Vector Generator
 
-    public static Values generate(byte[] K, byte[] AMF) {
+    public static AV generate(byte[] K, byte[] AMF) {
         //3GPP TS 33.102 V15.1.0 Page 25
 
         byte[] SQN = generateSQN();
@@ -17,15 +14,15 @@ public class AuthenticationVector {
 
         byte[] sqnRandAmf = Converter.concatenateBytes(SQN, RAND, AMF);
 
-        byte[] MAC = KDF.f1(K, sqnRandAmf);
-        byte[] xRES = KDF.f2(K, RAND);
+        byte[] MAC = KGF.f1(K, sqnRandAmf);
+        byte[] xRES = KGF.f2(K, RAND);
         byte[] CK = MAF.f3(K, RAND);
         byte[] IK = MAF.f4(K, RAND);
         byte[] AK = MAF.f5(K, RAND);
 
         byte[] SQNxorAK = Calculator.xor(SQN, AK);
 
-        return new Values(RAND, xRES, CK, IK, AK, SQNxorAK, AMF, MAC);
+        return new AV(RAND, xRES, CK, IK, AK, SQNxorAK, AMF, MAC);
     }
 
     private static byte[] generateSQN() {
@@ -37,7 +34,7 @@ public class AuthenticationVector {
         return Generator.randomBytes(ParameterLength.RAND);
     }
 
-    public static class Values {
+    public static class AV {
         public final byte[] RAND;
         public final byte[] XRES;
         public final byte[] CK;
@@ -47,7 +44,7 @@ public class AuthenticationVector {
         public final byte[] AMF;
         public final byte[] MAC;
 
-        Values(byte[] RAND, byte[] XRES, byte[] CK, byte[] IK, byte[] AK, byte[] SQNxorAK, byte[] AMF, byte[] MAC) {
+        AV(byte[] RAND, byte[] XRES, byte[] CK, byte[] IK, byte[] AK, byte[] SQNxorAK, byte[] AMF, byte[] MAC) {
             this.RAND = RAND;
             this.XRES = XRES;
             this.CK = CK;
