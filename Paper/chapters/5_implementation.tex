@@ -6,15 +6,54 @@ Die Implementierung ist dieser Arbeit beigefügt und kann auf Github unter folge
 In diesem Kapitel wird sich auf den Commit \#ID gezogen.//TODO
 
 Es wurde das 5G-AKA Protokoll aus der Spezifikation TS 33.501 des 3GPP mit der Version V15.34.1 implementiert.
-Die Sicherheitslücke wurde auf dieser Version implementiert.
+Die Sicherheitslücke wurde darauf aufbauend implementiert.
+
 
 \section{Beschreibung des Aufbaus}
+Für die Implementierung wurde die Programmiersprache Java gewählt.
 
+Der Einstiegspunkt des Programms ist die \lstinline{Implementation.App} Klasse. Von dort lässt sich das Programm mit der \lstinline{main} Methode aufrufen.
+
+In dem \lstinline{Implementation.structure} Package wird die grundlegende Struktur für Entitäten und Nachrichten definiert.
+Alle Entitäten haben die \lstinline{Implementation.structure.Entity} Klasse als Superklasse und alle Nachrichten haben das \lstinline{Implementation.structure.Message} Interface implementiert.
+
+Das \lstinline{Implementation.helper} Package beinhaltet Helferklassen.
+Diese Helferklassen werden verwendet um die Übersichtlichkeit in den anderen Packages zu verbessern.
+Sie beinhalten nur statische Methoden.
+
+In dem \lstinline{Implementation.protocol} Package ist die tatsächliche Implementierung des Protokolls zu finden.
+Es ist unterteilt in die Packages \lstinline{Implementation.protocol.additional}, \lstinline{Implementation.protocol.data}, \lstinline{Implementation.protocol.entities} und \lstinline{Implementation.protocol.messages}.
+
+Das \lstinline{Implementation.protocol.additional} Package beinhaltet hauptsächlich Klassen die kryptographischen Berechnungen ausführen, wie die \gls{kdf}.
+Alle Klassen in diesem Package beinhalten nur statische Methoden.
+
+Das \lstinline{Implementation.protocol.data} Package beinhaltet Klassen, die mehrere verschiedene Parameter in sich zusammenfassen, wie z.B. der \gls{5g-he-av}.
+
+In dem \lstinline{Implementation.protocol.entities} Package ist die Implementierung der vier Entitäten \gls{ue}, \gls{seaf}, \gls{ausf} und \gls{udm} zu finden, so wie eine \lstinline{EvilUE} Klasse, die den Angreifer darstellen soll.
+In diesen Klassen ist das Versenden und Antworten auf Nachrichten implementiert.
+Dies geschieht über die \lstinline{Implementation.structure.Entity} Superklasse.
+
+In dem \lstinline{Implementation.protocol.messages} Package sind alle Nachrichten zu finden, die die Entitäten untereinander verschicken.
+Jede Nachricht hat eine eigene Klasse, die das \lstinline{Implementation.structure.Message} Interface implementiert.
 
 \subsection{Implementierung der Race Condition}
 
 
+\subsection{Unterschiede zum Protokoll}
+Ziel dieser Implementierung ist es die Praktikabilität der in \cref{chap:4} beschriebenen Sicherheitslücke herauszufinden.
+In der Implementierung wurde daher einige Teile der Protokolls, die für die Sicherheitslücke nicht relevant sind, verändert oder weggelassen.
+Nachfolgend ist eine Liste aller Abweichungen vom Protokoll aufgeführt.
+Alle Abweichungen sind im Code mit dem Kommentar \lstinline{//MARK: Deviation #} versehen.
+Das \lstinline{#} entspricht der Nummer der Abweichung.
+
+\begin{enumerate}
+\item //TODO: Continue
+//TODO: Den Codekommentar MARK: Deviation \# setzen
+\end{enumerate}
+
 \section{Ausführen des Programms}
+//TODO: Continue
+
 
 
 \section{Übersicht der Komponenten}
