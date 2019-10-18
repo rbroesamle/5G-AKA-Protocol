@@ -9,6 +9,33 @@ Es wurde das 5G-AKA Protokoll aus der Spezifikation TS 33.501 des 3GPP mit der V
 Die Sicherheitslücke wurde darauf aufbauend implementiert.
 
 
+\section{Ausführen des Programms}
+Zum Ausführen des Programms wurde ein \textit{Gradle} Build Script bereitgestellt.
+Es wird daher empfohlen die neueste Java und Gradle Version auf einem Linux Betriebssystem installiert zu haben.
+
+Um das Programm auszuführen muss der Befehl \lstinline{gradle run} in eine Konsole eingegeben werden.
+Dafür sollte man sich in dem Ordner befinden, in dem sich auch die build.gradle Datei befindet.
+
+Alternativ kann auch der Gradle Wrapper ausgeführt werden.
+Dafür muss auf Linux oder macOS der Befehl \lstinline{./gradlew run} und auf Windows der Befehl \lstinline{gradlew.bat run} ausgeführt werden.
+Auch hier sollte man sich in dem Ordner befinden, in dem sich auch die build.gradle Datei befindet.
+
+\subsection{Einstellungen}
+
+Das Programm erlaubt es Einstellungen anzupassen, die das Verhalten des Programms beeinflussen.
+Diese Einstellungen sind in der \lstinline{Implementation.App} Klasse zu finden.
+Die Einstellungen lassen sich folgendermaßen beschreiben:
+
+\subsubsection{RUNMODE}
+
+
+\subsubsection{LOG\_MESSAGES}
+
+
+\subsubsection{DETAILED\_AUTH\_INFO}
+
+
+
 \section{Beschreibung des Aufbaus}
 Für die Implementierung wurde die Programmiersprache Java gewählt.
 
@@ -50,10 +77,5 @@ Das \lstinline{#} entspricht der Nummer der Abweichung.
 \item //TODO: Continue
 //TODO: Den Codekommentar MARK: Deviation \# setzen
 \end{enumerate}
-
-\section{Ausführen des Programms}
-//TODO: Continue
-
-
 
 \section{Übersicht der Komponenten}
