@@ -548,9 +548,9 @@ Stimmen sie nicht \"uberein oder kann der \gls{autn} nicht angenommen werden, so
 
 %14
 \item Nachdem die \gls{seaf} die \textit{Authentication Response} vom \gls{ue} erhalten hat berechnet sie aus der \gls{res*} die \gls{hres*} und vergleicht sie mit der \gls{hxres*}, die sie in \textit{Schritt 11} zwischengespeichert hat.
-Stimmen sie \"uberein so wird bei \textit{Schritt 15} weitergemacht.
-Stimmen sie nicht \"uberein, so wird bei dem Abschnitt \textit{''HRES* failure in \gls{seaf}''} in \cref{fig:protocol_res*_verification_failure_v1} weitergemacht.
-Wird bis zu einem festgelegten Zeitpunkt keine Antwort vom \gls{ue} erhalten, so wird die Authentifizierung als fehlgeschlagen angesehen und es wird die \gls{ausf} \"uber den Fehlschlag informiert.
+Stimmen sie \"uberein so wird die Authentifizierung von der \gls{seaf} als erfolgreich angesehen und es wird bei \textit{Schritt 15} weitergemacht.
+Stimmen sie nicht \"uberein, so wird die Authentifizierung von der \gls{seaf} als fehlgeschlagen angesehen und es wird bei dem Abschnitt \textit{''HRES* failure in \gls{seaf}''} in \cref{fig:protocol_res*_verification_failure_v1} weitergemacht.
+Wird bis zu einem festgelegten Zeitpunkt keine Antwort vom \gls{ue} erhalten, so wird die Authentifizierung von der \gls{seaf} als fehlgeschlagen angesehen und es wird die \gls{ausf} \"uber den Fehlschlag informiert.
 Wann dieser Zeitpunkt erreicht ist ist nicht spezifiziert.
 
 %15
@@ -559,8 +559,8 @@ Er beinhaltet die \gls{res*} den die \gls{seaf} in der \textit{Authentication Re
 
 %16
 \item Nachdem die \gls{ausf} den \textit{Nausf\_UEAuthentication\_Authenticate Request} erhalten hat vergleicht sie die \gls{res*} mit der \gls{xres*}, die sie in \textit{Schritt 8} zwischengespeichert hat.
-Stimmen sie \"uberein so wird bei \textit{Schritt 17} weitergemacht.
-Stimmen sie nicht \"uberein, so wird bei dem Abschnitt \textit{''RES* failure in \gls{seaf}''} in \cref{fig:protocol_res*_verification_failure_v1} weitergemacht.
+Stimmen sie \"uberein so wird die Authentifizierung von der \gls{ausf} als erfolgreich angesehen und es wird bei \textit{Schritt 17} weitergemacht.
+Stimmen sie nicht \"uberein, so wird die Authentifizierung von der \gls{ausf} als fehlgeschlagen angesehen und es wird bei dem Abschnitt \textit{''RES* failure in \gls{seaf}''} in \cref{fig:protocol_res*_verification_failure_v1} weitergemacht.
 Des Weiteren kann auch \"uberpr\"uft werden ob der Authentication Vector abgelaufen ist.
 Dies ist aber nicht zwingend vorgeschrieben.
 Die \gls{ausf} informiert das \gls{udm} über das Ergebnis(\textit{Result}) des Vergleichs.

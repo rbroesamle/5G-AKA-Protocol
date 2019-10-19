@@ -39,20 +39,24 @@ public class App {
     public static void main(String[] args) {
         generateKeyPair();
 
+        System.out.println("Starting protocol...");
+
         UE ue;
         switch (RUN_MODE) {
             case Protocol:
                 ue = new UE(K, SUPI, publicKey);
+                System.out.println("RunMode: Protocol");
                 break;
             case Vulnerability:
                 ue = new EvilUE(K, SUPI, publicKey, SUPI_victim);
+                System.out.println("RunMode: Vulnerability");
                 break;
             default:
                 System.err.println("Please specify a correct RunMode. Exiting.");
                 return;
         }
 
-        System.out.println("Starting protocol...\n");
+        System.out.println();
 
         runProtocol(ue);
 
@@ -124,10 +128,10 @@ public class App {
             System.out.println(" " + seaf.getName() + ": Kseaf: " + (seafKseaf == null ? "null" : Converter.bytesToHex(seafKseaf)));
         }
 
-        if (App.RUN_MODE == RunMode.Vulnerability && App.DETAILED_AUTH_INFO &&
+        if (App.RUN_MODE == RunMode.Vulnerability &&
                 wasSuccessful && Calculator.equals(ueKseaf, seafKseaf)) {
             System.out.println("Vulnerability was successful.");
-        } else if (App.RUN_MODE == RunMode.Vulnerability && App.DETAILED_AUTH_INFO) {
+        } else if (App.RUN_MODE == RunMode.Vulnerability) {
             System.err.println("Vulnerability failed.");
         }
     }

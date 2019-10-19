@@ -23,17 +23,40 @@ Auch hier sollte man sich in dem Ordner befinden, in dem sich auch die build.gra
 \subsection{Einstellungen}
 
 Das Programm erlaubt es Einstellungen anzupassen, die das Verhalten des Programms beeinflussen.
-Diese Einstellungen sind in der \lstinline{Implementation.App} Klasse zu finden.
-Die Einstellungen lassen sich folgendermaßen beschreiben:
+Diese Einstellungen sind in der \lstinline{Implementation.App} Klasse zu finden und lassen sich folgendermaßen beschreiben:
 
-\subsubsection{RUNMODE}
+\subsubsection{RUN\_MODE}
+Der \textit{RUN\_MODE} beschreibt ob das Protokoll oder die Sicherheitslücke simuliert werden soll.
+Er kann die Werte \lstinline{RunMode.Protocol} und \lstinline{RunMode.Vulnerability} annehmen.
 
+Wird der \textit{RUN\_MODE} auf den Wert \lstinline{RunMode.Protocol} gesetzt, dann wird ein erfolgreicher normaler Durchlauf des Protokolls simuliert. 
+Nach dem Durchlauf des Protokolls wird ausgegeben ob der Durchlauf erfolgreich war.
+
+Wird der \textit{RUN\_MODE} auf den Wert \lstinline{RunMode.Vulnerability} gesetzt, dann wird der Angriff, wie er in \cref{chap:4} beschrieben ist, simuliert.
+Nach dem Durchlauf wird ausgegeben ob Authentifizierung und Angriff erfolgreich waren.
+Der Angriff kann nur erfolgreich sein wenn der Langzeitschlüssel \gls{k-seaf} bei dem \gls{ue} und der \gls{seaf} Entitäten gleich ist.
+Mit der \textit{DETAILED\_AUTH\_INFO} Einstellung lassen sich die Langzeitschüssel auf der Konsole ausgeben.
 
 \subsubsection{LOG\_MESSAGES}
 
+Mit \textit{LOG\_MESSAGES} lässt sich einstellen ob die von Entitäten empfangenen Nachrichten auf der Konsole ausgegeben werden sollen.
+Es können die Werte \lstinline{true} und \lstinline{false} angegeben werden.
+
+Wird \textit{LOG\_MESSAGES} auf \lstinline{true} gesetzt, dann werden auf der Konsole alle Nachrichten ausgeben, die von einer der Entitäten empfangen wurden.
+Die Ausgabe auf der Konsole hat das Format: \textit{SENDER -> EMPFÄNGER : NACHRICHT}
+
+Wird \textit{LOG\_MESSAGES} auf \lstinline{false} gesetzt, dann werden die empfangenen Nachrichten nicht auf der Konsole ausgegeben.
 
 \subsubsection{DETAILED\_AUTH\_INFO}
 
+Mit \textit{DETAILED\_AUTH\_INFO} lässt sich einstellen ob detaillierte Informationen auf der Konsole ausgegeben werden sollen.
+Es können die Werte \lstinline{true} und \lstinline{false} angegeben werden.
+
+Wird \textit{DETAILED\_AUTH\_INFO} auf \lstinline{true} gesetzt, dann werden detaillierte Informationen zur Authentifizierung auf der Konsole ausgegeben.
+Dies beinhaltet Informationen darüber ob die Authentifizierung von der \gls{seaf}, der \gls{ausf} und dem \gls{udm} als erfolgreich angesehen wird, wie es in \textit{Schritt 14 \& 16} von \cref{fig:protocol_v1} beschrieben ist.
+Des Weiteren wird der Langzeitschlüssel \gls{k-seaf} der im \gls{ue} und in der \gls{seaf} gespeichert ist ausgegeben.
+
+Wird \textit{DETAILED\_AUTH\_INFO} auf \lstinline{false} gesetzt, dann werden keine detaillierten Informationen zur Authentifizierung auf der Konsole ausgegeben.
 
 
 \section{Beschreibung des Aufbaus}
