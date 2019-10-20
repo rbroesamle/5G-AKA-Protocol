@@ -14,7 +14,7 @@ public class SIDF {
     public static byte[] deconcealSUCI(byte[] SUCI, PrivateKey privateKey) {
         //3GPP TS 33.501 V15.34.1 Page 96
 
-        //TODO: Find and use the correct encryption.
+        //MARK: Deviation 7
         try {
             Cipher cipher = Cipher.getInstance("RSA");
             cipher.init(Cipher.DECRYPT_MODE, privateKey);
@@ -33,7 +33,7 @@ public class SIDF {
     public static byte[] concealSUPI(byte[] SUPI, PublicKey publicKey) {
         //3GPP TS 33.501 V15.34.1 Page 96
 
-        //TODO: Find and use the correct encryption.
+        //MARK: Deviation 8
         try {
             Cipher cipher = Cipher.getInstance("RSA");
             cipher.init(Cipher.ENCRYPT_MODE, publicKey);

@@ -55,11 +55,9 @@ public class SEAF extends Entity {
                 System.out.println(ausf.getName() + " -> " + getName() + " : " + authResponse.getName());
             }
 
-            if (checkExpiryTimer(authResponse, ausf)) {
-                Authentication_Request authRequest = getAuthRequest(authResponse, ausf);
+            Authentication_Request authRequest = getAuthRequest(authResponse, ausf);
 
-                sendMessage(authRequest, this.ue);
-            }
+            sendMessage(authRequest, this.ue);
         } else if (message instanceof Authentication_Response && sender instanceof UE) {
             //Received Authentication Response
             Authentication_Response authResponse = (Authentication_Response) message;
@@ -68,7 +66,7 @@ public class SEAF extends Entity {
                 System.out.println(ue.getName() + " -> " + getName() + " : " + authResponse.getName());
             }
 
-            if (calculateHresAndCompare(authResponse, ue)) {
+            if (checkExpiryTimer(authResponse, ue) && calculateHresAndCompare(authResponse, ue)) {
                 //Consider authentication as successful.
                 if (App.DETAILED_AUTH_INFO) {
                     System.out.println("  " + getName() + " is considering the authentication as successful.");
@@ -101,7 +99,8 @@ public class SEAF extends Entity {
                 if (confirmResponse.SUPI != null) {
                     this.Kseafs.put(Converter.bytesToHex(confirmResponse.SUPI), confirmResponse.Kseaf);
                 } else {
-                    //TODO: Find SUPI and save the Kseaf.
+                    //MARK: Deviation 12
+                    //Find SUPI and save the Kseaf.
                 }
                 App.reportAuthResult(true);
             } else {
@@ -116,8 +115,9 @@ public class SEAF extends Entity {
                 System.out.println(ue.getName() + " -> " + getName() + " : " + authFailure.getName());
             }
 
-            //TODO
             App.reportAuthResult(false);
+
+            //MARK: Deviation 13
             //Maybe initiate new authentication here.
         } else {
             String messageName = message == null ? "?" : message.getName();
@@ -140,11 +140,11 @@ public class SEAF extends Entity {
 
     /**
      * @param authResponse Authentication Response
-     * @param ausf AUSF
+     * @param ue UE
      * @return true if timer is not expired
      */
-    private boolean checkExpiryTimer(Nausf_UEAuthentication_Authenticate_Response authResponse, AUSF ausf) {
-        //TODO
+    private boolean checkExpiryTimer(Authentication_Response authResponse, UE ue) {
+        //MARK: Deviation 14
         return true;
     }
 
@@ -160,7 +160,7 @@ public class SEAF extends Entity {
 
     /**
      * @param authResponse Authentication Response
-     * @param ue UE
+     * @param ue           UE
      * @return true if calculated HXRES equals the previously stored one.
      */
     private boolean calculateHresAndCompare(Authentication_Response authResponse, UE ue) {
@@ -179,13 +179,13 @@ public class SEAF extends Entity {
     }
 
     private static class HXRESstar {
-        //TODO: Improve this.
         byte[] HXRESstar;
         byte[] RAND;
     }
 
     //Custom function for displaying the Kseaf.
-    public byte[] getKseafForSUPI(byte[] SUPI) {//TODO: Mention this function as extra in the paper.
+    //NOTE: This function is NOT part of the specification. It's only purpose is to allow the comparison of the Kseaf from UE and SEAF!
+    public byte[] getKseafForSUPI(byte[] SUPI) {
         return this.Kseafs.get(Converter.bytesToHex(SUPI));
     }
 }

@@ -64,6 +64,7 @@ public class App {
     }
 
     private static byte[] K = Generator.randomBytes(ParameterLength.K);
+    //TODO: Does not satisfy the specification.
     private static byte[] SUPI = Generator.randomBytes(ParameterLength.K);
     private static byte[] SNN = Generator.randomBytes(ParameterLength.K);
     private static byte[] AMF = Generator.randomBytes(ParameterLength.AMF);

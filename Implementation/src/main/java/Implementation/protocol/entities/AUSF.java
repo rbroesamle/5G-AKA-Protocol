@@ -40,7 +40,8 @@ public class AUSF extends Entity {
 
                 sendMessage(getRequest, this.udm);
             } else {
-                //TODO: answer with 'serving network not authorized' to the seaf, as described on page 40.
+                //MARK: Deviation 10
+                //Answer with 'serving network not authorized' to the seaf, as described in 3GPP TS 33.501 V15.34.1 Page 40.
             }
         } else if (message instanceof Nudm_Authentication_Get_Response && sender instanceof UDM) {
             //Received Nudm_Authentication_Get Response
@@ -118,9 +119,9 @@ public class AUSF extends Entity {
      * @return true if SEAF is entitled to use the ServingNetworkName
      */
     private boolean checkIfSeafIsEntitledToUseSnName(Nausf_UEAuthentication_Authenticate_Request authRequest, SEAF seaf) {
-        //3GPP TS 33.501 V15.34.1 0 Page 40
+        //3GPP TS 33.501 V15.34.1 Page 40
         SNNameQueue.add(authRequest.servingNetworkName);
-        //TODO: Check if Seaf is entitled to use this SN-Name.
+        //MARK: Deviation 11
         return true;
     }
 
@@ -185,7 +186,6 @@ public class AUSF extends Entity {
         if (temporaryData == null) {
             return false;
         }
-        //TODO: Inform UDM about successful authentication, as described on page 45 step 11.
         return Calculator.equals(confirmRequest.RESstar, temporaryData.XRESstar);
     }
 

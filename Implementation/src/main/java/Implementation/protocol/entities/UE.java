@@ -153,7 +153,8 @@ public class UE extends Entity {
     }
 
     //Custom function for displaying the Kseaf.
-    public byte[] getKseafForSNN(byte[] SNN) {//TODO: Mention this function as extra in the paper.
+    //NOTE: This function is NOT part of the specification. It's only purpose is to allow the comparison of the Kseaf from UE and SEAF!
+    public byte[] getKseafForSNN(byte[] SNN) {
         return this.Kseafs.get(Converter.bytesToHex(SNN));
     }
 }

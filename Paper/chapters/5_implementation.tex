@@ -2,7 +2,7 @@
 \label{chap:5}
 
 Die in \cref{chap:4} beschriebene Sicherheitslücke und das 5G-AKA Protokoll wurde nun implementiert.
-Die Implementierung ist dieser Arbeit beigefügt und kann auf Github unter folgendem Link eingesehen werden: \url{}//TODO
+Die Implementierung ist dieser Arbeit beigefügt und kann auch auf Github unter folgendem Link eingesehen werden: \url{}//TODO
 In diesem Kapitel wird sich auf den Commit \#ID gezogen.//TODO
 
 Es wurde das 5G-AKA Protokoll aus der Spezifikation TS 33.501 des 3GPP mit der Version V15.34.1 implementiert.
@@ -135,6 +135,42 @@ In der Implementierung wurde hierfür, wie auch bei der Abweichung Nr. 4, die le
 \item In der \lstinline{Implementation.protocol.additional.MAF} Klasse wurde bei der \textit{Key generation function} f5 von der Spezifikation abgewichen.
 In der Spezifikation ist für die \lstinline{f5} Methode eine \textit{Key generating function} gefordert.
 In der Implementierung wurde hierfür jedoch die letzten 6 Bytes des \textit{HmacSHA256} verwendet.
+
+%7
+\item In der \lstinline{Implementation.protocol.additional.SIDF} Klasse wurde bei der Entschlüsselung des \gls{suci} in den \gls{supi} von der Spezifikation abgewichen.
+In der Spezifikation ist der \gls{suci} ein kompliziertes Bitfeld und bedarf somit einer umfangreichen Entschlüsselungsfunktion.
+Die Implementierung der \lstinline{deconcealSUCI} Methode verwendet jedoch nur das \textit{RSA} Verfahren zum entschlüsseln.
+
+%8
+\item In der \lstinline{Implementation.protocol.additional.SIDF} Klasse wurde bei der Verschlüsselung des \gls{supi} in den \gls{suci} von der Spezifikation abgewichen.
+In der Spezifikation ist der \gls{suci} ein kompliziertes Bitfeld. Dies muss eine Verschlüsselungsfunktion berücksichtigen.
+Die Implementierung der \lstinline{deconcealSUCI} Methode verwendet jedoch nur das \textit{RSA} Verfahren zum verschlüsseln.
+Daher entspricht der \gls{suci} in der Implementierung auch nur dem Ergebnis des \textit{RSA} Verfahrens und nicht dem Bitfeld das in der Spezifikation beschrieben wurde.
+
+%9
+\item Da in der Sicherheitslücke der \gls{5g-guti} nicht verwendet wird, wurde der \gls{5g-guti} nicht implementiert.
+
+%10
+\item In \textit{Schritt 3} der \cref{fig:protocol_v1} soll die \gls{ausf} einer \gls{seaf}, die den mitgesendeten \gls{sn-name} nicht verwenden darf, mit einer \textit{serving network not authorized} Nachricht antworten.
+In der Implementierung sendet die \lstinline{Implementierung.protocol.entities.AUSF} Klasse diese Nachricht nicht.
+
+%11
+\item In \textit{Schritt 3} der \cref{fig:protocol_v1} soll die \gls{ausf} überprüfen ob eine \gls{seaf}, die eine Nachricht an die \gls{ausf} geschickt hat, den mitgesendeten \gls{sn-name} verwenden darf.
+In der Implementierung tut dies die \lstinline{Implementation.protocol.entities.AUSF} Klasse nicht.
+
+%12
+\item In \textit{Schritt 17} der \cref{fig:protocol_v1} wird beschrieben, dass die \gls{ausf} der \gls{seaf} den \gls{supi} des Benutzer mitsendet, wenn die \gls{ausf} diesen in \textit{Schritt 7} erhalten hat.
+Hat sie den \gls{supi} nicht in \textit{Schritt 7} erhalten, so wurde in \textit{Schritt 1} der \gls{5g-guti} an die \gls{seaf} gesendet.
+Da jedoch bei dem implementierten Angriff nie der \gls{5g-guti} versendet wird, wurde in der \lstinline{Implementation.protocol.entities.SEAF} Klasse die Nachricht aus \textit{Schritt 17} nur mit mitgesendetem \gls{supi} behandelt.
+
+%13
+\item Erhält die \gls{seaf} eine \textit{Authentication Failure} Nachricht vom \gls{ue} so soll sie im Falle einer \textit{Synchronization failure} eine neue Authentifizierung initiieren können.
+In der Implementierung wird in der \lstinline{Implemenation.protocol.entities.SEAF} Klasse jedoch nie eine neue Authentifizierung initiiert.
+
+%14
+\item In \textit{Schritt 14} der \cref{fig:protocol_v1} soll die \gls{seaf} bei einer zu spät oder nicht erhaltener Nachricht die Authentifizierung abbrechen.
+In der Implementierung wird die erhaltene Nachricht jedoch immer akzeptiert.
+Es gibt also keinen \textit{Timeout}.
 
 
 \end{enumerate}
