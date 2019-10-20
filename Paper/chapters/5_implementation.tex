@@ -106,8 +106,37 @@ Alle Abweichungen sind im Code mit dem Kommentar \lstinline{//MARK: Deviation #}
 Das \lstinline{#} entspricht der Nummer der Abweichung.
 
 \begin{enumerate}
-\item //TODO: Continue
-//TODO: Den Codekommentar MARK: Deviation \# setzen
+%1
+\item In der \lstinline{Implementation.protocol.additional.AVGenerator} Klasse wurde bei der Generierung der \gls{sqn} in der \lstinline{generateSQN} Methode von der Spezifikation abgewichen.
+In der Spezifikation wurden Bedingungen, wie die \textit{Wrap around Protection}, für die Generierung der \gls{sqn} festgelegt.
+In der Implementierung wurde jedoch die \gls{sqn} mit einem Zufallsgenerator generiert, der diese Bedingungen nicht erfüllt.
+
+%2
+\item In der \lstinline{Implementation.protocol.additional.KGF} Klasse wurde bei der \textit{Message authentication function} f1 von der Spezifikation abgewichen.
+In der Spezifikation ist für die \lstinline{f1} Methode eine \textit{Message authentication function} gefordert.
+In der Implementierung wurde hierfür jedoch die letzten 8 Bytes des \textit{HmacSHA256} verwendet.
+
+%3
+\item In der \lstinline{Implementation.protocol.additional.KGF} Klasse wurde bei der \textit{Message authentication function} f2 von der Spezifikation abgewichen.
+In der Spezifikation ist für die \lstinline{f2} Methode eine \textit{Message authentication function} gefordert.
+In der Implementierung wurde hierfür jedoch der \textit{HmacSHA256} verwendet.
+
+%4
+\item In der \lstinline{Implementation.protocol.additional.MAF} Klasse wurde bei der \textit{Key generation function} f3 von der Spezifikation abgewichen.
+In der Spezifikation ist für die \lstinline{f3} Methode eine \textit{Key generating function} gefordert.
+In der Implementierung wurde hierfür jedoch die letzten 16 Bytes des \textit{HmacSHA256} verwendet.
+
+%5
+\item In der \lstinline{Implementation.protocol.additional.MAF} Klasse wurde bei der \textit{Key generation function} f4 von der Spezifikation abgewichen.
+In der Spezifikation ist für die \lstinline{f4} Methode eine \textit{Key generating function} gefordert.
+In der Implementierung wurde hierfür, wie auch bei der Abweichung Nr. 4, die letzten 16 Bytes des \textit{HmacSHA256} verwendet.
+
+%6
+\item In der \lstinline{Implementation.protocol.additional.MAF} Klasse wurde bei der \textit{Key generation function} f5 von der Spezifikation abgewichen.
+In der Spezifikation ist für die \lstinline{f5} Methode eine \textit{Key generating function} gefordert.
+In der Implementierung wurde hierfür jedoch die letzten 6 Bytes des \textit{HmacSHA256} verwendet.
+
+
 \end{enumerate}
 
 

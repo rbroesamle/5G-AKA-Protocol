@@ -26,7 +26,7 @@ public class AVGenerator {//Authentication Vector Generator
     }
 
     private static byte[] generateSQN() {
-        //TODO: Generate the correct SQN.
+        //MARK: Deviation 1
         return Generator.randomBytes(ParameterLength.SQN);
     }
 
