@@ -74,14 +74,18 @@ public class UE extends Entity {
 
     private Message calculateAuthResponse(Authentication_Request authRequest, SEAF seaf) {
         Data_AUTN AUTN = authRequest.AUTN;
-        //TODO: Verify freshness of AUTN, as described on page 45.
-        if (/*AUTN is not valid*/false) {
+
+        //MARK: Deviation 15
+        // Verify freshness of AUTN, as described at 3GPP TS 33.501 V15.34.1 Page 45.
+        if (false) {
+            //Result of verification of freshness failed
             if (App.DETAILED_AUTH_INFO) {
                 System.err.println(getName() + ": The AUTN is not valid.");
             }
-            return new Authentication_Failure(/*TODO: Indicate the resaon for failure. See 6.1.3.3.1*/);
+
+            //MARK: Deviation 16
+            return new Authentication_Failure(/*CAUSE value*/);
         }
-        //TODO: Check if the separation bit of the AMF is set to 1, as described on page 45.
         byte[] RAND = authRequest.RAND;
 
         byte[] AK = KGF.f5(this.K, RAND);
@@ -92,7 +96,9 @@ public class UE extends Entity {
             if (App.DETAILED_AUTH_INFO) {
                 System.out.println(getName() + ": The calculated XMAC doesn't equal to the received MAC");
             }
-            return new Authentication_Failure(/*TODO: Indicate the resaon for failure. See 6.1.3.3.1*/);
+
+            //MARK: Deviation 16
+            return new Authentication_Failure(/*CAUSE value*/);
         }
 
         byte[] RES = MAF.f2(K, RAND);

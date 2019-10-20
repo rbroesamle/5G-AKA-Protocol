@@ -10,9 +10,9 @@ public class Authentication_Request implements Message {
     public final byte[] RAND;
     public final Data_AUTN AUTN;
 
-    //TODO: Include ngKSI
-
-    //TODO: Include ABBA
+    //MARK: Deviation 17
+    //Include ngKSI
+    //Include ABBA
 
 
     @Override

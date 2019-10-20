@@ -172,6 +172,35 @@ In der Implementierung wird in der \lstinline{Implemenation.protocol.entities.SE
 In der Implementierung wird die erhaltene Nachricht jedoch immer akzeptiert.
 Es gibt also keinen \textit{Timeout}.
 
+%15
+\item In \textit{Schritt 12} der \cref{fig:protocol_v1} wird überprüft ob der \gls{autn} angenommen werden kann.
+In der Implementierung wurde in der \lstinline{Implementation.protocol.entities.UE} Klasse diese Überprüfung weggelassen.
+
+%16
+\item In \textit{Schritt 2*} der \cref{fig:protocol_mac_failure_v1} sendet das \gls{ue} eine \textit{Authentication Failure} Nachricht an die \gls{seaf}.
+Diese Nachricht enthält auch einen CAUSE Wert, der den Grund des Fehlschlagens beschreibt.
+In der Implementierung wird jedoch kein CAUSE Wert in der \textit{Authentication Failure} Nachricht mitgesendet.
+
+%17
+\item In \textit{Schritt 11} der \cref{fig:protocol_v1} sendet die \gls{seaf} in der \textit{Authentication Request} Nachricht zusätzlich noch den \gls{ng-ksi} und die \gls{abba} mit.
+In der Implementierung werden diese Parameter jedoch nicht mitgesendet.
+
+%18
+\item In \textit{Schritt 15} der \cref{fig:protocol_v1} sendet die \gls{seaf} eine \textit{Nausf\_UEAuthentication\_Authenticate Request} Nachricht an die \gls{ausf}.
+In der Implementierung wurde diese Nachricht in \textit{Nausf\_UEAuthentication\_Confirmation Request} umbenannt, da die Nachricht aus \textit{Schritt 2} sonst den gleichen Name hätte.
+
+%19
+\item In \textit{Schritt 17} der \cref{fig:protocol_v1} sendet die \gls{ausf} eine \textit{Nausf\_UEAuthentication\_Authenticate Response} Nachricht an die \gls{seaf}.
+In der Implementierung wurde diese Nachricht in \textit{Nausf\_UEAuthentication\_Confirmation Response} umbenannt, da die Nachricht aus \textit{Schritt 10} sonst den gleichen Name hätte.
+
+%20
+\item In \textit{Schritt 7} der \cref{fig:protocol_v1} wird zusätzlich zum \gls{5g-he-av} der Hinweis mitgesendet, dass der \gls{5g-he-av} für das 5G-AKA Protokoll bestimmt ist.
+In der Implementierung wurde dieser Hinweis weggelassen.
+
+%21
+\item Der \gls{supi} ist als ein Bitfeld spezifiziert, das aus mehreren Parametern besteht.
+In der Implementierung ist der \gls{supi} jedoch nur eine zufällige Bitfolge.
+
 
 \end{enumerate}
 

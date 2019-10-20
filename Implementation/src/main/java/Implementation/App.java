@@ -64,7 +64,7 @@ public class App {
     }
 
     private static byte[] K = Generator.randomBytes(ParameterLength.K);
-    //TODO: Does not satisfy the specification.
+    //MARK: Deviation 21
     private static byte[] SUPI = Generator.randomBytes(ParameterLength.K);
     private static byte[] SNN = Generator.randomBytes(ParameterLength.K);
     private static byte[] AMF = Generator.randomBytes(ParameterLength.AMF);
@@ -96,7 +96,7 @@ public class App {
         App.ausf = new AUSF();
         App.udm = new UDM(K, AMF, privateKey);
 
-        App.seaf.ausf = App.ausf;//TODO: Change to not be reliant on this...
+        App.seaf.ausf = App.ausf;
         App.seaf.ue = App.ue;
         App.ausf.udm = App.udm;
         App.ausf.seaf = App.seaf;
