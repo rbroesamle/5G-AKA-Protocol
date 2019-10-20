@@ -36,6 +36,7 @@ Wird der \textit{RUN\_MODE} auf den Wert \lstinline{RunMode.Vulnerability} geset
 Nach dem Durchlauf wird ausgegeben ob Authentifizierung und Angriff erfolgreich waren.
 Der Angriff kann nur erfolgreich sein wenn der Langzeitschlüssel \gls{k-seaf} bei dem \gls{ue} und der \gls{seaf} Entitäten gleich ist.
 Mit der \textit{DETAILED\_AUTH\_INFO} Einstellung lassen sich die Langzeitschüssel auf der Konsole ausgeben.
+Da der Angriff auf einer \textit{Race Condition} beruht ist auch das Fehlschlagen des simulierten Angriffs zu erwarten.
 
 \subsubsection{LOG\_MESSAGES}
 
@@ -86,7 +87,15 @@ Dies geschieht über die \lstinline{Implementation.structure.Entity} Superklasse
 In dem \lstinline{Implementation.protocol.messages} Package sind alle Nachrichten zu finden, die die Entitäten untereinander verschicken.
 Jede Nachricht hat eine eigene Klasse, die das \lstinline{Implementation.structure.Message} Interface implementiert.
 
+
 \subsection{Implementierung der Race Condition}
+Um die \textit{Race Condition} zu realisieren muss sichergestellt werden dass versendete Nachrichten sich überholen können.
+Dies wurde mit Hilfe von \textit{Threads} implementiert.
+Dafür wurden in der \lstinline{Implementation.structure.Entity} Klasse die \lstinline{sendMessage} Methode erstellt.
+Da die \lstinline{Implementation.structure.Entity} Klasse die Superklasse von allen Entitäten ist wird in den Entitäten die \lstinline{sendMessage} der \lstinline{Implementation.structure.Entity} Klasse verwendet um Nachrichten zu versenden.
+
+Führt eine Entität die \lstinline{sendMessage} Methode aus, so wird ein neuer Thread erzeugt der die \lstinline{onReceiveMessage} Methode asynchron auf der Entität ausführt, die die gesendete Nachricht erhalten soll.
+Somit ist sichergestellt, dass eine \textit{Race Condition} möglich ist.
 
 
 \subsection{Unterschiede zum Protokoll}
@@ -100,5 +109,6 @@ Das \lstinline{#} entspricht der Nummer der Abweichung.
 \item //TODO: Continue
 //TODO: Den Codekommentar MARK: Deviation \# setzen
 \end{enumerate}
+
 
 \section{Übersicht der Komponenten}
