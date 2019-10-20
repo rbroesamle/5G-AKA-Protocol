@@ -4,8 +4,8 @@ import Implementation.App;
 import Implementation.helper.Calculator;
 import Implementation.helper.Converter;
 import Implementation.protocol.additional.KDF;
-import Implementation.protocol.additional.KGF;
 import Implementation.protocol.additional.MAF;
+import Implementation.protocol.additional.KGF;
 import Implementation.protocol.additional.SIDF;
 import Implementation.protocol.data.Data_AUTN;
 import Implementation.protocol.messages.*;
@@ -84,10 +84,10 @@ public class UE extends Entity {
         //TODO: Check if the separation bit of the AMF is set to 1, as described on page 45.
         byte[] RAND = authRequest.RAND;
 
-        byte[] AK = MAF.f5(this.K, RAND);
+        byte[] AK = KGF.f5(this.K, RAND);
         byte[] SQN = Calculator.xor(AUTN.SQNxorAK, AK);
 
-        byte[] XMAC = KGF.f1(K, Converter.concatenateBytes(SQN, RAND, AUTN.AMF));
+        byte[] XMAC = MAF.f1(K, Converter.concatenateBytes(SQN, RAND, AUTN.AMF));
         if (!Calculator.equals(XMAC, AUTN.MAC)) {
             if (App.DETAILED_AUTH_INFO) {
                 System.out.println(getName() + ": The calculated XMAC doesn't equal to the received MAC");
@@ -95,10 +95,10 @@ public class UE extends Entity {
             return new Authentication_Failure(/*TODO: Indicate the resaon for failure. See 6.1.3.3.1*/);
         }
 
-        byte[] RES = KGF.f2(K, RAND);
+        byte[] RES = MAF.f2(K, RAND);
 
-        byte[] CK = MAF.f3(K, RAND);
-        byte[] IK = MAF.f4(K, RAND);
+        byte[] CK = KGF.f3(K, RAND);
+        byte[] IK = KGF.f4(K, RAND);
 
 
         byte[] KEY = Converter.concatenateBytes(CK, IK);

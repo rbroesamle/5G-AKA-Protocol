@@ -14,11 +14,11 @@ public class AVGenerator {//Authentication Vector Generator
 
         byte[] sqnRandAmf = Converter.concatenateBytes(SQN, RAND, AMF);
 
-        byte[] MAC = KGF.f1(K, sqnRandAmf);
-        byte[] xRES = KGF.f2(K, RAND);
-        byte[] CK = MAF.f3(K, RAND);
-        byte[] IK = MAF.f4(K, RAND);
-        byte[] AK = MAF.f5(K, RAND);
+        byte[] MAC = MAF.f1(K, sqnRandAmf);
+        byte[] xRES = MAF.f2(K, RAND);
+        byte[] CK = KGF.f3(K, RAND);
+        byte[] IK = KGF.f4(K, RAND);
+        byte[] AK = KGF.f5(K, RAND);
 
         byte[] SQNxorAK = Calculator.xor(SQN, AK);
 
