@@ -201,8 +201,76 @@ In der Implementierung wurde dieser Hinweis weggelassen.
 \item Der \gls{supi} ist als ein Bitfeld spezifiziert, das aus mehreren Parametern besteht.
 In der Implementierung ist der \gls{supi} jedoch nur eine zufällige Bitfolge.
 
-
 \end{enumerate}
 
 
 \section{Übersicht der Komponenten}
+
+In \cref{tab:overview_classes} wurden alle Begriffe aufgelistet, die als Klassen in der Implementierung zu finden sind.
+
+In \cref{tab:overview_generating_classes} wurden alle Begriffe aufgelistet, die in der Implementierung erzeugt werden.
+In den dazugehörigen Klassen werden die Begriffe erzeugt.
+
+\begin{table}
+\centering
+\begin{tabular}{|c|c|}
+\hline
+\textbf{Begriff} & \textbf{Klasse} \\ \hline
+{\gls{5g-guti}} & \texttt{Implementation.protocol.data.Data\_5G\_GUTI} \\
+{\gls{5g-he-av}} & \texttt{Implementation.protocol.data.Data\_5G\_HE\_AV} \\
+{\gls{5g-se-av}} & \texttt{Implementation.protocol.data.Data\_5G\_SE\_AV} \\
+{\gls{autn}} & \texttt{Implementation.protocol.data.Data\_AUTN} \\
+{\gls{f12345}} & \texttt{Implementation.protocol.additional.MAF}, \texttt{.KGF} \\
+{\gls{kdf}} & \texttt{Implementation.protocol.additional.KDF} \\ 
+\hline
+{\gls{ue}} & \texttt{Implementation.protocol.entities.UE} \\
+{\gls{seaf}} & \texttt{Implementation.protocol.entities.SEAF} \\
+{\gls{ausf}} & \texttt{Implementation.protocol.entities.AUSF} \\
+{\gls{udm}} & \texttt{Implementation.protocol.entities.UDM} \\
+{\gls{sidf}} & \texttt{Implementation.protocol.additional.SIDF} \\
+\hline
+\end{tabular}
+\caption{Übersicht der normalen Klassen}
+\label{tab:overview_classes}
+\end{table}
+
+
+\begin{table}
+\centering
+\begin{tabular}{|c|c|}
+\hline
+\textbf{Begriff} & \textbf{Klasse} \\ \hline
+{\gls{ak}} & \texttt{Implementation.protocol.additional.AVGenerator}, \\
+ & \texttt{Implementation.protocol.entities.UE} \\
+{\gls{amf}} & \texttt{Implementation.App} \\
+{\gls{ck}} & \texttt{Implementation.protocol.additional.AVGenerator}, \\
+ & \texttt{Implementation.protocol.entities.UE} \\
+{\gls{hres*}} & \texttt{Implementation.protocol.entities.SEAF} \\
+{\gls{hxres*}} & \texttt{Implementation.protocol.entities.AUSF} \\
+{\gls{ik}} & \texttt{Implementation.protocol.additional.AVGenerator}, \\
+ & \texttt{Implementation.protocol.entities.UE} \\
+{\gls{k}} & \texttt{Implementation.App} \\
+{\gls{k-ausf}} & \texttt{Implementation.protocol.entities.UDM}, \\
+ & \texttt{Implementation.protocol.entities.UE} \\
+{\gls{k-seaf}} & \texttt{Implementation.protocol.entities.AUSF}, \\
+ & \texttt{Implementation.protocol.entities.UE} \\
+{\gls{mac}} & \texttt{Implementation.protocol.additional.AVGenerator} \\
+{\gls{rand}} & \texttt{Implementation.protocol.additional.AVGenerator} \\
+{\gls{res}} & \texttt{Implementation.protocol.entities.UE} \\
+{\gls{res*}} & \texttt{Implementation.protocol.entities.UE} \\
+{\gls{sn-name}} & \texttt{Implementation.App} \\
+{\gls{sqn}} & \texttt{Implementation.protocol.additional.AVGenerator} \\
+{\gls{suci}} & \texttt{Implementation.protocol.additional.SIDF} \\
+{\gls{supi}} & \texttt{Implementation.App} \\
+{\gls{xmac}} & \texttt{Implementation.protocol.entities.UE} \\
+{\gls{xres}} & \texttt{Implementation.protocol.additional.AVGenerator} \\
+{\gls{xres*}} & \texttt{Implementation.protocol.entities.UDM} \\
+\hline
+\end{tabular}
+\caption{Übersicht der erzeugenden Klassen}
+\label{tab:overview_generating_classes}
+\end{table}
+
+
+
+

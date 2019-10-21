@@ -66,7 +66,7 @@ public class App {
     private static byte[] K = Generator.randomBytes(ParameterLength.K);
     //MARK: Deviation 21
     private static byte[] SUPI = Generator.randomBytes(ParameterLength.K);
-    private static byte[] SNN = Generator.randomBytes(ParameterLength.K);
+    private static byte[] SN_NAME = Generator.randomBytes(ParameterLength.K);
     private static byte[] AMF = Generator.randomBytes(ParameterLength.AMF);
     private static PublicKey publicKey = null;
     private static PrivateKey privateKey = null;
@@ -92,7 +92,7 @@ public class App {
 
     private static void runProtocol(UE ue) {
         App.ue = ue;
-        App.seaf = new SEAF(SNN);
+        App.seaf = new SEAF(SN_NAME);
         App.ausf = new AUSF();
         App.udm = new UDM(K, AMF, privateKey);
 
@@ -116,7 +116,7 @@ public class App {
         } else {
             System.err.println("Authentication failed.");
         }
-        byte[] ueKseaf = ue.getKseafForSNN(SNN);
+        byte[] ueKseaf = ue.getKseafForSNN(SN_NAME);
         byte[] seafKseaf = null;
         if (App.RUN_MODE == RunMode.Protocol) {
             seafKseaf = seaf.getKseafForSUPI(SUPI);
