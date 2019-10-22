@@ -1,6 +1,18 @@
 \chapter{Zusammenfassung und Ausblick}
 \label{chap:6}
-Hier bitte einen kurzen Durchgang durch die Arbeit.
+
+In dieser Arbeit wurde das 5G-AKA Protokoll erklärt und mit dem 4G EPS-AKA Protokoll verglichen.
+Des Weiteren wurde eine Sicherheitslücke des 5G-AKA Protokolls erklärt und implementiert.
+
+Das 5G-AKA Protokoll ist eines von zwei Protokollen des 5G-Standards das für den sicheren Austausch eines Schlüssels zuständig ist.
+Es besteht aus den 4 Entitäten \gls{ue}, \gls{seaf}, \gls{ausf} und \gls{udm}.
+Das \gls{ue} entspricht z.B. dem Smartphne eines Benutzers, die \gls{seaf} entspricht z.B. einem Funkmast mit dem sich das Smartphone des Benutzers verbindet und die \gls{ausf} und das \gls{udm} entsprechen z.B. dem Provider von dem der Benutzer eine SIM-Karte gekauft hat.
+Über diese vier Entitäten werden nun Nachrichten versendet, die das \gls{ue} authentifizieren und einen gemeinsamen Schlüssel austauschen.
+War das 5G-AKA Protokoll erfolgreich, dann verfügen das \gls{ue} und die \gls{seaf} über einen \textit{Anchor Key}, genannt \gls{k-seaf}, der für die weitere Verschlüsselung verwendet wird.
+
+Das 5G-AKA Protokoll hat einige Verbesserungen gegenüber dem 4G EPS-AKA Protokoll des 4G-Standards.
+Jedoch wurde auch in dem 5G-AKA Protokoll eine Sicherheitslücke entdeckt.
+
 
 \section*{Ausblick}
 ...und anschließend einen Ausblick
