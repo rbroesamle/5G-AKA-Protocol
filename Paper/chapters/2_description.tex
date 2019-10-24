@@ -171,20 +171,20 @@ Ist \gls{ak} = 0, dann kann davon ausgegangen werden dass die \gls{sqn} alleine 
 \glsreset{ck}
 \subsubsection{\gls{ck}}
 Der \gls{ck} ist ein 128 Bit langer Schlüssel. %3GPP TS 33.102 V15.1.0 Page 32
-Er wird von der \textit{Key generating function} f3 berechnet.
-Diese Funktion ist von \gls{k} abhängig und bekommt \gls{rand} als Eingabe. %3GPP TS 33.102 V15.1.0 Page 26
+Er wird, zusammen mit dem \gls{ik}, benötigt um den \gls{k-ausf} zu berechnen.
 
-Der \gls{ck} und der \gls{ik} werden benötigt um \gls{k-ausf} zu berechnen.
+Der \gls{ck} wird von der \textit{Key generating function} f3 berechnet.
+Diese Funktion bekommt \gls{rand} und \gls{k} als Eingabe. %3GPP TS 33.102 V15.1.0 Page 26
 
 \glsreset{f12345}
 \subsubsection{\gls{f12345}}
 Mit diesen Funktionen werden \gls{ak}, \gls{ck}, \gls{ik} \gls{res} bzw. \gls{xres} und \gls{mac} bzw. \gls{xmac} berechnet. %3GPP TS 33.102 V15.1.0 Page 26
 \begin{itemize}
-\item f1 ist eine \textit{Message authentication function}.
+\item Bei f1 handelt es sich um eine \textit{Message authentication function}.
 Sie berechnet in Abhängigkeit von \gls{k} den \gls{mac} bzw. \gls{xmac} und bekommt als Eingabe die Konkatenation von \gls{sqn}, \gls{rand} und \gls{amf} (\gls{sqn} || \gls{rand} || \gls{amf}). \\
-\item f2 ist eine, möglicherweise verkürzte, \textit{Message authentication function}.
+\item Bei f2 handelt es sich um eine, möglicherweise verkürzte, \textit{Message authentication function}.
 Sie berechnet in Abhängigkeit von \gls{k} die \gls{res} bzw. \gls{xres} und bekommt \gls{rand} als Eingabe.
-\item f3, f4 und f5 sind \textit{Key generating function}s.
+\item Bei f3, f4 und f5 handelt es sich um \textit{Key generating function}s.
 f3 berechnet \gls{ck}, f4 berechnet \gls{ik} und f5 berechnet \gls{ak}.
 Alle drei bekommen \gls{rand} als Eingabe und sind abhängig von \gls{k}.
 Falls \gls{sqn} keine Rückschlüsse auf die Identität oder Position des Benutzers zulässt wird f5 = 0 gesetzt.
@@ -192,7 +192,7 @@ Falls \gls{sqn} keine Rückschlüsse auf die Identität oder Position des Benutz
 
 \glsreset{hres*}
 \subsubsection{\gls{hres*}}
-\gls{hres*} ist der Hash von \gls{res*}.
+\gls{hres*} ist der Hash von \gls{res*} und wird von der \gls{seaf} benötigt, um ihn mit dem \gls{hxres*} zu vergleichen.
 Er wird von der \gls{seaf} mit Hilfe des SHA-256-Algorithmus berechnet. %3GPP TS 33.501 V15.34.1 Page 155
 Eingabe des SHA-256-Algorithmus ist die Konkatenation von \gls{rand} und \gls{res*} (\gls{rand} || \gls{res*}).
 
@@ -200,7 +200,7 @@ Eingabe des SHA-256-Algorithmus ist die Konkatenation von \gls{rand} und \gls{re
 
 \glsreset{hxres*}
 \subsubsection{\gls{hxres*}}
-\gls{hxres*} ist der Hash von \gls{xres*}.
+\gls{hxres*} ist der Hash von \gls{xres*} und wird von der \gls{seaf} benötigt, um ihn mit dem \gls{hres*} zu vergleichen.
 Er wird von der \gls{ausf} mit Hilfe des SHA-256-Algorithmus berechnet. %3GPP TS 33.501 V15.34.1 Page 155
 Eingabe des SHA-256-Algorithmus ist die Konkatenation von \gls{rand} und \gls{xres*} (\gls{rand} || \gls{xres*}).
 
@@ -209,10 +209,11 @@ Eingabe des SHA-256-Algorithmus ist die Konkatenation von \gls{rand} und \gls{xr
 \glsreset{ik}
 \subsubsection{\gls{ik}}
 Der \gls{ik} ist ein 128 Bit langer Schlüssel. %3GPP TS 33.102 V15.1.0 Page 32
-Er wird von der \textit{Key generating function} f4 berechnet.
-Diese Funktion ist von \gls{k} abhängig und bekommt \gls{rand} als Eingabe. %3GPP TS 33.102 V15.1.0 Page 26
+Er \gls{ik} wird, zusammen mit dem \gls{ck}, benötigt um \gls{k-ausf} zu berechnen.
 
-Der \gls{ik} wird zusammen mit dem \gls{ck} benötigt um \gls{k-ausf} zu berechnen.
+Er wird von der \textit{Key generating function} f4 berechnet.
+Diese Funktion bekommt \gls{rand} und \gls{k} als Eingabe. %3GPP TS 33.102 V15.1.0 Page 26
+
 
 \glsreset{imsi}
 \subsubsection{\gls{imsi}}
