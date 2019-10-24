@@ -2,56 +2,68 @@
 \label{chap:2}
 
 Das 5G-AKA-Protokoll ist eines von mehreren Protokollen des 5G-Standards.
-Vor Allem das EAP-AKA-Protokoll und das 5G-AKA-Protokoll sind f\"ur den sicheren Austausch eines Schl\"ussels zust\"andig. 
-Bei beiden Protokollen ist der erste Teil der Gleiche bis bei dem Provider eines der Protokolle ausgew\"ahlt wird. %3GPP TS 33.501 V15.34.1 Page 40
-Bei beiden Protokollen ist auch der Authentifizierungsvorgang sehr \"ahnlich, wobei jedoch der das 5G-AKA-Protokoll das EAP-AKA-Protokoll darum erweitert, dass es dem Provider, \textit{Home Network} genannt, eine erfolgreiche Authentifizierung nachweist. %3GPP TS 33.501 V15.34.1 Page 43
+Vor Allem das EAP-AKA-Protokoll und das 5G-AKA-Protokoll sind für den sicheren Austausch eines Schlüssels zuständig. 
+Bei beiden Protokollen ist der erste Teil der Gleiche bis bei dem Provider eines der Protokolle ausgewählt wird. %3GPP TS 33.501 V15.34.1 Page 40
+Bei beiden Protokollen ist auch der Authentifizierungsvorgang sehr ähnlich, wobei das 5G-AKA-Protokoll das EAP-AKA-Protokoll darum erweitert, dass es dem Provider, \textit{Home Network} genannt, eine erfolgreiche Authentifizierung nachweist. %3GPP TS 33.501 V15.34.1 Page 43
 
-Das 5G-AKA-Protokoll wird gr\"o{\ss}tenteils in der Spezifikation TS 33.501 des 3GPP beschrieben. %3GPP TS 33.501 V15.34.1
-Dabei wird die zurzeit neueste Version V15.34.1 herangezogen.
+Das 5G-AKA-Protokoll wird größtenteils in der Spezifikation TS 33.501 des 3GPP beschrieben. %3GPP TS 33.501 V15.34.1
+Dabei wird immer die zum Zeitpunkt dieser Arbeit neueste Version V15.34.1 herangezogen.
 
 \section{Ziele}
 
-Ziel des 5G-AKA Protokolls ist es den Benutzer und das Netzwerk gegenseitig zu authentifizieren (\textit{''Mutual Authentication''}) und Schlüsselmaterial bereitzustellen, die von nachfolgenden Protokollen verwendet werden können. % 3GPP TS 33.501 V15.34.1 Page 37
-Bei einer erfolgreichen Authentifizierung wissen alle Teilnehmer des Protokolls über den Erfolg Bescheid und es wurde ein gemeinsamer \textit{''Anchor Key''} ausgetauscht.
+Ziel des 5G-AKA Protokolls ist es den Benutzer und das Netzwerk gegenseitig zu authentifizieren (\textit{Mutual Authentication}) und Schlüsselmaterial bereitzustellen, die von nachfolgenden Protokollen verwendet werden können. % 3GPP TS 33.501 V15.34.1 Page 37
+Bei einer erfolgreichen Authentifizierung wissen alle Teilnehmer des Protokolls über den Erfolg Bescheid und es wurde ein gemeinsamer \textit{Anchor Key} ausgetauscht.
 Aus diesem \textit{''Anchor Key''} können weitere Schlüssel für mehrere Sicherheitskontexte abgeleitet werden.
 Ein Überblick über die ableitbaren Schlüssel ist in Abbildung 6.2.1-1 und 6.2.2-1 des 3GPP TS 33.501 V15.34.1 zu finden. % 3GPP TS 33.501 V15.34.1 Page 49 & 52
 
 \section{Das Protokoll}
 
-\subsection{Entities}% Auf die Sicherheitsstandards für die Kommunikation zwischen den Entitäten eingehen.
+\subsection{Entitäten}% Auf die Sicherheitsstandards für die Kommunikation zwischen den Entitäten eingehen.
 
-In dem Protokoll werden vier grundlegende Entit\"aten beschrieben.
+In dem Protokoll werden vier grundlegende Entitäten beschrieben.
 Diese sind das \gls{ue}, die \gls{seaf}, die \gls{ausf} und das \gls{udm}.
 
 \glsreset{ue}
 \subsubsection{\gls{ue}}
 
 Das \gls{ue} kann sich zum Beispiel auf dem Smartphone des Nutzers oder auf einem 5G-USB Dongle befinden.
-Es l\"asst sich in das \gls{me} und das \gls{usim} unterteilen.
-In dem \gls{usim} werden f\"ur die Authentifizierung ben\"otigte Schl\"ussel und Benutzerkennungen gespeichert, die f\"ur die eindeutige Identifizierung und Authentifizierung des \gls{ue} ben\"otigt werden. %3GPP TS 33.501 V15.34.1 Page 24
-In dem \gls{me} werden die Schl\"ussel, die f\"ur die Kommunikation nach dem 5G-AKA-Protokoll ben\"otigt werden berechnet.
+Es lässt sich in das \gls{me} und das \gls{usim} unterteilen.
+In dem \gls{usim} werden für die Authentifizierung benötigte Schlüssel und Benutzerkennungen gespeichert, die für die eindeutige Identifizierung und Authentifizierung des \gls{ue} benötigt werden. %3GPP TS 33.501 V15.34.1 Page 24
+In dem \gls{me} werden die Schlüssel, die für die Kommunikation nach dem 5G-AKA-Protokoll benötigt werden, berechnet.
 
 \glsreset{seaf}
 \subsubsection{\gls{seaf}}
 
 Die \gls{seaf} ist Teil des mit dem \gls{ue} kommunizierenden Netzwerks, auch \textit{Serving Network}, genannt.
 Sie kommuniziert mit dem \gls{ue} und mit dem Provider des Benutzers.
-Nach erfolgreicher Authentifizierung haben das \gls{ue} und die \gls{seaf} beide einen gemeinsamen Schl\"ussel.%3GPP TS 33.501 V15.34.1 Page 37
+Nach erfolgreicher Authentifizierung haben das \gls{ue} und die \gls{seaf} beide einen gemeinsamen Schlüssel.%3GPP TS 33.501 V15.34.1 Page 37
 
 \glsreset{ausf}
 \subsubsection{\gls{ausf}}
 
 Die \gls{ausf} ist Teil des Providers, bei dem sich der Benutzer die hier verwendete SIM-Karte gekauft hat, auch \textit{Home Network} genannt.
-Sie kommuniziert mit der \gls{seaf} und validiert die Antwort des \gls{ue} f\"ur die \gls{seaf}.
+Sie kommuniziert mit der \gls{seaf} und validiert die Antwort des \gls{ue} für die \gls{seaf}.
 
 \glsreset{udm}
 \subsubsection{\gls{udm}}
 
 Das \gls{udm} ist, wie auch die \gls{ausf} Teil des \textit{Home Network}.
-Grunds\"atzlich funktioniert es jedoch nicht ohne die \gls{arpf} und die \gls{sidf}.
+Grundsätzlich funktioniert es jedoch nicht ohne die \gls{arpf} und die \gls{sidf}.
 
-Das \gls{udm} und die \gls{arpf} generieren Authentifizierungsvektoren aus den Schl\"usseln, die sie mit dem \gls{usim} teilen.
-Die \gls{sidf} gerechnet die Benutzerkennung (\glsunset{supi}\gls{supi}) f\"ur den \gls{udm} und die \gls{arpf} aus einer verschl\"usselten Benutzerkennung (\glsunset{suci}\gls{suci}), die sie von dem \gls{ausf} erh\"alt.
+Das \gls{udm} und die \gls{arpf} generieren Authentifizierungsvektoren aus den Schlüsseln, die sie mit dem \gls{usim} teilen.
+Die \gls{sidf} gerechnet die Benutzerkennung (\glsunset{supi}\gls{supi}) für das \gls{udm} und die \gls{arpf} aus einer verschlüsselten Benutzerkennung (\glsunset{suci}\gls{suci}), die sie von dem \gls{ausf} erhält.
+
+
+\subsection{Vorbedingungen}
+
+Damit das 5G-AKA Protokoll erfolgreich durchgeführt werden kann müssen folgende Vorbedingungen erfüllt sein:
+
+\begin{itemize}
+\item Das \gls{usim} und die \gls{arpf} verfügen über einen gemeinsamen Langzeitschlüssel \glsunset{k}\gls{k}.
+
+\item Die \gls{arpf} verfügt über den privaten Schlüssel und das \gls{usim} verfügt über den öffentlichen Schlüssel eines asynchronen Schlüsselpaars.
+
+\end{itemize}
 
 
 \subsection{Wichtige Definitionen}
