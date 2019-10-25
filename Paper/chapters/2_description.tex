@@ -355,14 +355,16 @@ Aus ihr wird der \gls{mac} bwz. \gls{xmac} erzeugt. %3GPP TS 33.102 V15.1.0 Page
 
 Für die Generierung der \gls{sqn} muss das \gls{udm}/\gls{arpf} folgende Bedingungen erfüllen:\\%3GPP TS 33.102 V15.1.0 Page 25
 \begin{enumerate}
-\item Der Erzeugungsmechanismus der \gls{sqn} soll eine Re-Synchronisations Prozedur beinhalten.\\
-\item Falls die \gls{sqn} Rückschlüsse auf die Identität oder Position des Nutzers zulässt, dann soll der \gls{ak} verwendet werden um die \gls{sqn} zu verbergen.\\
-\item Der Erzeugungsmechanismus soll gegen den Überlauf der \gls{sqn} (\textit{Wrap around Protection}) geschützt sein, da sonst bereits verwendete Schlüssel erneut verwendet werden könnten. 
+\item Der Erzeugungsmechanismus der \gls{sqn} soll eine Re-Synchronisations Prozedur beinhalten.
+Die Re-Synchronisations Prozedur ist eine Prozedur die ausgeführt werden kann, wenn der \gls{autn} vom \gls{ue} in \textit{Schritt 1*} von \cref{fig:protocol_mac_failure_v1} nicht angenommen werden kann (\textit{Synchronization failure}).
+\item Der Erzeugungsmechanismus soll gegen den Überlauf der \gls{sqn} (\textit{Wrap around Protection}) geschützt sein, da sonst eine bereits verwendete \gls{sqn} möglicherweise erneut erzeugt und verwendet werden könnte. 
 \end{enumerate}
+
+Falls die \gls{sqn} Rückschlüsse auf die Identität oder Position des Nutzers zulässt, dann soll der \gls{ak} verwendet werden um die \gls{sqn} zu verbergen.
 
 \glsreset{suci}
 \subsubsection{\gls{suci}}
-Der \gls{suci} ist die verschlüsselte Version des \gls{supi}.
+Der \gls{suci} ist die verschlüsselte Version des \gls{supi} und wird für die Identifizierung des \gls{ue} benötigt..
 Er lässt sich mit der \gls{sidf} in den \gls{supi} umwandeln.
 
 Er ist wie folgt aufgebaut: %3GPP TS 23.003 V15.7.0 Page 27
@@ -372,7 +374,7 @@ Er ist wie folgt aufgebaut: %3GPP TS 23.003 V15.7.0 Page 27
 \begin{itemize}
 \item Der Home Network Identifier ist von dem \gls{supi-type} abhängig.
 \begin{itemize}
-\item Wenn der \gls{supi-type} den \gls{imsi} angibt, dann entspricht der Home Network Identifier dem \gls{mcc} gefolgt von dem \gls{mnc}. (Home Network Identifier = \gls{mcc} || \gls{mnc})
+\item Wenn der \gls{supi-type} den \gls{imsi} angibt, dann entspricht der Home Network Identifier dem \gls{mcc} gefolgt von dem \gls{mnc} (Home Network Identifier = \gls{mcc} || \gls{mnc}). 
 \item Wenn der \gls{supi-type} den Network Specific Identifier angibt, dann entspricht der Home Network Identifier einer ähnlichen Form des Network Access Identifiers, wie er beim \gls{supi} verwendet wird. (Home Network Identifier = username@realm)
 Er ist genauer im Dokument IETF RFC 7542 spezifiziert. %IETF RFC 7542 Page 10 fort folgend
 \end{itemize}
@@ -396,7 +398,8 @@ Die genaue Definition des Scheme Outputs ist im Annex C des 3GPP TS 33.501 V15.3
 
 \glsreset{supi}
 \subsubsection{\gls{supi}}
-Der \gls{supi} ist für jeden Nutzer global eindeutig. 
+Der \gls{supi} wird für die Identifizierung des \gls{ue} benötigt.
+Er ist für jeden Nutzer global eindeutig. 
 Er ist wie folgt aufgebaut: %3GPP TS 23.003 V15.7.0 Page 27
 
 \gls{supi} = \gls{supi-type} || Home Network Identifier
@@ -412,7 +415,7 @@ Er ist genauer im Dokument IETF RFC 7542 spezifiziert. %IETF RFC 7542 Page 10 fo
 
 \glsreset{supi-type}
 \subsubsection{\gls{supi-type}}
-Der \gls{supi-type} kann Werte von 0 bis 7 annehmen. %3GPP TS 23.003 V15.7.0 Page 27
+Der \gls{supi-type} wird zum Erzeugen des \gls{supi} benötigt und kann Werte von 0 bis 7 annehmen. %3GPP TS 23.003 V15.7.0 Page 27
 \begin{itemize}
 \item Der Wert 0 bedeutet, dass der Home Network Identifier den \gls{imsi} angibt.
 \item Der Wert 1 bedeutet, dass der Home Network Identifier den Network Specific Identifier angibt.
