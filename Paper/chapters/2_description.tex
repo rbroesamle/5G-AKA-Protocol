@@ -465,31 +465,28 @@ Es wird von der \gls{arpf} berechnet.
 Der \gls{abba} Parameter soll einen \textit{Anti-bidding down}-Schutz für Sicherheitsfeatures gewährleisten, die es verhindern sollen, dass ältere Sicherheitsfeatures verwendet werden obwohl alle Parteien neuere Sicherheitsfeatures unterstützen. %3GPP TS 33.501 V15.34.1 Page 22
 Des Weiteren soll damit angegeben werden welche Sicherheitsfeatures in diesem Netzwerk aktiv sind.
 
-Der \gls{abba} Parameter wird von der \gls{seaf} an das \gls{ue} gesendet.
-Er hat eine variable Länge und kann folgende Werte annehmen:
-\begin{itemize}
-\item Zurzeit kann der \gls{abba} Parameter nur den Wert 0x0000 annehmen. Dieser Wert steht für die bisher definierten Sicherheitsfeatures. %3GPP TS 33.501 V15.34.1 Page 156
-\end{itemize}
+Der \gls{abba} Parameter wird von der \gls{seaf} an das \gls{ue} gesendet und hat eine variable Länge.
+Zurzeit kann der \gls{abba} Parameter nur den Wert 0x0000 annehmen. Dieser Wert steht für die bisher definierten Sicherheitsfeatures. %3GPP TS 33.501 V15.34.1 Page 156
 
 \glsreset{auts}
 \subsubsection{\gls{auts}}
+Der \gls{auts} Parameter wird für die Re-Synchronisations Prozedur aus \textit{Schritt 3*} von \cref{fig:protocol_mac_failure_v1} benötigt.
 Die \gls{seaf} erhält den \gls{auts} Parameter von dem \gls{ue} nach einer beim \gls{ue} fehlgeschlagenen Authentifizierung.
-Der \gls{auts} Parameter enthält zwei der \gls{sqn} und dem \gls{mac} ähnelnde Werte, die jedoch nicht miteinander in Korrelation stehen. %3GPP TS 33.102 V15.1.0 Page 27
-
+\begin{equation*}
 \gls{auts} = Conc(\gls{sqn}) || MACS
-
-Conc(\gls{sqn}) = \gls{sqn}$ \oplus $f5*(RAND)
-
+\end{equation*}
+\begin{equation*}
+Conc(\gls{sqn}) = \gls{sqn} \oplus f5*(RAND)
+\end{equation*}
+\begin{equation*}
 MACS = f1*(\gls{sqn} || \gls{rand} || \gls{amf})
-
+\end{equation*}
 Die Funktionen f1* und f5* sind, wie auch die \textit{Message authentication and Key generating functions} vom \gls{k} abhängig, dürfen aber keine Schlüsse über die Funktionen \gls{f12345} zulassen.
-Die \gls{sqn} ist hier die Sequenznummer der \textit{Mobile Station}.
 
 \glsreset{ng-ksi}
 \subsubsection{\gls{ng-ksi}}
-Der \gls{ng-ksi} identifiziert den K\textsubscript{AMF} eindeutig.%3GPP TS 33.501 V15.34.1 Page 54
+Der \gls{ng-ksi} identifiziert den K\textsubscript{AMF} eindeutig. %3GPP TS 33.501 V15.34.1 Page 54
 Er wird von der \gls{seaf} an das \gls{ue} geschickt und wird nach einer erfolgreichen Authentifizierung benötigt um den K\textsubscript{AMF} zu identifizieren.
-Er kann entweder vom Typ \textit{Native} oder vom Typ \textit{Mapped} sein.%3GPP TS 33.501 V15.34.1 Page 54
 
 
 \subsection{Authentifikationsprozedur}
