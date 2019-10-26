@@ -306,7 +306,7 @@ Sie wird vom \gls{udm}/\gls{arpf} erzeugt und an das \gls{ue} weitergeleitet. Di
 
 \glsreset{res}
 \subsubsection{\gls{res}}
-Die \gls{res} ist eine Bitfolge mit eine variable Länge von bis zu 416 Bytes. %3GPP TS 33.102 V15.1.0 Page 32
+Die \gls{res} ist eine Bitfolge mit einer variablen Länge von bis zu 416 Bytes. %3GPP TS 33.102 V15.1.0 Page 32
 Sie wird von dem \gls{ue} mit der \textit{Message authentication function} f2 berechnet.
 Die Funktion bekommt \gls{k} und \gls{rand} als Eingabe. %3GPP TS 33.102 V15.1.0 Page 26
 
@@ -424,8 +424,9 @@ Der \gls{supi-type} wird zum Erzeugen des \gls{supi} benötigt und kann Werte vo
 
 \glsreset{xmac}
 \subsubsection{\gls{xmac}}
-Der \gls{xmac} hat eine Länge von 64 Bits und wird wie auch der \gls{mac} mit der Funktion f1 berechnet. %3GPP TS 33.102 V15.1.0 Page 32
-Die \textit{Message authentication function} f1 ist von \gls{k} abhängig und bekommt als Eingabe die Konkatenation von \gls{sqn}, \gls{rand} und \gls{amf} (\gls{sqn} || \gls{rand} || \gls{amf}). %3GPP TS 33.102 V15.1.0 Page 27
+Der \gls{xmac} hat eine Länge von 64 Bits und wird vom \gls{ue} benötigt um ihn mit dem \gls{mac} zu vergleichen.
+Er wird, wie auch der \gls{mac}, mit der Funktion f1 berechnet. %3GPP TS 33.102 V15.1.0 Page 32
+Die \textit{Message authentication function} f1 bekommt als Eingabe \gls{k} und die Konkatenation von \gls{sqn}, \gls{rand} und \gls{amf} (\gls{sqn} || \gls{rand} || \gls{amf}). %3GPP TS 33.102 V15.1.0 Page 27
 
 Der \gls{xmac} wird von dem \gls{ue} berechnet und mit dem \gls{mac} verglichen. 
 Den \gls{mac} hat das \gls{ue} bereits von der \gls{seaf} erhalten.
@@ -433,16 +434,16 @@ Stimmen \gls{mac} und \gls{xmac} nicht überein, so ist die Authentifizierung fe
 
 \glsreset{xres}
 \subsubsection{\gls{xres}}
-Die \gls{xres} hat eine variable Länge von bis zu 416 Bytes. %3GPP TS 33.102 V15.1.0 Page 32
+Die \gls{xres} ist eine Bitfolge mit einer variablen Länge von bis zu 416 Bytes. %3GPP TS 33.102 V15.1.0 Page 32
 Sie wird, wie auch die \gls{res}, mit der \textit{Message authentication function} f2 berechnet. 
-Diese Funktion ist von \gls{k} abhängig und bekommt \gls{rand} als Eingabe. %3GPP TS 33.102 V15.1.0 Page 26
+Diese Funktion bekommt \gls{k} und \gls{rand} als Eingabe. %3GPP TS 33.102 V15.1.0 Page 26
 
 Die \gls{ausf} vergleicht \gls{res} und \gls{xres} miteinander.
-Stimmen sie nicht überein so bricht die \gls{ausf} die Authentifizierung ab. %3GPP TS 33.501 V15.34.1 Page 45
+Stimmen sie nicht überein, so bricht die \gls{ausf} die Authentifizierung ab. %3GPP TS 33.501 V15.34.1 Page 45
 
 \glsreset{xres*}
 \subsubsection{\gls{xres*}}
-\gls{xres*} lässt sich, wie auch \gls{res*}, mit Hilfe der \gls{kdf} berechnen.
+Die \gls{xres*} ist eine Bitfolge und lässt sich, wie auch \gls{res*}, mit Hilfe der \gls{kdf} berechnen.
 Dabei sind folgende Werte Eingabeparameter der \gls{kdf}: %3GPP TS 33.501 V15.34.1 Page 155
 \begin{itemize}
 \item KEY = Konkatenation von \gls{ck} und \gls{ik} (\gls{ck} || \gls{ik})
