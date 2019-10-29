@@ -18,7 +18,7 @@ Der \gls{hss} ist Teil des \textit{Home Network} und befindet sich bei dem Netzb
 \subsection{Ziele}
 
 Ziel des 4G EPS-AKA Protokolls ist es, wie auch beim 5G-AKA Protokoll, den Benutzer und das Netzwerk gegenseitig zu authentifizieren und einen gemeinsamen \textit{Anchor Key} bereitzustellen der von nachfolgenden Protokollen verwendet werden kann.
-Im Gegensatz zum 5G-AKA Protokoll weiß das \textit{Home Network} beim 4G EPS-AKA Protokoll jedoch nicht über den Erfolg der Authentifizierung bescheid.
+Im Gegensatz zum 5G-AKA Protokoll weiß das \textit{Home Network} beim 4G EPS-AKA Protokoll jedoch nicht über den Erfolg der Authentifizierung Bescheid.
 Aus dem \textit{Anchor Key} können ebenfalls weitere Schlüssel für unterschiedliche Verwendung abgeleitet werden.
 Eine Übersicht über die ableitbaren Schlüssel ist in Abbildung 6.2-1 und 6.2-2 des 3GPP TS 33.401 V15.4.0 zu finden \cite[33, 35]{3gppTS33.401V15.4.0}.
 
@@ -38,7 +38,7 @@ Eine Übersicht über die ableitbaren Schlüssel ist in Abbildung 6.2-1 und 6.2-
 
 %1
 \item In Schritt 1 schickt das \gls{ue} den \textit{Attach Request} an den \gls{enodeb} und beginnt somit das 4G EPS-AKA Protokoll.
-Die Nachricht enthält entweder die \gls{imsi} oder den \gls{guti} und wird durch das erfolgreiche abschließen der \gls{rrc} Prozedur ausgelöst.
+Die Nachricht enthält entweder die \gls{imsi} oder den \gls{guti} und wird durch das erfolgreiche Abschließen der \gls{rrc} Prozedur ausgelöst.
 
 %2
 \item In Schritt 2 wird der \textit{Attach Request} aus \textit{Schritt 1} von der \gls{enodeb} an die \gls{mme} weitergesendet.
@@ -50,7 +50,7 @@ Sie enthält entweder die \gls{imsi} oder den \gls{guti}, den die \gls{mme} in \
 %4
 \item In Schritt 4 wird aus dem geheimen Schlüssel \textit{K}, den sowohl der \gls{hss} wie auch das \gls{ue} kennen, der \gls{av} generiert.
 Er beinhaltet unter anderem die \gls{xres}, die später mit der Antwort des \gls{ue}, \gls{res}, verglichen werden soll.
-Er beinhaltet auch den \gls{auth}, den das \gls{ue} für die Berechnung der \gls{res} benötigt und kryptographischen Schlüssel die im weiteren Verlauf benötigt werden.
+Außerdem beinhaltet er den \gls{auth}, den das \gls{ue} für die Berechnung der \gls{res} benötigt und kryptographische Schlüssel die im weiteren Verlauf benötigt werden.
 
 %5
 \item In Schritt 5 wird der in \textit{Schritt 4} generierte \gls{av} mit der \textit{Auth Response} Nachricht an die \gls{mme} gesendet.
@@ -67,7 +67,7 @@ Er enthält den \gls{auth}, den das \gls{ue} zur Berechnung der \gls{res} benöt
 
 %9
 \item Nach Erhalt der \textit{Auth Response} Nachricht wird in Schritt 9 überprüft, ob die \gls{res}, die die \gls{mme} in \textit{Schritt 8} erhalten hat, mit der \gls{xres}, die die \gls{mme} in \textit{Schritt 5} erhalten hat, übereinstimmt.
-Ist dies der Fall, so wird aus den kryptographischen Schlüsseln, die die \gls{mme} ebenfalls in \textit{Schritt 5} erhalten hat, unteranderem der \gls{k-asme} der \gls{asme} berechnet.
+Ist dies der Fall, so wird aus den kryptographischen Schlüsseln, die die \gls{mme} ebenfalls in \textit{Schritt 5} erhalten hat, unter anderem der \gls{k-asme} der \gls{asme} berechnet.
 Der \gls{k-asme} wird beispielsweise für die Berechnung weiterer Schlüssel nach der erfolgreichen Authentifizierung benötigt \cite[19]{3gppTS33.401V15.4.0}.
 \end{enumerate}
 
@@ -78,10 +78,10 @@ Das 4G-EPS-AKA Protokoll und das 5G-AKA Protokoll haben in folgenden Aspekten Ge
 \begin{itemize}
 %User Equipment
 \item Das \gls{ue} hat sowohl bei 4G-EPS-AKA, wie auch bei 5G-AKA den gleichen Namen und ähnliche Aufgaben.
-In beiden Protokollen beginnt bei dem \gls{ue} die Authentifizierung und ist der symmetrischen Langzeitschlüssel \gls{k} gespeichert.
+In beiden Protokollen beginnt bei dem \gls{ue} die Authentifizierung und ist der symmetrische Langzeitschlüssel \gls{k} gespeichert.
 
 %Trust Model
-\item Sowohl im 4G EPS-AKA wie auch im 5G-AKA Protokoll wird für die Authentifizierung der symmetrischer Langzeitschlüssel \gls{k} benötigt.
+\item Sowohl im 4G EPS-AKA wie auch im 5G-AKA Protokoll wird für die Authentifizierung der symmetrische Langzeitschlüssel \gls{k} benötigt.
 Er ist beim 4G EPS-AKA Protokoll im \gls{ue} und im \gls{hss} gespeichert.
 Beim 5G-AKA Protokoll ist \gls{k} im \gls{ue} und im \gls{udm}/\gls{arpf} gespeichert.
 
@@ -106,11 +106,11 @@ Im 5G-AKA Protokoll hingegen besteht das \textit{Serving Network} nur aus der \g
 
 %Home Network
 \item Im 4G EPS-AKA Protokoll besteht das \textit{Home Network} nur aus dem \gls{hss}.
-Im 5G-AKA Protokoll hingegen gesteht das \textit{Home Network} aus der \gls{ausf} und aus dem \gls{udm}/\gls{arpf}/\gls{sidf}.
+Im 5G-AKA Protokoll hingegen besteht das \textit{Home Network} aus der \gls{ausf} und aus dem \gls{udm}/\gls{arpf}/\gls{sidf}.
 
 %UE Identity
 \item Jedes \gls{ue} hat ein Bitfeld, das es eindeutig identifiziert.
-Diese ist jedoch bei den beiden Protokollen unterschiedlich.
+Dieses ist jedoch bei den beiden Protokollen unterschiedlich.
 
 Beim 4G EPS-AKA Protokoll kann bei der Kommunikation zwischen \gls{ue} und \textit{Serving Network} die \gls{imsi} oder der \gls{guti} und bei der Kommunikation zwischen \textit{Serving Network} und \textit{Home Network} nur die \gls{imsi} verwendet werden um das \gls{ue} eindeutig zu identifizieren.
 Beim 5G-AKA Protokoll hingegen kann bei der Kommunikation zwischen \gls{ue} und \textit{Serving Network} der \gls{suci} oder der \gls{5g-guti} und bei der Kommunikation zwischen \textit{Serving Network} und \textit{Home Network} der \gls{suci} oder der \gls{supi} verwendet werden um das \gls{ue} eindeutig zu identifizieren.
