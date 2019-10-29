@@ -3,22 +3,22 @@
 
 Das 5G-AKA-Protokoll ist eines von mehreren Protokollen des 5G-Standards.
 Vor Allem das EAP-AKA-Protokoll und das 5G-AKA-Protokoll sind für den sicheren Austausch eines kryptographischen Schlüssels zuständig. 
-Bei beiden Protokollen ist der erste Teil identisch, bis bei dem Provider eines der Protokolle ausgewählt wird. %3GPP TS 33.501 V15.34.1 Page 40
-Bei beiden Protokollen ist auch der Authentifizierungsvorgang sehr ähnlich, wobei das 5G-AKA-Protokoll gegenüber dem EAP-AKA-Protokoll dahingehen erweitert wurde, dass es dem Provider, \textit{Home Network} genannt, eine erfolgreiche Authentifizierung nachweist. %3GPP TS 33.501 V15.34.1 Page 43
+Bei beiden Protokollen ist der erste Teil identisch, bis bei dem Provider eines der Protokolle ausgewählt wird \cite[40]{3gppTS33.501V15.34.1}. 
+Bei beiden Protokollen ist auch der Authentifizierungsvorgang sehr ähnlich, wobei das 5G-AKA-Protokoll gegenüber dem EAP-AKA-Protokoll dahingehen erweitert wurde, dass es dem Provider, \textit{Home Network} genannt, eine erfolgreiche Authentifizierung nachweist \cite[43]{3gppTS33.501V15.34.1}. 
 
-Das 5G-AKA-Protokoll wird größtenteils in der Spezifikation TS 33.501 des 3GPP beschrieben. %3GPP TS 33.501 V15.34.1
-Dabei wird immer die zum Zeitpunkt dieser Arbeit neueste Version V15.34.1 herangezogen.
+Das 5G-AKA-Protokoll wird größtenteils in der Spezifikation TS 33.501 des 3GPP beschrieben.
+Dabei wird immer die zum Zeitpunkt dieser Arbeit neueste Version V15.34.1 (15.4.0) herangezogen \cite{3gppTS33.501V15.34.1}.
 
 \section{Ziele}
 
-Ziel des 5G-AKA Protokolls ist es den Benutzer und das Netzwerk gegenseitig zu authentifizieren (\textit{Mutual Authentication}) und Schlüsselmaterial bereitzustellen, die von nachfolgenden Protokollen verwendet werden können. % 3GPP TS 33.501 V15.34.1 Page 37
+Ziel des 5G-AKA Protokolls ist es den Benutzer und das Netzwerk gegenseitig zu authentifizieren (\textit{Mutual Authentication}) und Schlüsselmaterial bereitzustellen, die von nachfolgenden Protokollen verwendet werden können \cite[37]{3gppTS33.501V15.34.1}.
 Bei einer erfolgreichen Authentifizierung wissen alle Teilnehmer des Protokolls über den Erfolg Bescheid und es wurde ein gemeinsamer \textit{Anchor Key} ausgetauscht.
 Aus diesem \textit{Anchor Key} können weitere Schlüssel für mehrere Sicherheitskontexte abgeleitet werden.
-Ein Überblick über die ableitbaren Schlüssel ist in Abbildung 6.2.1-1 und 6.2.2-1 des 3GPP TS 33.501 V15.34.1 zu finden. % 3GPP TS 33.501 V15.34.1 Page 49 & 52
+Ein Überblick über die ableitbaren Schlüssel ist in Abbildung 6.2.1-1 und 6.2.2-1 des 3GPP TS 33.501 V15.34.1 (15.4.0) zu finden \cite[49, 52]{3gppTS33.501V15.34.1}.
 
 \section{Das Protokoll}
 
-\subsection{Entitäten}% Auf die Sicherheitsstandards für die Kommunikation zwischen den Entitäten eingehen.
+\subsection{Entitäten}
 
 In dem Protokoll werden vier grundlegende Entitäten beschrieben.
 Diese sind das \gls{ue}, die \gls{seaf}, die \gls{ausf} und das \gls{udm}.
@@ -28,7 +28,7 @@ Diese sind das \gls{ue}, die \gls{seaf}, die \gls{ausf} und das \gls{udm}.
 
 Das \gls{ue} kann sich zum Beispiel auf dem Smartphone des Nutzers oder auf einem 5G-USB Dongle befinden.
 Es lässt sich in das \gls{me} und das \gls{usim} unterteilen.
-In dem \gls{usim} werden für die Authentifizierung benötigte Schlüssel und Benutzerkennungen gespeichert, die für die eindeutige Identifizierung und Authentifizierung des \gls{ue} benötigt werden. %3GPP TS 33.501 V15.34.1 Page 24
+In dem \gls{usim} werden für die Authentifizierung benötigte Schlüssel und Benutzerkennungen gespeichert, die für die eindeutige Identifizierung und Authentifizierung des \gls{ue} benötigt werden \cite[24]{3gppTS33.501V15.34.1}.
 In dem \gls{me} werden die Schlüssel, die für die Kommunikation nach dem 5G-AKA-Protokoll benötigt werden, berechnet.
 
 \glsreset{seaf}
@@ -36,7 +36,7 @@ In dem \gls{me} werden die Schlüssel, die für die Kommunikation nach dem 5G-AK
 
 Die \gls{seaf} ist Teil des mit dem \gls{ue} kommunizierenden Netzwerks, auch \textit{Serving Network} genannt.
 Sie kommuniziert mit dem \gls{ue} und mit dem Provider des Benutzers.
-Nach erfolgreicher Authentifizierung haben das \gls{ue} und die \gls{seaf} beide einen gemeinsamen Schlüssel.%3GPP TS 33.501 V15.34.1 Page 37
+Nach erfolgreicher Authentifizierung haben das \gls{ue} und die \gls{seaf} beide einen gemeinsamen Schlüssel \cite[37]{3gppTS33.501V15.34.1}.
 
 \glsreset{ausf}
 \subsubsection{\gls{ausf}}
@@ -56,7 +56,7 @@ Die \gls{sidf} berechnet die Benutzerkennung (\glsunset{supi}\gls{supi}) für da
 
 \subsection{Vorbedingungen}
 
-Damit das 5G-AKA Protokoll erfolgreich durchgeführt werden kann müssen folgende Vorbedingungen erfüllt sein:
+Damit das 5G-AKA Protokoll erfolgreich durchgeführt werden kann müssen folgende Vorbedingungen erfüllt sein \cite{3gppTS33.501V15.34.1}:
 
 \begin{itemize}
 \item Das \gls{usim} und das \gls{udm}/\gls{arpf} verfügen über den gemeinsamen Langzeitschlüssel \gls{k}.
@@ -79,7 +79,7 @@ Dieser wird als Grundlage für die weitere Kommunikation verwendet.
   \label{fig:protocol_v1}
 \end{figure}
 
-Die einzelnen Nachrichten lassen sich folgendermaßen beschreiben: %3GPP TS 33.501 V15.34.1 Page 40 und 44
+Die einzelnen Nachrichten lassen sich folgendermaßen beschreiben \cite[40, 44]{3gppTS33.501V15.34.1}:
 
 \begin{enumerate}
 %1
@@ -216,7 +216,7 @@ Wenn die \gls{ausf} in \textit{Schritt 7} den \gls{supi} erhalten hat, dann wird
 \subsubsection{\gls{5g-guti}}
 Der \gls{5g-guti} ist ein Bitfeld das vom \glsunset{amf}\gls{amf} erstellt wird.
 Er kann, wie auch der \gls{suci}, für die Initiierung der Authentifizierung verwendet werden.
-Er besteht aus zwei Teilen mit denen man das \gls{amf} und das \gls{ue} eindeutig identifizieren kann. %3GPP TS 23.003 V15.7.0 Page 35
+Er besteht aus zwei Teilen mit denen man das \gls{amf} und das \gls{ue} eindeutig identifizieren kann \cite[35]{3gppTS33.501V15.34.1}.
 Diese Teile sind der \gls{guami} und der \gls{5g-tmsi}.
 \begin{equation*}
 \gls{5g-guti} = \gls{guami} || \gls{5g-tmsi}
@@ -227,7 +227,7 @@ Diese Teile sind der \gls{guami} und der \gls{5g-tmsi}.
 \begin{equation*}
 AMF Identifier = AMF Region Id || AMF Set Id || AMF Pointer
 \end{equation*}
-Der \gls{5g-tmsi} hat eine Länge von 32 Bits, die AMF Region Id hat eine Länge von 8 Bits, die AMF Set Id hat eine Länge von 10 Bits und der AMF Pointer hat eine Länge von 6 Bits. %3GPP TS 23.003 V15.7.0 Page 36
+Der \gls{5g-tmsi} hat eine Länge von 32 Bits, die AMF Region Id hat eine Länge von 8 Bits, die AMF Set Id hat eine Länge von 10 Bits und der AMF Pointer hat eine Länge von 6 Bits \cite[36]{3gppTS23.003V15.7.0}.
 
 %5G HE AV
 \glsreset{5g-he-av}
@@ -235,7 +235,7 @@ Der \gls{5g-tmsi} hat eine Länge von 32 Bits, die AMF Region Id hat eine Länge
 Der \gls{5g-he-av} ist eine Ansammlung von Zahlen und Bitfeldern, die für die Authentifizierung benötigt werden.
 Er wird von dem \gls{udm} erstellt und an die \gls{ausf} geschickt.
 
-Er beinhaltet \gls{rand}, \gls{autn}, \gls{xres*} und \gls{k-ausf}. %3GPP TS 33.501 V15.34.1 Page 44
+Er beinhaltet \gls{rand}, \gls{autn}, \gls{xres*} und \gls{k-ausf} \cite[44]{3gppTS33.501V15.34.1}.
 
 %5G SE AV
 \glsreset{5g-se-av}
@@ -243,13 +243,13 @@ Er beinhaltet \gls{rand}, \gls{autn}, \gls{xres*} und \gls{k-ausf}. %3GPP TS 33.
 Der \gls{5g-se-av} ist ebenfalls eine Ansammlung von Zahlen und Bitfeldern, die für die Authentifizierung benötigt werden.
 Er wird von der \gls{ausf} erstellt und an die \gls{seaf} geschickt.
 
-Er beinhaltet \gls{rand}, \gls{autn} und \gls{hxres*}. %3GPP TS 33.501 V15.34.1 Page 44
+Er beinhaltet \gls{rand}, \gls{autn} und \gls{hxres*} \cite[44]{3gppTS33.501V15.34.1}.
 
 %AUTN
 \glsreset{autn}
 \subsubsection{\gls{autn}}
 Der \gls{autn} ist ein Bitfeld und besteht aus den vier Komponenten \gls{sqn}, \gls{ak}, \gls{amf} und \gls{mac}. 
-Er ist wie folgt aufgebaut: %3GPP TS 33.102 V15.1.0 Page 25
+Er ist wie folgt aufgebaut \cite[25]{3gppTS33.102V15.1.0}:
 \begin{equation*}
 \gls{autn} = (\gls{sqn} \oplus \gls{ak}) || \gls{amf} || \gls{mac}
 \end{equation*}
@@ -265,7 +265,7 @@ Ist \gls{ak} = 0, dann kann davon ausgegangen werden, dass die \gls{sqn} alleine
 \glsreset{hres*}
 \subsubsection{\gls{hres*}}
 \gls{hres*} ist der Hash von \gls{res*} und wird von der \gls{seaf} benötigt, um ihn mit dem \gls{hxres*} zu vergleichen.
-Er wird von der \gls{seaf} mit Hilfe des SHA-256-Algorithmus' berechnet. %3GPP TS 33.501 V15.34.1 Page 155
+Er wird von der \gls{seaf} mit Hilfe des SHA-256-Algorithmus' berechnet \cite[155]{3gppTS33.501V15.34.1}.
 Eingabe des SHA-256-Algorithmus' ist die Konkatenation von \gls{rand} und \gls{res*} (\gls{rand} || \gls{res*}).
 
 \gls{hres*} setzt sich aus den 128 \textit{least significant} Bits von der Ausgabe des SHA-256 zusammen.
@@ -274,7 +274,7 @@ Eingabe des SHA-256-Algorithmus' ist die Konkatenation von \gls{rand} und \gls{r
 \glsreset{hxres*}
 \subsubsection{\gls{hxres*}}
 \gls{hxres*} ist der Hash von \gls{xres*} und wird von der \gls{seaf} benötigt, um ihn mit dem \gls{hres*} zu vergleichen.
-Er wird von der \gls{ausf} mit Hilfe des SHA-256-Algorithmus' berechnet. %3GPP TS 33.501 V15.34.1 Page 155
+Er wird von der \gls{ausf} mit Hilfe des SHA-256-Algorithmus' berechnet \cite[155]{3gppTS33.501V15.34.1}.
 Eingabe des SHA-256-Algorithmus' ist die Konkatenation von \gls{rand} und \gls{xres*} (\gls{rand} || \gls{xres*}).
 
 \gls{hxres*} setzt sich aus den 128 \textit{least significant} Bits von der Ausgabe des SHA-256 zusammen.
@@ -282,17 +282,17 @@ Eingabe des SHA-256-Algorithmus' ist die Konkatenation von \gls{rand} und \gls{x
 %K
 \glsreset{k}
 \subsubsection{\gls{k}}
-Der Schlüssel \gls{k} hat eine Länge von 128 oder 256 Bits und wird für die Generierung von \gls{ak}, \gls{ck}, \gls{ik} \gls{res} bzw. \gls{xres} und \gls{mac} bzw. \gls{xmac} benötigt. %3GPP TS 33.102 V15.1.0 Page 32
-Die tatsächliche Länge ist nicht spezifiziert und wird möglicherweise vom Provider festgelegt. %3GPP TS 33.102 V15.1.0 Page 32
+Der Schlüssel \gls{k} hat eine Länge von 128 oder 256 Bits und wird für die Generierung von \gls{ak}, \gls{ck}, \gls{ik} \gls{res} bzw. \gls{xres} und \gls{mac} bzw. \gls{xmac} benötigt \cite[32]{3gppTS33.102V15.1.0}.
+Die tatsächliche Länge ist nicht spezifiziert und wird möglicherweise vom Provider festgelegt.
 
-\gls{k} soll auf dem \gls{udm}/\gls{arpf} und in einer manipulationssicheren Hardwarekomponente auf dem \gls{ue} gespeichert werden.  %3GPP TS 33.501 V15.34.1 Page 29
+\gls{k} soll auf dem \gls{udm}/\gls{arpf} und in einer manipulationssicheren Hardwarekomponente auf dem \gls{ue} gespeichert werden \cite[29]{3gppTS33.501V15.34.1}.
 
 %K_SEAF
 \glsreset{k-seaf}
 \subsubsection{\gls{k-seaf}}
-Der \gls{k-seaf}, auch \textit{Anchor Key} genannt, ist der Schlüssel auf den sich alle Entitäten bei erfolgreicher Authentifizierung einigen. %3GPP TS 33.501 V15.34.1 Page 37
+Der \gls{k-seaf}, auch \textit{Anchor Key} genannt, ist der Schlüssel auf den sich alle Entitäten bei erfolgreicher Authentifizierung einigen \cite[37]{3gppTS33.501V15.34.1}.
 Er wird von der \gls{ausf} und dem \gls{ue} berechnet und lässt sich mit Hilfe der \gls{kdf} berechnen.
-Dabei sind folgende Werte Eingabeparameter der \gls{kdf}: %3GPP TS 33.501 V15.34.1 Page 155
+Dabei sind folgende Werte Eingabeparameter der \gls{kdf} \cite[155]{3gppTS33.501V15.34.1}:
 \begin{itemize}
 \item KEY = \gls{k-ausf}
 \item Fc = 0x6C
@@ -302,9 +302,9 @@ Die Ausgabe der \gls{kdf} ist der \gls{k-seaf}.
 
 \glsreset{rand}
 \subsubsection{\gls{rand}}
-Der \gls{rand} ist eine 128 Bit lange zufällige Zahl. %3GPP TS 33.102 V15.1.0 Page 32
+Der \gls{rand} ist eine 128 Bit lange zufällige Zahl \cite[32]{3gppTS33.102V15.1.0}.
 Sie wird für die Generierung von \gls{ak}, \gls{ck}, \gls{ik} \gls{res} bzw. \gls{xres} und \gls{mac} bzw. \gls{xmac} benötigt. 
-Der \gls{rand} soll eine unvorhersehbare Zahl sein, wie genau sie generiert wird ist jedoch nicht beschrieben. %3GPP TS 33.102 V15.1.0 Page 25
+Der \gls{rand} soll eine unvorhersehbare Zahl sein, wie genau sie generiert wird ist jedoch nicht beschrieben \cite[25]{3gppTS33.102V15.1.0}.
 
 Sie wird vom \gls{udm}/\gls{arpf} erzeugt und an das \gls{ue} weitergeleitet. Diese Entitäten generieren auch die oben genannten Schlüssel \gls{ak}, \gls{ck}, \gls{ik}, usw.
 
@@ -312,7 +312,7 @@ Sie wird vom \gls{udm}/\gls{arpf} erzeugt und an das \gls{ue} weitergeleitet. Di
 \glsreset{res*}
 \subsubsection{\gls{res*}}
 Die \gls{res*} ist eine Bitfolge und lässt sich, wie auch \gls{xres*}, mit Hilfe der \gls{kdf} berechnen.
-Dabei sind folgende Werte Eingabeparameter der \gls{kdf}: %3GPP TS 33.501 V15.34.1 Page 155
+Dabei sind folgende Werte Eingabeparameter der \gls{kdf} \cite[155]{3gppTS33.501V15.34.1}:
 \begin{itemize}
 \item KEY = Konkatenation von \gls{ck} und \gls{ik} (\gls{ck} || \gls{ik})
 \item Fc = 0x6B
@@ -329,12 +329,12 @@ Es wird vom \gls{ue} berechnet.
 \glsreset{sn-name}
 \subsubsection{\gls{sn-name}}
 Der \gls{sn-name} wird für die Berechnung von \gls{res*} bzw. \gls{xres*}, \gls{k-ausf} und \gls{k-seaf} benötigt.
-Er hat zwei Zwecke: %3GPP TS 33.501 V15.34.1 Page 39
+Er hat zwei Zwecke \cite[39]{3gppTS33.501V15.34.1}:
 \begin{itemize}
 \item Er bindet den \gls{k-seaf}, auch  \textit{Anchor Key}  genannt, an die \gls{seaf}, auch \textit{Serving Network} genannt, indem er die \gls{sn-id} beinhaltet.
 \item Er stellt sicher, dass der \textit{Anchor Key} nur für die Authentifizierung in 5G-Netzwerken verwendbar ist, indem er den Service Code ''5G'' beinhaltet.
 \end{itemize}
-Der \gls{sn-name} ist wie folgt aufgebaut: %3GPP TS 33.501 V15.34.1 Page 39
+Der \gls{sn-name} ist wie folgt aufgebaut \cite[39]{3gppTS33.501V15.34.1}:
 
 Er beginnt mit dem Service code ''5G'', gefolgt von dem Trennzeichen '':'' und der \gls{sn-id}.
 Die \gls{sn-id} ist für jedes \textit{Serving Network} eindeutig.
@@ -351,7 +351,7 @@ Die \gls{sn-id} ist für jedes \textit{Serving Network} eindeutig.
 Der \gls{suci} ist die verschlüsselte Version des \gls{supi} und wird für die Identifizierung des \gls{ue} benötigt..
 Er lässt sich mit der \gls{sidf} in den \gls{supi} umwandeln.
 
-Er ist wie folgt aufgebaut: %3GPP TS 23.003 V15.7.0 Page 27
+Er ist wie folgt aufgebaut \cite[27]{3gppTS23.003V15.7.0}:
 
 \gls{suci} = \gls{supi-type} || Home Network Identifier || Routing Indicator || Protection Scheme Id || Home Network Public Key Id || Scheme Output
 
@@ -360,13 +360,13 @@ Er ist wie folgt aufgebaut: %3GPP TS 23.003 V15.7.0 Page 27
 \begin{itemize}
 \item Wenn der \gls{supi-type} den \gls{imsi} angibt, dann entspricht der Home Network Identifier dem \gls{mcc}, gefolgt von dem \gls{mnc} (Home Network Identifier = \gls{mcc} || \gls{mnc}). 
 \item Wenn der \gls{supi-type} den Network Specific Identifier angibt, dann entspricht der Home Network Identifier einer ähnlichen Form des Network Access Identifiers, wie er beispielsweise auch beim \gls{supi} verwendet wird. (Home Network Identifier = username@realm)
-Er ist genauer im Dokument IETF RFC 7542 spezifiziert. %IETF RFC 7542 Page 10 fort folgend
+Er ist genauer im Dokument IETF RFC 7542 spezifiziert \cite[10]{ietfRFC7542}.
 \end{itemize}
-\item Der Routing Indicator besteht aus einem bis zu vier Zeichen. %3GPP TS 23.003 V15.7.0 Page 28
+\item Der Routing Indicator besteht aus einem bis zu vier Zeichen \cite[28]{3gppTS23.003V15.7.0}.
 Er erlaubt es der \gls{seaf} zusammen mit dem Home Network Identifier eine Verbindung mit der korrekten \gls{ausf} aufzubauen.
 Falls kein Routing Indicator konfiguriert ist soll er auf 0 gesetzt werden.
 \item Der Protection Scheme Identifier kann Werte von 0 bis 15 annehmen.
-Die genaue Definition der einzelnen Algorithmen ist im Annex C des 3GPP TS 33.501 V15.34.1 zu finden. %3GPP TS 33.501 V15.34.1 Page 168
+Die genaue Definition der einzelnen Algorithmen ist im Annex C des 3GPP TS 33.501 V15.34.1 zu finden \cite[168]{3gppTS33.501V15.34.1}.
 \begin{itemize}
 \item Der Wert 0 bedeutet, dass das Null Scheme verwendet wird.
 \item Der Wert 1 bedeutet, dass das Profile A verwendet wird.
@@ -377,14 +377,14 @@ Die genaue Definition der einzelnen Algorithmen ist im Annex C des 3GPP TS 33.50
 \item Der Home Network Public Key Identifier kann Werte von 0 bis 255 annehmen.
 Er wird genutzt um den Public Key zu identifizieren, der für die Verschlüsselung des \gls{supi} verwendet wird.
 \item Der Scheme Output ist die Ausgabe des Verschlüsselungs-Algorithmus.
-Die genaue Definition des Scheme Outputs ist im Annex C des 3GPP TS 33.501 V15.34.1 zu finden. %3GPP TS 33.501 V15.34.1 Page 168
+Die genaue Definition des Scheme Outputs ist im Annex C des 3GPP TS 33.501 V15.34.1 zu finden \cite[168]{3gppTS33.501V15.34.1}.
 \end{itemize}
 
 %SUPI
 \glsreset{supi}
 \subsubsection{\gls{supi}}
 Der \gls{supi} wird für die Identifizierung des \gls{ue} benötigt.
-Er ist für jeden Nutzer global eindeutig und ist wie folgt aufgebaut: %3GPP TS 23.003 V15.7.0 Page 27
+Er ist für jeden Nutzer global eindeutig und ist wie folgt aufgebaut \cite[27]{3gppTS23.003V15.7.0}:
 
 \gls{supi} = \gls{supi-type} || Home Network Identifier
 
@@ -394,14 +394,14 @@ Der Identifier ist von dem \gls{supi-type} abhängig und kann folgende Werte ann
 \item Wenn der \gls{supi-type} den \gls{imsi} angibt, dann entspricht der Home Network Identifier dem \gls{imsi}. (Home Network Identifier = \gls{imsi})
 \item Wenn der \gls{supi-type} den Network Specific Identifier angibt, dann entspricht der Home Network Identifier dem Network Access Identifier. (Home Network Identifier = Network Access Identifier)
 Der Network Access Identifier hat die Form $ username@realm $. 
-Er ist genauer im Dokument IETF RFC 7542 spezifiziert. %IETF RFC 7542 Page 10 fort folgend
+Er ist genauer im Dokument IETF RFC 7542 spezifiziert \cite[10]{ietfRFC7542}.
 \end{itemize}
 
 %XRES*
 \glsreset{xres*}
 \subsubsection{\gls{xres*}}
 Die \gls{xres*} ist eine Bitfolge und lässt sich, wie auch \gls{res*}, mit Hilfe der \gls{kdf} berechnen.
-Dabei sind folgende Werte Eingabeparameter der \gls{kdf}: %3GPP TS 33.501 V15.34.1 Page 155
+Dabei sind folgende Werte Eingabeparameter der \gls{kdf} \cite[155]{3gppTS33.501V15.34.1}:
 \begin{itemize}
 \item KEY = Konkatenation von \gls{ck} und \gls{ik} (\gls{ck} || \gls{ik})
 \item Fc = 0x6B
@@ -420,27 +420,27 @@ Es wird von der \gls{arpf} berechnet.
 %ABBA
 \glsreset{abba}
 \subsubsection{\gls{abba}}
-Der \gls{abba} Parameter soll einen \textit{Anti-bidding down}-Schutz für Sicherheitsfeatures gewährleisten, der verhindern soll, dass ältere Sicherheitsfeatures verwendet werden obwohl alle Parteien auch neuere Sicherheitsfeatures unterstützen. %3GPP TS 33.501 V15.34.1 Page 22
+Der \gls{abba} Parameter soll einen \textit{Anti-bidding down}-Schutz für Sicherheitsfeatures gewährleisten, der verhindern soll, dass ältere Sicherheitsfeatures verwendet werden obwohl alle Parteien auch neuere Sicherheitsfeatures unterstützen \cite[22]{3gppTS33.501V15.34.1}.
 Außerdem soll damit angegeben werden welche Sicherheitsfeatures in diesem Netzwerk aktiv sind.
 
 Der \gls{abba} Parameter wird von der \gls{seaf} an das \gls{ue} gesendet und hat eine variable Länge.
-Zurzeit kann der \gls{abba} Parameter nur den Wert 0x0000 annehmen. Dieser Wert steht für die bisher definierten Sicherheitsfeatures. %3GPP TS 33.501 V15.34.1 Page 156
+Zurzeit kann der \gls{abba} Parameter nur den Wert 0x0000 annehmen. Dieser Wert steht für die bisher definierten Sicherheitsfeatures \cite[156]{3gppTS33.501V15.34.1}.
 
 %AK
 \glsreset{ak}
 \subsubsection{\gls{ak}}
 Der \gls{ak} ist ein Schlüssel mit einer Länge von 48 Bits.
-Er wird zum Verschlüsseln der \gls{sqn} verwendet. %3GPP TS 33.102 V15.1.0 Page 32
-Lässt die \gls{sqn} keine Rückschlüsse auf die Identität oder Position des Nutzers zu, so kann der \gls{ak} auch auf 0 gesetzt werden. %3GPP TS 33.102 V15.1.0 Page 25
+Er wird zum Verschlüsseln der \gls{sqn} verwendet \cite[32]{3gppTS33.102V15.1.0}.
+Lässt die \gls{sqn} keine Rückschlüsse auf die Identität oder Position des Nutzers zu, so kann der \gls{ak} auch auf 0 gesetzt werden \cite[25]{3gppTS33.102V15.1.0}.
 
-Der \gls{ak} wird mit der \textit{Key generating function} f5 berechnet und bekommt \gls{rand} und \gls{k} als Eingabe. %3GPP TS 33.102 V15.1.0 Page 26
+Der \gls{ak} wird mit der \textit{Key generating function} f5 berechnet und bekommt \gls{rand} und \gls{k} als Eingabe \cite[26]{3gppTS33.102V15.1.0}.
 
 %AMF
 \glsreset{amf}
 \subsubsection{\gls{amf}}
-Das \gls{amf} ist ein 16 Bit langes Bitfeld. %3GPP TS 33.102 V15.1.0 Page 32
+Das \gls{amf} ist ein 16 Bit langes Bitfeld \cite[32]{3gppTS33.102V15.1.0}.
 Es wird für die Berechnung von Tokens und anderen Bitfeldern benötigt.
-Die 16 Bits des \gls{amf} sind von 0 bis 15 durchnummeriert. %3GPP TS 33.102 V15.1.0 Page 79
+Die 16 Bits des \gls{amf} sind von 0 bis 15 durchnummeriert \cite[79]{3gppTS33.102V15.1.0}.
 0 steht hier für das \textit{most significant bit} und 15 steht für das \textit{least significant bit}.
 
 \begin{itemize}
@@ -448,7 +448,7 @@ Die 16 Bits des \gls{amf} sind von 0 bis 15 durchnummeriert. %3GPP TS 33.102 V15
 \item Bits 1 bis 7 sind für eine zukünftige Spezifikation reserviert und sollen auf 0 gesetzt werden. \\
 \item Bits 8 bis 15 können für proprietäre Zwecke verwendet werden, sind aber nicht explizit festgelegt. 
 Sie können verwendet werden um spezifische Anpassungen festzulegen.
-Zum Beispiel könnten mehrere Authentifikations-Algorithmen unterstützt werden, indem die Bits 8 bis 15 den Algorithmus festlegen oder es könnten die Verifikationsparameter der \gls{sqn} durch die Bits bestimmt werden. %3GPP TS 33.102 V15.1.0 Page 77
+Zum Beispiel könnten mehrere Authentifikations-Algorithmen unterstützt werden, indem die Bits 8 bis 15 den Algorithmus festlegen oder es könnten die Verifikationsparameter der \gls{sqn} durch die Bits bestimmt werden \cite[77]{3gppTS33.102V15.1.0}.
 \end{itemize}
 
 %AUTS
@@ -470,16 +470,16 @@ Die Funktionen f1* und f5* sind, wie auch die \textit{Message authentication and
 %CK
 \glsreset{ck}
 \subsubsection{\gls{ck}}
-Der \gls{ck} ist ein 128 Bit langer Schlüssel. %3GPP TS 33.102 V15.1.0 Page 32
+Der \gls{ck} ist ein 128 Bit langer Schlüssel \cite[32]{3gppTS33.102V15.1.0}.
 Er wird, zusammen mit dem \gls{ik}, benötigt um den \gls{k-ausf} zu berechnen.
 
 Der \gls{ck} wird von der \textit{Key generating function} f3 berechnet.
-Diese Funktion bekommt \gls{rand} und \gls{k} als Eingabe. %3GPP TS 33.102 V15.1.0 Page 26
+Diese Funktion bekommt \gls{rand} und \gls{k} als Eingabe \cite[26]{3gppTS33.102V15.1.0}.
 
 %f1, f2, f3, f4, f5
 \glsreset{f12345}
 \subsubsection{\gls{f12345}}
-Mit diesen Funktionen werden \gls{ak}, \gls{ck}, \gls{ik} \gls{res} bzw. \gls{xres} und \gls{mac} bzw. \gls{xmac} berechnet. %3GPP TS 33.102 V15.1.0 Page 26
+Mit diesen Funktionen werden \gls{ak}, \gls{ck}, \gls{ik} \gls{res} bzw. \gls{xres} und \gls{mac} bzw. \gls{xmac} berechnet \cite[26]{3gppTS33.102V15.1.0}.
 \begin{itemize}
 \item Bei f1 handelt es sich um eine \textit{Message authentication function}.
 Sie berechnet den \gls{mac} bzw. \gls{xmac} und bekommt \gls{k} und die Konkatenation von \gls{sqn}, \gls{rand} und \gls{amf} (\gls{sqn} || \gls{rand} || \gls{amf}) als Eingabe. \\
@@ -494,29 +494,29 @@ Falls \gls{sqn} keine Rückschlüsse auf die Identität oder Position des Benutz
 %IK
 \glsreset{ik}
 \subsubsection{\gls{ik}}
-Der \gls{ik} ist ein 128 Bit langer Schlüssel. %3GPP TS 33.102 V15.1.0 Page 32
+Der \gls{ik} ist ein 128 Bit langer Schlüssel \cite[32]{3gppTS33.102V15.1.0}.
 Er wird zusammen mit dem \gls{ck} benötigt, um \gls{k-ausf} zu berechnen.
 
 Er wird von der \textit{Key generating function} f4 berechnet.
-Diese Funktion bekommt \gls{rand} und \gls{k} als Eingabe. %3GPP TS 33.102 V15.1.0 Page 26
+Diese Funktion bekommt \gls{rand} und \gls{k} als Eingabe \cite[26]{3gppTS33.102V15.1.0}.
 
 %IMSI
 \glsreset{imsi}
 \subsubsection{\gls{imsi}}
 Die \gls{imsi} ist eine bis zu 15 Zahlen lange Zahlenfolge und wird unter anderem für die Identifizierung des \gls{ue} benötigt.
-Die \gls{imsi} darf nur aus den Dezimalzahlen 0 - 9 bestehen. %3GPP TS 23.003 V15.7.0 Page 29
-Sie wird aus dem \gls{mcc}, dem \gls{mnc} und der \gls{msin} aufgebaut. %3GPP TS 23.003 V15.7.0 Page 26
+Die \gls{imsi} darf nur aus den Dezimalzahlen 0 - 9 bestehen.
+Sie wird aus dem \gls{mcc}, dem \gls{mnc} und der \gls{msin} aufgebaut \cite[26, 29]{3gppTS23.003V15.7.0}.
 \begin{equation*}
 \gls{imsi} = \gls{mcc} || \gls{mnc} || \gls{msin}
 \end{equation*}
-Die \gls{msin} ist bis zu 9 Zahlen lang und identifiziert den Benutzer eindeutig. %3GPP TS 23.003 V15.7.0 Page 26
+Die \gls{msin} ist bis zu 9 Zahlen lang und identifiziert den Benutzer eindeutig.
 
 %K_AUSF
 \glsreset{k-ausf}
 \subsubsection{\gls{k-ausf}}
 Der \gls{k-ausf} wird für die Berechnung des \gls{k-seaf} benötigt.
 Er lässt sich mit Hilfe der \gls{kdf} berechnen.
-Dabei sind folgende Werte Eingabeparameter der \gls{kdf}: %3GPP TS 33.501 V15.34.1 Page 154
+Dabei sind folgende Werte Eingabeparameter der \gls{kdf} \cite[154]{3gppTS33.501V15.34.1}:
 \begin{itemize}
 \item KEY = Konkatenation von \gls{ck} und \gls{ik} (\gls{ck} || \gls{ik})
 \item Fc = 0x6A
@@ -534,8 +534,8 @@ Die \gls{kdf} wird für die Berechnung von \gls{k-ausf}, \gls{k-seaf} und \gls{r
 
 Die Eingabeparameter der \gls{kdf} sind KEY, Fc, P0, $ \dots $, Pn und optional auch L0, $ \dots $, Ln.
 
-Um den Schlüssel zu berechnen muss zuerst der Wert S berechnet werden. %3GPP TS 33.220 V15.4.0 Page 46
-Er l\"asst sich folgendermaßen zusammensetzen: 
+Um den Schlüssel zu berechnen muss zuerst der Wert S berechnet werden.
+Er l\"asst sich folgendermaßen zusammensetzen \cite[46]{3gppTS33.220V15.4.0}: 
 \begin{equation*}
 S = Fc || P0 || L0 || P1 || L1 || \dots || Pn || Ln 
 \end{equation*}
@@ -551,46 +551,46 @@ Ausgabe = HMAC-SHA-256(KEY, S) \\
 \glsreset{mac}
 \subsubsection{\gls{mac}}
 Der \gls{mac} hat eine Länge von 64 Bits und wird vom \gls{ue} benötigt um ihn mit dem \gls{xmac} zu vergleichen.
-Er wird, wie auch der \gls{xmac}, mit der \textit{Message authentication function} f1 berechnet. %3GPP TS 33.102 V15.1.0 Page 32
-Die Funktion f1 ist von \gls{k} abhängig und bekommt als Eingabe die Konkatenation von \gls{sqn}, \gls{rand} und \gls{amf} (\gls{sqn} || \gls{rand} || \gls{amf}). %3GPP TS 33.102 V15.1.0 Page 26
+Er wird, wie auch der \gls{xmac}, mit der \textit{Message authentication function} f1 berechnet \cite[32]{3gppTS33.102V15.1.0}.
+Die Funktion f1 ist von \gls{k} abhängig und bekommt als Eingabe die Konkatenation von \gls{sqn}, \gls{rand} und \gls{amf} (\gls{sqn} || \gls{rand} || \gls{amf}) \cite[26]{3gppTS33.102V15.1.0}.
 Der \gls{mac} wird von der \gls{udm}/\gls{arpf} berechnet.
 
 %MCC
 \glsreset{mcc}
 \subsubsection{\gls{mcc}}
-Der \gls{mcc} ist drei Zeichen lang und ist Teil der \gls{imsi} und des \gls{sn-name}. %3GPP TS 23.003 V15.7.0 Page 26
+Der \gls{mcc} ist drei Zeichen lang und ist Teil der \gls{imsi} und des \gls{sn-name} \cite[26]{3gppTS23.003V15.7.0}.
 Er identifiziert das Land in dem sich der Provider befindet. 
 
 %MNC
 \glsreset{mnc}
 \subsubsection{\gls{mnc}}
-Der \gls{mnc} ist zwei oder drei Zeichen lang, wie auch der \gls{mcc}, Teil der \gls{imsi} und des \gls{sn-name}. %3GPP TS 23.003 V15.7.0 Page 26
+Der \gls{mnc} ist zwei oder drei Zeichen lang, wie auch der \gls{mcc}, Teil der \gls{imsi} und des \gls{sn-name} \cite[26]{3gppTS23.003V15.7.0}.
 Die genaue Länge ist vom \gls{mcc} abhängig und somit von Land zu Land unterschiedlich.
 Der \gls{mnc} und der \gls{mcc} zusammen identifizieren den Provider.
 
 %ng-KSI
 \glsreset{ng-ksi}
 \subsubsection{\gls{ng-ksi}}
-Der \gls{ng-ksi} identifiziert den K\textsubscript{AMF} eindeutig. %3GPP TS 33.501 V15.34.1 Page 54
+Der \gls{ng-ksi} identifiziert den K\textsubscript{AMF} eindeutig \cite[54]{3gppTS33.501V15.34.1}.
 Er wird von der \gls{seaf} an das \gls{ue} geschickt und wird nach einer erfolgreichen Authentifizierung benötigt um den K\textsubscript{AMF} zu identifizieren.
 
 %RES
 \glsreset{res}
 \subsubsection{\gls{res}}
-Die \gls{res} ist eine Bitfolge mit einer variablen Länge von bis zu 416 Bytes. %3GPP TS 33.102 V15.1.0 Page 32
+Die \gls{res} ist eine Bitfolge mit einer variablen Länge von bis zu 416 Bytes.
 Sie wird von dem \gls{ue} mit der \textit{Message authentication function} f2 berechnet.
-Die Funktion bekommt \gls{k} und \gls{rand} als Eingabe. %3GPP TS 33.102 V15.1.0 Page 26
+Die Funktion bekommt \gls{k} und \gls{rand} als Eingabe \cite[26, 32]{3gppTS33.102V15.1.0}.
 
 Die \gls{res} wird von der \gls{ausf} mit der \gls{xres} verglichen.
-Stimmen sie nicht überein so bricht die \gls{ausf} die Authentifizierung ab. %3GPP TS 33.501 V15.34.1 Page 45
+Stimmen sie nicht überein so bricht die \gls{ausf} die Authentifizierung ab \cite[45]{3gppTS33.501V15.34.1}.
 
 %SQN
 \glsreset{sqn}
 \subsubsection{\gls{sqn}}
-\gls{sqn} ist eine Zahl mit einer Länge von 48 Bits. %3GPP TS 33.102 V15.1.0 Page 32
-Aus ihr wird der \gls{mac} bwz. \gls{xmac} erzeugt. %3GPP TS 33.102 V15.1.0 Page 25
+\gls{sqn} ist eine Zahl mit einer Länge von 48 Bits.
+Aus ihr wird der \gls{mac} bwz. \gls{xmac} erzeugt.
 
-Für die Generierung der \gls{sqn} muss das \gls{udm}/\gls{arpf} folgende Bedingungen erfüllen:\\%3GPP TS 33.102 V15.1.0 Page 25
+Für die Generierung der \gls{sqn} muss das \gls{udm}/\gls{arpf} folgende Bedingungen erfüllen \cite[25, 32]{3gppTS33.102V15.1.0}:\\
 \begin{enumerate}
 \item Der Erzeugungsmechanismus der \gls{sqn} soll eine Re-Synchronisations Prozedur beinhalten.
 Die Re-Synchronisations Prozedur ist eine Prozedur die ausgeführt werden kann, wenn der \gls{autn} vom \gls{ue} in \textit{Schritt 1*} von \cref{fig:protocol_mac_failure_v1} nicht angenommen werden kann (\textit{Synchronization failure}).
@@ -602,7 +602,7 @@ Falls die \gls{sqn} Rückschlüsse auf die Identität oder Position des Nutzers 
 %SUPI-Type
 \glsreset{supi-type}
 \subsubsection{\gls{supi-type}}
-Der \gls{supi-type} wird zum Erzeugen des \gls{supi} benötigt und kann Werte von 0 bis 7 annehmen. %3GPP TS 23.003 V15.7.0 Page 27
+Der \gls{supi-type} wird zum Erzeugen des \gls{supi} benötigt und kann Werte von 0 bis 7 annehmen \cite[27]{3gppTS23.003V15.7.0}.
 \begin{itemize}
 \item Der Wert 0 bedeutet, dass der Home Network Identifier den \gls{imsi} angibt.
 \item Der Wert 1 bedeutet, dass der Home Network Identifier den Network Specific Identifier angibt.
@@ -613,27 +613,27 @@ Der \gls{supi-type} wird zum Erzeugen des \gls{supi} benötigt und kann Werte vo
 \glsreset{xmac}
 \subsubsection{\gls{xmac}}
 Der \gls{xmac} hat eine Länge von 64 Bits und wird vom \gls{ue} benötigt um ihn mit dem \gls{mac} zu vergleichen.
-Er wird, wie auch der \gls{mac}, mit der Funktion f1 berechnet. %3GPP TS 33.102 V15.1.0 Page 32
-Die \textit{Message authentication function} f1 bekommt als Eingabe \gls{k} und die Konkatenation von \gls{sqn}, \gls{rand} und \gls{amf} (\gls{sqn} || \gls{rand} || \gls{amf}). %3GPP TS 33.102 V15.1.0 Page 27
+Er wird, wie auch der \gls{mac}, mit der Funktion f1 berechnet.
+Die \textit{Message authentication function} f1 bekommt als Eingabe \gls{k} und die Konkatenation von \gls{sqn}, \gls{rand} und \gls{amf} (\gls{sqn} || \gls{rand} || \gls{amf}) \cite[27, 32]{3gppTS33.102V15.1.0}.
 
 Der \gls{xmac} wird von dem \gls{ue} berechnet und mit dem \gls{mac} verglichen. 
 Den \gls{mac} hat das \gls{ue} bereits von der \gls{seaf} erhalten.
-Stimmen \gls{mac} und \gls{xmac} nicht überein, so ist die Authentifizierung fehlgeschlagen. %3GPP TS 33.102 V15.1.0 Page 27
+Stimmen \gls{mac} und \gls{xmac} nicht überein, so ist die Authentifizierung fehlgeschlagen \cite[27]{3gppTS33.102V15.1.0}.
 
 %XRES
 \glsreset{xres}
 \subsubsection{\gls{xres}}
-Die \gls{xres} ist eine Bitfolge mit einer variablen Länge von bis zu 416 Bytes. %3GPP TS 33.102 V15.1.0 Page 32
+Die \gls{xres} ist eine Bitfolge mit einer variablen Länge von bis zu 416 Bytes.
 Sie wird, wie auch die \gls{res}, mit der \textit{Message authentication function} f2 berechnet. 
-Diese Funktion bekommt \gls{k} und \gls{rand} als Eingabe. %3GPP TS 33.102 V15.1.0 Page 26
+Diese Funktion bekommt \gls{k} und \gls{rand} als Eingabe \cite[26, 32]{3gppTS33.102V15.1.0}.
 
 Die \gls{ausf} vergleicht \gls{res} und \gls{xres} miteinander.
-Stimmen sie nicht überein, so bricht die \gls{ausf} die Authentifizierung ab. %3GPP TS 33.501 V15.34.1 Page 45
+Stimmen sie nicht überein, so bricht die \gls{ausf} die Authentifizierung ab \cite[45]{3gppTS33.501V15.34.1}.
 
 
 \subsection{Fehlgeschlagene Authentifikation}
 
-\subsubsection{Fehlschlag beim Vergleich von \gls{mac} und \gls{xmac}}
+\subsubsection{Fehlschlag beim Vergleich von \gls{mac} und \gls{xmac} \cite[46]{3gppTS33.501V15.34.1}}
 
 \begin{figure}[H]
   \centering
@@ -654,11 +654,11 @@ Handelt es sich um eine \textit{Synchronisation failure} so wird auch der \gls{a
 %3*
 \item[3*.] In Schritt 3* wird entschieden ob die Authentifikation gescheitert ist oder ob eine neue Authentifikation initiiert werden soll.
 Eine neue Authentifikation kann nur initiiert werden wenn es sich bei dem Fehlschlag um eine \textit{Synchronisation failure} handelt.
-Die genaue Beschreibung der Re-Authentifizierungsprozedur ist im Dokument TS 24.501 zu finden. %3GPP TS 24.501 V16.1.0
+Die genaue Beschreibung der Re-Authentifizierungsprozedur ist im Dokument TS 24.501 zu finden \cite{3gppTS24.501V16.1.0}.
 \end{enumerate}
 
 
-\subsubsection{Fehlschlag beim Vergleich von \gls{res*} bzw. \gls{hres*} mit \gls{xres*} bzw. \gls{hxres*}}
+\subsubsection{Fehlschlag beim Vergleich von \gls{res*} bzw. \gls{hres*} mit \gls{xres*} bzw. \gls{hxres*} \cite[45]{3gppTS33.501V15.34.1}}
 
 \begin{figure}[H]
   \centering
