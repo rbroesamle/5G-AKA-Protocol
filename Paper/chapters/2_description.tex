@@ -83,7 +83,7 @@ Die einzelnen Nachrichten lassen sich folgendermaßen beschreiben: %3GPP TS 33.5
 
 \begin{enumerate}
 %1
-\item Das \gls{ue} sende in Schritt 1 die \textit{N1 message} an die \gls{seaf} und beginnt damit die Authentifikationsprozedur.
+\item Das \gls{ue} sendet in Schritt 1 die \textit{N1 message} an die \gls{seaf} und beginnt damit die Authentifikationsprozedur.
 Diese Nachricht beinhaltet entweder den \gls{suci} oder den \gls{5g-guti}.
 Sie werden später von dem \gls{udm}/\gls{arpf} zur Authentifizierung des \gls{ue} verwendet.
 
@@ -100,22 +100,22 @@ Er enthält den \gls{suci} oder \gls{supi} und den \gls{sn-name}, den die \gls{a
 Falls der Test nicht erfolgreich war, antwortet die \gls{ausf} mit der \textit{Nausf\_UEAuthentication\_Authenticate Response}, die den Text \textit{serving network not authorized} enthält.
 
 %4
-\item Falls die \gls{ausf} in \textit{Schritt 3} den \gls{suci} an das \gls{udm} gesendet hat, dann wird in diesem Schritt aus dem \gls{suci} der \gls{supi} abgeleitet.
+\item Falls die \gls{ausf} in \textit{Schritt 3} den \gls{suci} an das \gls{udm} gesendet hat, wird in diesem Schritt aus dem \gls{suci} der \gls{supi} abgeleitet.
 Hierfür wird die \gls{sidf} verwendet.
 
 %5
 \item In diesem Schritt wird die Authentifikationsmethode ausgewählt.
 Das \gls{udm} kann zwischen dem EAP-AKA' und dem 5G-AKA Protokoll wählen.
-Da in dieser Ausarbeitung nur auf das 5G-AKA-Protokoll eingegangen wird, wird angenommen das hier immer das 5G-AKA-Protokoll als Authentifikationsmethode gewählt wird.
+Da in dieser Ausarbeitung nur auf das 5G-AKA-Protokoll eingegangen wird, wird angenommen, dass hier immer das 5G-AKA-Protokoll als Authentifikationsmethode gewählt wird.
 
 %6
-\item In diesem Schritt wird der \gls{5g-he-av} generiert.
+\item Nun wird der \gls{5g-he-av} generiert.
 Hierfür wird der \gls{sn-name} und der \gls{supi} benötigt, den das \gls{udm} in \textit{Schritt 3} erhalten oder in \textit{Schritt 4} erzeugt hat.
 Für die Generierung soll das \textit{separation bit} des \gls{amf} auf ''1'' gesetzt werden.
 
 %7
-\item In diesem Schritt sendet das \gls{udm} die \textit{Nudm\_Authentication\_Get Response} an die \gls{ausf}.
-Sie beinhaltet den \gls{5g-he-av}, der in \textit{Schritt 6} generiert wurde, und dem Hinweis, dass der \gls{5g-he-av} für das 5G-AKA-Protokoll bestimmt ist.
+\item Jetzt sendet das \gls{udm} die \textit{Nudm\_Authentication\_Get Response} an die \gls{ausf}.
+Sie beinhaltet den \gls{5g-he-av}, der in \textit{Schritt 6} generiert wurde, und den Hinweis, dass der \gls{5g-he-av} für das 5G-AKA-Protokoll bestimmt ist.
 Falls das \gls{udm} in \textit{Schritt 3} den \gls{suci} erhalten und in \textit{Schritt 4} den \gls{supi} erzeugt hat, dann wird der \gls{supi} in der \textit{Nudm\_Authentication\_Get Response} mitgeschickt.
 
 %8
@@ -123,7 +123,7 @@ Falls das \gls{udm} in \textit{Schritt 3} den \gls{suci} erhalten und in \textit
 Des Weiteren wird auch der \gls{k-ausf}, welcher auch in dem \gls{5g-he-av} enthalten ist, zwischengespeichert.
 
 %9
-\item In diesem Schritt wird aus der \gls{xres*} die \gls{hxres*} gerechnet.
+\item Als nächstes wird aus der \gls{xres*} die \gls{hxres*} gerechnet.
 Des Weiteren wird der \gls{5g-se-av} für \textit{Schritt 10} aus dem \gls{5g-he-av} berechnet.
 Dafür wird die \gls{xres*} durch die \gls{hxres*} ersetzt und der \gls{k-ausf} entfernt.
 
@@ -134,7 +134,7 @@ Erhält die \gls{seaf} diese Nachricht nicht, so soll mit \textit{Schritt 2'} vo
 %11
 \item Nach dem Erhalten der \textit{Nausf\_UEAuthentication\_Authenticate Response} wird die \gls{seaf} in Schritt 11 den \textit{Authentication Request}  an das \gls{ue} schicken.
 Er beinhaltet die \gls{rand} und das \gls{autn} den die \gls{seaf} in \textit{Schritt 10} erhalten hat.
-Zusätzlich wird noch der \gls{ng-ksi} und die \gls{abba}, die nach einer erfolgreiche Authentifizierung benötigt werden, mitgesendet.
+Zusätzlich wird noch der \gls{ng-ksi} und die \gls{abba}, die nach einer erfolgreichen Authentifizierung benötigt werden, mitgesendet.
 Des Weiteren wird die \gls{hxres*}, die in dem \gls{5g-se-av} enthalten ist, bei der \gls{seaf} zwischengespeichert, da sie noch für \textit{Schritt 14} benötigt wird.
 
 %12
@@ -150,9 +150,9 @@ Stimmen sie nicht überein oder kann der \gls{autn} nicht angenommen werden, so 
 
 %14
 \item Nachdem die \gls{seaf} die \textit{Authentication Response} vom \gls{ue} erhalten hat, berechnet sie aus der \gls{res*} die \gls{hres*} und vergleicht sie mit der \gls{hxres*}, die sie in \textit{Schritt 11} zwischengespeichert hat.
-Stimmen sie überein so wird die Authentifizierung von der \gls{seaf} als erfolgreich angesehen und es wird bei \textit{Schritt 15} weitergemacht.
+Stimmen sie überein so wird die Authentifizierung von der \gls{seaf} als erfolgreich angesehen und es geht weiter mit \textit{Schritt 15}.
 Stimmen sie nicht überein, so wird die Authentifizierung von der \gls{seaf} als fehlgeschlagen angesehen und es wird die Prozedur aus dem Abschnitt \textit{HRES* failure in \gls{seaf}} in \cref{fig:protocol_res*_verification_failure_v1} ausgeführt.
-Wird keine Antwort vom \gls{ue} erhalten, so wird die Authentifizierung von der \gls{seaf} als fehlgeschlagen angesehen und es wird die \gls{ausf} über den Fehlschlag informiert.
+Wird keine Antwort vom \gls{ue} erhalten, so wird die Authentifizierung von der \gls{seaf} als fehlgeschlagen angesehen und die \gls{ausf} wird über den Fehlschlag informiert.
 Wann dieser Zeitpunkt erreicht ist, ist nicht spezifiziert.
 
 %15
@@ -161,9 +161,9 @@ Er beinhaltet die \gls{res*} den die \gls{seaf} in der \textit{Authentication Re
 
 %16
 \item Nachdem die \gls{ausf} den \textit{Nausf\_UEAuthentication\_Authenticate Request} erhalten hat vergleicht sie die \gls{res*} mit der \gls{xres*}, die sie in \textit{Schritt 8} zwischengespeichert hat.
-Stimmen sie überein so wird die Authentifizierung von der \gls{ausf} als erfolgreich angesehen und es wird bei \textit{Schritt 17} weitergemacht.
+Stimmen sie überein so wird die Authentifizierung von der \gls{ausf} als erfolgreich angesehen und es geht weiter mit \textit{Schritt 17}.
 Stimmen sie nicht überein, so wird die Authentifizierung von der \gls{ausf} als fehlgeschlagen angesehen und es wird die Prozedur aus dem Abschnitt \textit{RES* failure in \gls{seaf}} in \cref{fig:protocol_res*_verification_failure_v1} ausgeführt.
-Des Weiteren kann auch überprüft werden, ob der Authentication Vector abgelaufen ist.
+Außerdem kann auch überprüft werden, ob der Authentication Vector abgelaufen ist.
 Dies ist aber nicht zwingend vorgeschrieben.
 Die \gls{ausf} informiert das \gls{udm} über das Ergebnis (\textit{Result}) des Vergleichs.
 
