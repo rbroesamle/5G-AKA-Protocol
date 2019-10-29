@@ -40,8 +40,6 @@ rnote <<note>> over UDM
 Selection
 end note
 
-== 5G AKA ==
-
 rnote <<note>> over UDM
 **[6]** Generate
 Authentication Vector

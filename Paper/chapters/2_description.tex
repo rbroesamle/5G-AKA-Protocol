@@ -2,9 +2,9 @@
 \label{chap:2}
 
 Das 5G-AKA-Protokoll ist eines von mehreren Protokollen des 5G-Standards.
-Vor Allem das EAP-AKA-Protokoll und das 5G-AKA-Protokoll sind für den sicheren Austausch eines Schlüssels zuständig. 
-Bei beiden Protokollen ist der erste Teil der Gleiche bis bei dem Provider eines der Protokolle ausgewählt wird. %3GPP TS 33.501 V15.34.1 Page 40
-Bei beiden Protokollen ist auch der Authentifizierungsvorgang sehr ähnlich, wobei das 5G-AKA-Protokoll das EAP-AKA-Protokoll darum erweitert, dass es dem Provider, \textit{Home Network} genannt, eine erfolgreiche Authentifizierung nachweist. %3GPP TS 33.501 V15.34.1 Page 43
+Vor Allem das EAP-AKA-Protokoll und das 5G-AKA-Protokoll sind für den sicheren Austausch eines kryptographischen Schlüssels zuständig. 
+Bei beiden Protokollen ist der erste Teil identisch, bis bei dem Provider eines der Protokolle ausgewählt wird. %3GPP TS 33.501 V15.34.1 Page 40
+Bei beiden Protokollen ist auch der Authentifizierungsvorgang sehr ähnlich, wobei das 5G-AKA-Protokoll gegenüber dem EAP-AKA-Protokoll dahingehen erweitert wurde, dass es dem Provider, \textit{Home Network} genannt, eine erfolgreiche Authentifizierung nachweist. %3GPP TS 33.501 V15.34.1 Page 43
 
 Das 5G-AKA-Protokoll wird größtenteils in der Spezifikation TS 33.501 des 3GPP beschrieben. %3GPP TS 33.501 V15.34.1
 Dabei wird immer die zum Zeitpunkt dieser Arbeit neueste Version V15.34.1 herangezogen.
@@ -13,7 +13,7 @@ Dabei wird immer die zum Zeitpunkt dieser Arbeit neueste Version V15.34.1 herang
 
 Ziel des 5G-AKA Protokolls ist es den Benutzer und das Netzwerk gegenseitig zu authentifizieren (\textit{Mutual Authentication}) und Schlüsselmaterial bereitzustellen, die von nachfolgenden Protokollen verwendet werden können. % 3GPP TS 33.501 V15.34.1 Page 37
 Bei einer erfolgreichen Authentifizierung wissen alle Teilnehmer des Protokolls über den Erfolg Bescheid und es wurde ein gemeinsamer \textit{Anchor Key} ausgetauscht.
-Aus diesem \textit{''Anchor Key''} können weitere Schlüssel für mehrere Sicherheitskontexte abgeleitet werden.
+Aus diesem \textit{Anchor Key} können weitere Schlüssel für mehrere Sicherheitskontexte abgeleitet werden.
 Ein Überblick über die ableitbaren Schlüssel ist in Abbildung 6.2.1-1 und 6.2.2-1 des 3GPP TS 33.501 V15.34.1 zu finden. % 3GPP TS 33.501 V15.34.1 Page 49 & 52
 
 \section{Das Protokoll}
@@ -34,7 +34,7 @@ In dem \gls{me} werden die Schlüssel, die für die Kommunikation nach dem 5G-AK
 \glsreset{seaf}
 \subsubsection{\gls{seaf}}
 
-Die \gls{seaf} ist Teil des mit dem \gls{ue} kommunizierenden Netzwerks, auch \textit{Serving Network}, genannt.
+Die \gls{seaf} ist Teil des mit dem \gls{ue} kommunizierenden Netzwerks, auch \textit{Serving Network} genannt.
 Sie kommuniziert mit dem \gls{ue} und mit dem Provider des Benutzers.
 Nach erfolgreicher Authentifizierung haben das \gls{ue} und die \gls{seaf} beide einen gemeinsamen Schlüssel.%3GPP TS 33.501 V15.34.1 Page 37
 
@@ -51,7 +51,7 @@ Das \gls{udm} ist, wie auch die \gls{ausf} Teil des \textit{Home Network}.
 Grundsätzlich funktioniert es jedoch nicht ohne die \gls{arpf} und die \gls{sidf}.
 
 Das \gls{udm} und die \gls{arpf} generieren Authentifizierungsvektoren aus den Schlüsseln, die sie mit dem \gls{usim} teilen.
-Die \gls{sidf} gerechnet die Benutzerkennung (\glsunset{supi}\gls{supi}) für das \gls{udm} und die \gls{arpf} aus einer verschlüsselten Benutzerkennung (\glsunset{suci}\gls{suci}), die sie von dem \gls{ausf} erhält.
+Die \gls{sidf} berechnet die Benutzerkennung (\glsunset{supi}\gls{supi}) für das \gls{udm} und die \gls{arpf} aus einer verschlüsselten Benutzerkennung (\glsunset{suci}\gls{suci}), die sie von dem \gls{ausf} erhält.
 
 
 \subsection{Vorbedingungen}
@@ -69,7 +69,7 @@ Damit das 5G-AKA Protokoll erfolgreich durchgeführt werden kann müssen folgend
 \subsection{Authentifikationsprozedur}
 
 Die \cref{fig:protocol_v1} zeigt eine erfolgreiche Authentifizierung.
-Nach dem Ende der Prozedur haben sich alle Entitäten auf den \textit{Anchor Key} \gls{k-seaf} geeinigt.
+Nach dem Ende der Prozedur haben sich alle Entitäten auf den \textit{Anchor Key}, \gls{k-seaf}, geeinigt.
 Dieser wird als Grundlage für die weitere Kommunikation verwendet.
 
 \begin{figure}[H]
