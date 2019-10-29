@@ -3,7 +3,7 @@
 
 Das 4G EPS-AKA Protokoll ist Teil des 4G Standards, dem Vorgänger des 5G Standards, zu dem das 5G-AKA Protokoll gehört \cite{Compare}.
 Beide Protokolle haben Gemeinsamkeiten und Unterschiede, die in diesem Kapitel genauer erläutert werden.
-% Hier beschreiben, dass die Infos nicht aus der Spezfikation stammen sondern aus dem 'Comparative Introduction' paper.
+
 
 \section{Beschreibung des 4G EPS-AKA Protokolls}
 
@@ -20,14 +20,14 @@ Der \gls{hss} ist Teil des \textit{Home Network} und befindet sich bei dem Netzb
 Ziel des 4G EPS-AKA Protokolls ist es, wie auch beim 5G-AKA Protokoll, den Benutzer und das Netzwerk gegenseitig zu authentifizieren und einen gemeinsamen \textit{Anchor Key} bereitzustellen der von nachfolgenden Protokollen verwendet werden kann.
 Im Gegensatz zum 5G-AKA Protokoll weiß das \textit{Home Network} beim 4G EPS-AKA Protokoll jedoch nicht über den Erfolg der Authentifizierung bescheid.
 Aus dem \textit{Anchor Key} können ebenfalls weitere Schlüssel für unterschiedliche Verwendung abgeleitet werden.
-Eine Übersicht über die ableitbaren Schlüssel ist in Abbildung 6.2-1 und 6.2-2 des 3GPP TS 33.401 V15.4.0 zu finden. % 3GPP TS 33.401 V15.4.0 Page 33 & 35
+Eine Übersicht über die ableitbaren Schlüssel ist in Abbildung 6.2-1 und 6.2-2 des 3GPP TS 33.401 V15.4.0 zu finden \cite[33, 35]{3gppTS33.401V15.4.0}.
 
-\subsection{Das Protokoll}
+\subsection{Das Protokoll \cite{Compare}}
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=\textwidth]{uml/4g-protocol_v1.png}
-  \caption{Das 4G EPS-AKA Protokoll \cite{Compare}}
+  \caption{Das 4G EPS-AKA Protokoll}
   \label{fig:4g_protocol_v1}
 \end{figure}
 
@@ -68,7 +68,7 @@ Er enthält den \gls{auth}, den das \gls{ue} zur Berechnung der \gls{res} benöt
 %9
 \item Nach Erhalt der \textit{Auth Response} Nachricht wird in Schritt 9 überprüft, ob die \gls{res}, die die \gls{mme} in \textit{Schritt 8} erhalten hat, mit der \gls{xres}, die die \gls{mme} in \textit{Schritt 5} erhalten hat, übereinstimmt.
 Ist dies der Fall, so wird aus den kryptographischen Schlüsseln, die die \gls{mme} ebenfalls in \textit{Schritt 5} erhalten hat, unteranderem der \gls{k-asme} der \gls{asme} berechnet.
-Der \gls{k-asme} wird beispielsweise für die Berechnung weiterer Schlüssel nach der erfolgreichen Authentifizierung benötigt.%3GPP TS 33.401 Page 19
+Der \gls{k-asme} wird beispielsweise für die Berechnung weiterer Schlüssel nach der erfolgreichen Authentifizierung benötigt \cite[19]{3gppTS33.401V15.4.0}.
 \end{enumerate}
 
 
@@ -128,3 +128,7 @@ Beim 5G-AKA Protokoll hingegen entscheiden sowohl die \gls{seaf}, die Teil des \
 Die Entscheidung wird somit sowohl innerhalb des \textit{Serving Network}s, wie auch innerhalb des \textit{Home Network}s getroffen.
 Des Weiteren benachrichtigt die \gls{ausf} auch das \gls{udm} über den Ausgang der Authentifizierung.
 \end{itemize}
+
+
+
+
