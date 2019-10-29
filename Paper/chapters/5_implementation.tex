@@ -3,7 +3,7 @@
 
 Die in \cref{chap:4} beschriebene Sicherheitslücke und das 5G-AKA Protokoll wurde nun implementiert.
 Die Implementierung ist dieser Arbeit beigefügt und kann auch auf Github unter folgendem Link eingesehen werden: \url{https://github.com/rbroesamle/5G-AKA-Protocol/tree/master/Implementation}
-In diesem Kapitel wird sich auf den Commit mit der ID 86bb8c8 gezogen.
+In diesem Kapitel wird sich auf den Commit mit der ID 86bb8c8 bezogen.
 
 Es wurde das 5G-AKA Protokoll aus der Spezifikation TS 33.501 des 3GPP mit der Version V15.34.1 implementiert \cite{3gppTS33.501V15.34.1}.
 Die Sicherheitslücke wurde darauf aufbauend implementiert.
@@ -14,7 +14,7 @@ Zum Ausführen des Programms wurde ein \textit{Gradle} Build Script bereitgestel
 Es wird daher empfohlen die neueste Java und Gradle Version auf einem Linux Betriebssystem installiert zu haben.
 
 Um das Programm auszuführen muss der Befehl \lstinline{gradle run} in eine Konsole eingegeben werden.
-Dafür sollte man sich in dem Ordner befinden, in dem sich auch die build.gradle Datei befindet.
+Dafür sollte man sich in dem Ordner befinden, in dem sich auch die \lstinline{build.gradle} Datei befindet.
 
 Alternativ kann auch der Gradle Wrapper ausgeführt werden.
 Dafür muss auf Linux oder macOS der Befehl \lstinline{./gradlew run} und auf Windows der Befehl \lstinline{gradlew.bat run} ausgeführt werden.
@@ -53,11 +53,11 @@ Wird \textit{LOG\_MESSAGES} auf \lstinline{false} gesetzt, dann werden die empfa
 Mit \textit{DETAILED\_AUTH\_INFO} lässt sich einstellen ob detaillierte Informationen auf der Konsole ausgegeben werden sollen.
 Es können die Werte \lstinline{true} und \lstinline{false} angegeben werden.
 
-Wird \textit{DETAILED\_AUTH\_INFO} auf \lstinline{true} gesetzt, dann werden detaillierte Informationen zur Authentifizierung auf der Konsole ausgegeben.
+Wird \textit{DETAILED\_AUTH\_INFO} auf \lstinline{true} gesetzt, werden detaillierte Informationen zur Authentifizierung auf der Konsole ausgegeben.
 Dies beinhaltet Informationen darüber ob die Authentifizierung von der \gls{seaf}, der \gls{ausf} und dem \gls{udm} als erfolgreich angesehen wird, wie es in \textit{Schritt 14 \& 16} von \cref{fig:protocol_v1} beschrieben ist.
-Des Weiteren wird der Langzeitschlüssel \gls{k-seaf} der im \gls{ue} und in der \gls{seaf} gespeichert ist ausgegeben.
+Zusätzlich wird der Langzeitschlüssel \gls{k-seaf} der im \gls{ue} und in der \gls{seaf} gespeichert ist ausgegeben.
 
-Wird \textit{DETAILED\_AUTH\_INFO} auf \lstinline{false} gesetzt, dann werden keine detaillierten Informationen zur Authentifizierung auf der Konsole ausgegeben.
+Wird \textit{DETAILED\_AUTH\_INFO} auf \lstinline{false} gesetzt, werden keine detaillierten Informationen zur Authentifizierung auf der Konsole ausgegeben.
 
 
 \section{Beschreibung des Aufbaus}
@@ -75,7 +75,7 @@ Sie beinhalten nur statische Methoden.
 In dem \lstinline{Implementation.protocol} Package ist die tatsächliche Implementierung des Protokolls zu finden.
 Es ist unterteilt in die Packages \lstinline{Implementation.protocol.additional}, \lstinline{Implementation.protocol.data}, \lstinline{Implementation.protocol.entities} und \lstinline{Implementation.protocol.messages}.
 
-Das \lstinline{Implementation.protocol.additional} Package beinhaltet hauptsächlich Klassen die kryptographischen Berechnungen ausführen, wie die \gls{kdf}.
+Das \lstinline{Implementation.protocol.additional} Package beinhaltet hauptsächlich Klassen die kryptographische Berechnungen ausführen, wie die \gls{kdf}.
 Alle Klassen in diesem Package beinhalten nur statische Methoden.
 
 Das \lstinline{Implementation.protocol.data} Package beinhaltet Klassen, die mehrere verschiedene Parameter in sich zusammenfassen, wie z.B. der \gls{5g-he-av}.
@@ -89,7 +89,7 @@ Jede Nachricht hat eine eigene Klasse, die das \lstinline{Implementation.structu
 
 
 \subsection{Implementierung der Race Condition}
-Um die \textit{Race Condition} zu realisieren muss sichergestellt werden dass versendete Nachrichten sich überholen können.
+Um die \textit{Race Condition} zu realisieren muss sichergestellt werden, dass versendete Nachrichten sich überholen können.
 Dies wurde mit Hilfe von \textit{Threads} implementiert.
 Dafür wurden in der \lstinline{Implementation.structure.Entity} Klasse die \lstinline{sendMessage} Methode erstellt.
 Da die \lstinline{Implementation.structure.Entity} Klasse die Superklasse von allen Entitäten ist wird in den Entitäten die \lstinline{sendMessage} der \lstinline{Implementation.structure.Entity} Klasse verwendet um Nachrichten zu versenden.
@@ -100,7 +100,7 @@ Somit ist sichergestellt, dass eine \textit{Race Condition} möglich ist.
 
 \subsection{Unterschiede zum Protokoll}
 Ziel dieser Implementierung ist es die Praktikabilität der in \cref{chap:4} beschriebenen Sicherheitslücke herauszufinden.
-In der Implementierung wurde daher einige Teile der Protokolls, die für die Sicherheitslücke nicht relevant sind, verändert oder weggelassen.
+In der Implementierung wurden daher einige Teile der Protokolls, die für die Sicherheitslücke nicht relevant sind, verändert oder weggelassen.
 Nachfolgend ist eine Liste aller Abweichungen vom Protokoll aufgeführt.
 Alle Abweichungen sind im Code mit dem Kommentar \lstinline{//MARK: Deviation #} versehen.
 Das \lstinline{#} entspricht der Nummer der Abweichung.
@@ -156,7 +156,7 @@ In der Implementierung sendet die \lstinline{Implementierung.protocol.entities.A
 
 %11
 \item In \textit{Schritt 3} der \cref{fig:protocol_v1} soll die \gls{ausf} überprüfen ob eine \gls{seaf}, die eine Nachricht an die \gls{ausf} geschickt hat, den mitgesendeten \gls{sn-name} verwenden darf.
-In der Implementierung tut dies die \lstinline{Implementation.protocol.entities.AUSF} Klasse nicht.
+In der Implementierung erfolgt dies von der \lstinline{Implementation.protocol.entities.AUSF} Klasse nicht.
 
 %12
 \item In \textit{Schritt 17} der \cref{fig:protocol_v1} wird beschrieben, dass die \gls{ausf} der \gls{seaf} den \gls{supi} des Benutzer mitsendet, wenn die \gls{ausf} diesen in \textit{Schritt 7} erhalten hat.
@@ -168,7 +168,7 @@ Da jedoch bei dem implementierten Angriff nie der \gls{5g-guti} versendet wird, 
 In der Implementierung wird in der \lstinline{Implemenation.protocol.entities.SEAF} Klasse jedoch nie eine neue Authentifizierung initiiert.
 
 %14
-\item In \textit{Schritt 14} der \cref{fig:protocol_v1} soll die \gls{seaf} bei einer zu spät oder nicht erhaltener Nachricht die Authentifizierung abbrechen.
+\item In \textit{Schritt 14} der \cref{fig:protocol_v1} soll die \gls{seaf} bei einer zu spät oder nicht erhaltenen Nachricht die Authentifizierung abbrechen.
 In der Implementierung wird die erhaltene Nachricht jedoch immer akzeptiert.
 Es gibt also keinen \textit{Timeout}.
 

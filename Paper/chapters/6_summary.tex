@@ -2,18 +2,18 @@
 \label{chap:6}
 
 In dieser Arbeit wurde das 5G-AKA Protokoll erklärt und mit dem 4G EPS-AKA Protokoll verglichen.
-Des Weiteren wurde eine Sicherheitslücke des 5G-AKA Protokolls erklärt und implementiert.
+Außerdem wurde eine Sicherheitslücke des 5G-AKA Protokolls erklärt und implementiert.
 
-Das 5G-AKA Protokoll ist eines von zwei Protokollen des 5G-Standards das für den sicheren Austausch eines Schlüssels zuständig ist.
+Das 5G-AKA Protokoll ist eines von zwei Protokollen des 5G-Standards das für den sicheren Austausch eines kryptographischen Schlüssels zuständig ist.
 Es besteht aus den 4 Entitäten \gls{ue}, \gls{seaf}, \gls{ausf} und \gls{udm}.
-Das \gls{ue} entspricht z.B. dem Smartphone eines Benutzers, die \gls{seaf} entspricht z.B. einem Funkmast mit dem sich das Smartphone des Benutzers verbindet und die \gls{ausf} und das \gls{udm} entsprechen z.B. dem Provider von dem der Benutzer eine SIM-Karte gekauft hat.
+Das \gls{ue} entspricht z.B. dem Smartphone eines Benutzers, die \gls{seaf} entspricht z.B. einem Funkmast mit dem sich das Smartphone des Benutzers verbindet und die \gls{ausf} und das \gls{udm} entsprechen z.B. dem Provider, von dem der Benutzer eine SIM-Karte gekauft hat.
 Über diese vier Entitäten werden nun Nachrichten versendet, die das \gls{ue} authentifizieren und einen gemeinsamen Schlüssel austauschen.
 War das 5G-AKA Protokoll erfolgreich, dann verfügen das \gls{ue} und die \gls{seaf} über einen \textit{Anchor Key}, genannt \gls{k-seaf}, der für die weitere Verschlüsselung verwendet wird.
 
 Das 5G-AKA Protokoll hat einige Verbesserungen gegenüber dem 4G EPS-AKA Protokoll des 4G-Standards.
 Jedoch wurde auch in dem 5G-AKA Protokoll eine Sicherheitslücke entdeckt.
-In dieser Sicherheitslücke geht es darum, dass sich ein Angreifer als einen anderen Benutzer ausgeben kann.
-Der Angreifer muss dafür den verschlüsselten Identifier des Benutzers, genannt \gls{suci}, abhören, sowie ein SIM-Karte bei dem Provider kaufen, von dem auch der Benutzer seine SIM-Karte hat.
+In dieser Sicherheitslücke geht es darum, dass sich ein Angreifer als ein anderer Benutzer ausgeben kann.
+Der Angreifer muss dafür den verschlüsselten Identifier des Benutzers, genannt \gls{suci}, abhören, sowie ein SIM-Karte bei dem Provider kaufen, bei dem auch der Benutzer seine SIM-Karte gekauft hat.
 Der Angreifer hat nun die Möglichkeit sich als diesen Benutzer auszugeben.
 Der Angriff beruht auf einer \textit{Race Condition}, ist also nicht immer erfolgreich.
 Des Weiteren wurde der Angriff für eine ältere Version des 5G-AKA Protokolls gefunden.
@@ -23,5 +23,5 @@ Es kann also sein, dass dieser Angriff bis zur kommerziellen Verwendung des 5G-S
 \section*{Ausblick}
 Das 5G-AKA Protokoll befindet sich zurzeit noch in der Entwicklung und ist bisher nur in wenigen Städten verfügbar.
 Während der Erstellung dieser Arbeit wurden auch bereits mehrere neue Versionen der Spezifikation des 5G-AKA Protokolls veröffentlicht.
-Diese Entwicklung legt es nahe, dass sich das Protokoll bis zu seiner flächendeckenden Verwendung noch verändern und weiterentwickeln wird.
+Diese Entwicklung zeigt, dass sich das Protokoll bis zu seiner flächendeckenden Verwendung noch verändern und weiterentwickeln wird.
 Daher ist es nahelegend, dass die hier vorgestellte Sicherheitslücke einen Benutzer möglicherweise nicht betreffen wird.
