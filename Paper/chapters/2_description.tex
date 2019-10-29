@@ -644,7 +644,7 @@ Stimmen sie nicht überein, so bricht die \gls{ausf} die Authentifizierung ab. %
 
 \begin{enumerate}
 %1*
-\item[1*.] In Schritt 1* wird festgestellt, dass der berechnete \gls{xmac} nicht mit dem \gls{mac}, der in Schritt 11 empfangen wurde, übereinstimmt (\textit{MAC failure}) oder, dass der \gls{autn} nicht angenommen werden kann (\textit{Synchronisation failure}).
+\item[1*.] In Schritt 1* wird entweder festgestellt, dass der berechnete \gls{xmac} nicht mit dem \gls{mac}, der in Schritt 11 empfangen wurde übereinstimmt (\textit{MAC failure}) oder dass der \gls{autn} nicht angenommen werden kann (\textit{Synchronisation failure}).
 
 %2*
 \item[2*.] In Schritt 2* sendet das \gls{ue} die \textit{Authentication Failure} an die \gls{seaf}.
@@ -653,7 +653,7 @@ Handelt es sich um eine \textit{Synchronisation failure} so wird auch der \gls{a
 
 %3*
 \item[3*.] In Schritt 3* wird entschieden ob die Authentifikation gescheitert ist oder ob eine neue Authentifikation initiiert werden soll.
-eine neue Authentifikation kann nur initiiert werden wenn es sich bei dem Fehlschlag um eine \textit{Synchronisation failure} handelt.
+Eine neue Authentifikation kann nur initiiert werden wenn es sich bei dem Fehlschlag um eine \textit{Synchronisation failure} handelt.
 Die genaue Beschreibung der Re-Authentifizierungsprozedur ist im Dokument TS 24.501 zu finden. %3GPP TS 24.501 V16.1.0
 \end{enumerate}
 
@@ -669,16 +669,16 @@ Die genaue Beschreibung der Re-Authentifizierungsprozedur ist im Dokument TS 24.
 
 \begin{enumerate}
 %1'
-\item[1'.] Im Abschnitt \textit{''HRES* failure in SEAF''} wird bei Schritt 1' festgestellt, dass \gls{hres*} und \gls{hxres*}, die in \textit{Schritt 14} verglichen wurden, nicht übereinstimmen. 
+\item[1'.] Im Abschnitt \textit{HRES* failure in SEAF} wird bei Schritt 1' festgestellt, dass \gls{hres*} und \gls{hxres*}, die in \textit{Schritt 14} verglichen wurden, nicht übereinstimmen. 
 Es wird trotzdem die Nachricht aus \textit{Schritt 15} gesendet und auf die Antwort der \gls{ausf} gewartet. \\
-Im Abschnitt \textit{''RES* failure in AUSF''} wird bei Schritt 1' festgestellt, dass \gls{res*} und \gls{xres*}, die in \textit{Schritt 16} verglichen wurden, nicht übereinstimmen.
-Dies wird der \gls{seaf} in \textit{Schritt 17} mit dem \textit{Result} Parameter mitgeteilt.
+Im Abschnitt \textit{RES* failure in AUSF} wird bei Schritt 1' festgestellt, dass \gls{res*} und \gls{xres*}, die in \textit{Schritt 16} verglichen wurden, nicht übereinstimmen.
+Dies wird der \gls{seaf} in \textit{Schritt 17} mit dem \textit{Result Parameter} mitgeteilt.
 
 %2'
 \item[2'.] Im Schritt 2' wird die Authentifizierung als nicht erfolgreich angesehen und es wird entweder eine neue Authentifizierung initiiert oder die Authentifizierung wird abgebrochen.
-Dies ist der Fall wenn der Vergleich aus dem \textit{Schritt 1'} im Abschnitt \textit{''RES* failure in AUSF''} oder im Abschnitt \textit{''HRES* failure in SEAF''} fehlschlägt.
-Schlägt er in \textit{Schritt 1'} aus Abschnitt \textit{''HRES* failure in SEAF''} fehl, so wird unabhängig von dem \textit{Result} Parameter aus \textit{Schritt 17} die Authentifizierung als nicht erfolgreich angesehen.
-Des Weiteren wird die Authentifizierung als nicht erfolgreich angesehen wenn die Nachricht aus \textit{Schritt 10} nicht von der \gls{seaf} erhalten wird.
+Dies ist der Fall wenn der Vergleich aus dem \textit{Schritt 1'} im Abschnitt \textit{RES* failure in AUSF} oder im Abschnitt \textit{HRES* failure in SEAF} fehlschlägt.
+Schlägt er in \textit{Schritt 1'} aus Abschnitt \textit{HRES* failure in SEAF} fehl, so wird unabhängig von dem \textit{Result Parameter} aus \textit{Schritt 17} die Authentifizierung als nicht erfolgreich angesehen.
+Ebenso wird die Authentifizierung als nicht erfolgreich angesehen wenn die Nachricht aus \textit{Schritt 10} nicht von der \gls{seaf} erhalten wird.
 Die Authentifizierung wird abgebrochen wenn die \gls{seaf} in \textit{Schritt 1} den \gls{suci} erhalten hat.
 Falls die \gls{seaf} in \textit{Schritt 1} den \gls{5g-guti} erhalten hat, so soll die \textit{Identification procedure} gestartet werden, durch die die \gls{seaf} den \gls{suci} vom \gls{ue} erhalten soll.
 
