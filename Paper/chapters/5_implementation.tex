@@ -161,7 +161,7 @@ In der Implementierung erfolgt dies von der \lstinline{Implementation.protocol.e
 %12
 \item In \textit{Schritt 17} der \cref{fig:protocol_v1} wird beschrieben, dass die \gls{ausf} der \gls{seaf} den \gls{supi} des Benutzer mitsendet, wenn die \gls{ausf} diesen in \textit{Schritt 7} erhalten hat.
 Hat sie den \gls{supi} nicht in \textit{Schritt 7} erhalten, so wurde in \textit{Schritt 1} der \gls{5g-guti} an die \gls{seaf} gesendet.
-Da jedoch bei dem implementierten Angriff nie der \gls{5g-guti} versendet wird, wurde in der \lstinline{Implementation.protocol.entities.SEAF} Klasse die Nachricht aus \textit{Schritt 17} nur mit mitgesendetem \gls{supi} behandelt.
+In der \lstinline{Implementation.protocol.entities.SEAF} Klasse wurde die Nachricht aus \textit{Schritt 17} jedoch nur mit mitgesendetem \gls{supi} behandelt.
 
 %13
 \item Erhält die \gls{seaf} eine \textit{Authentication Failure} Nachricht vom \gls{ue} so soll sie im Falle einer \textit{Synchronization failure} eine neue Authentifizierung initiieren können.
@@ -207,7 +207,6 @@ In der Implementierung ist der \gls{supi} jedoch nur eine zufällige Bitfolge.
 \section{Übersicht der Komponenten}
 
 In \cref{tab:overview_classes} wurden alle Begriffe aufgelistet, die als Klassen in der Implementierung zu finden sind.
-
 In \cref{tab:overview_generating_classes} wurden alle Begriffe aufgelistet, die in der Implementierung erzeugt werden.
 In den dazugehörigen Klassen werden die Begriffe erzeugt.
 
