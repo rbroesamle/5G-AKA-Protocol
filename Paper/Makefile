@@ -32,7 +32,7 @@ all: $(PDF)
 .PHONY: $(PDF)
 
 $(PDF): $(MASTER_TEX) $(LITERATURE) $(TEX_FILES) $(GFX_FILES)
-	$(latexmk) $(MASTER_TEX)
+	$(latexmk) -f -silent $(MASTER_TEX)
 
 clean:
 	$(latexmk) -C
